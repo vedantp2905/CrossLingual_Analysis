@@ -1,0 +1,938 @@
+{
+  "layer": 0,
+  "alignments": {
+    "c11": {
+      "encoder_cluster": {
+        "id": "c11",
+        "unique_tokens": [
+          "batchOutJump",
+          "frontJump",
+          "batchInJump"
+        ],
+        "syntactic_label": "Integer Variables",
+        "semantic_tags": [
+          "Array Indexing",
+          "Data Processing",
+          "Bit Manipulation",
+          "Algorithm Optimization",
+          "Parallel Processing"
+        ],
+        "description": "These integer variables act as indices and offsets within arrays, crucial for navigating and manipulating data during bit pruning.  `batchInJump` and `batchOutJump` calculate offsets based on batch size and array lengths, enabling efficient processing of data in batches. `frontJump` represents an additional offset, likely for handling data pruning or filtering. The code suggests an algorithm optimized for processing large datasets, possibly in a parallel or vectorized manner."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c77",
+          "unique_tokens": [
+            "frontJump",
+            "batchOutJump",
+            "batchInJump"
+          ],
+          "syntactic_label": "Variable",
+          "semantic_tags": [
+            "Array Indexing",
+            "Parallel Processing",
+            "Data Access",
+            "Kernel Function",
+            "GPU Computing"
+          ],
+          "description": "These variables act as offsets within arrays to access data elements efficiently in a parallel processing context.  They are crucial for calculating memory addresses within the kernel function executing on the GPU.  `frontJump` is an offset for the input array, `batchInJump` calculates the starting index of a batch in the input array, and `batchOutJump` calculates the starting index of a batch in the output array.  The calculations ensure that each thread accesses the correct data element."
+        }
+      ]
+    },
+    "c20": {
+      "encoder_cluster": {
+        "id": "c20",
+        "unique_tokens": [
+          "Xsize",
+          "dec_size",
+          "wsize",
+          "max_size",
+          "mask_size",
+          "image_size",
+          "ksize",
+          "data_size",
+          "array_size",
+          "Zsize",
+          "Ysize",
+          "img_size"
+        ],
+        "syntactic_label": "Variable",
+        "semantic_tags": [
+          "Image Processing",
+          "Array Size",
+          "Dimension",
+          "Kernel Size",
+          "Data Size"
+        ],
+        "description": "These tokens represent variables storing sizes or dimensions related to images, arrays, or kernels in image processing or computer vision algorithms.  They are crucial for memory allocation, loop bounds, and calculations within the functions."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c116",
+          "unique_tokens": [
+            "data_size",
+            "ksize",
+            "wsize",
+            "array_size",
+            "img_size",
+            "mask_size",
+            "dec_size",
+            "Ysize",
+            "image_size",
+            "max_size",
+            "Xsize",
+            "Zsize"
+          ],
+          "syntactic_label": "Variable",
+          "semantic_tags": [
+            "Image Dimensions",
+            "Array Sizes",
+            "Kernel Size",
+            "Data Size",
+            "Memory Management"
+          ],
+          "description": "These tokens represent variables storing dimensions of images, arrays, kernels, and other data structures crucial for CUDA kernel operations.  They are integral to memory allocation, data transfer, and loop bounds within the kernels, ensuring correct processing of data on the GPU."
+        }
+      ]
+    },
+    "c63": {
+      "encoder_cluster": {
+        "id": "c63",
+        "unique_tokens": [
+          "inputLength",
+          "convLength",
+          "sLength",
+          "samplesLength",
+          "uLength",
+          "filterLength"
+        ],
+        "syntactic_label": "Integer Variables",
+        "semantic_tags": [
+          "Signal Processing",
+          "Filter Length",
+          "Array Lengths",
+          "Convolution",
+          "Data Dimensions"
+        ],
+        "description": "These integer variables represent lengths or sizes of different arrays or data structures used in signal processing operations, specifically in the context of filters and convolutions.  `samplesLength`, `filterLength`, `convLength`, `inputLength`, `uLength`, and `sLength` define the dimensions of input signals, filters, and output results.  They are crucial for indexing and iterating through arrays during computations."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c413",
+          "unique_tokens": [
+            "inputLength",
+            "conv_length",
+            "convLength",
+            "uLength",
+            "input_length",
+            "filterLength",
+            "sLength",
+            "outputlength",
+            "samplesLength"
+          ],
+          "syntactic_label": "Variable",
+          "semantic_tags": [
+            "Array Length",
+            "Signal Processing",
+            "Image Processing",
+            "Convolutional Neural Networks",
+            "CUDA Kernel Parameters"
+          ],
+          "description": "These tokens represent integer variables that store lengths or sizes of arrays or signals used within CUDA kernels.  They are crucial for defining the dimensions of data processed by parallel threads, ensuring correct memory access and computation within the kernels.  The context shows their use in determining loop bounds, array indexing, and thread management within parallel processing functions.  The semantic tags reflect the common applications of these types of calculations, such as signal processing, image processing, and convolutional neural networks."
+        }
+      ]
+    },
+    "c72": {
+      "encoder_cluster": {
+        "id": "c72",
+        "unique_tokens": [
+          "Lq",
+          "r_q",
+          "q_q",
+          "xq"
+        ],
+        "syntactic_label": "Array Identifiers",
+        "semantic_tags": [
+          "Signal Processing",
+          "Correlation",
+          "Time Series Analysis",
+          "Digital Signal Processing",
+          "Array Operations"
+        ],
+        "description": "The tokens Lq, r_q, q_q, and xq represent array identifiers used in signal processing algorithms.  Specifically, they seem to be involved in calculating correlations within time series data.  The code snippets show nested loops iterating through these arrays, performing calculations that are characteristic of digital signal processing, such as calculating real and imaginary parts of a correlation. The arrays likely hold samples of signals or their components."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c35",
+          "unique_tokens": [
+            "xq",
+            "q_q",
+            "yq",
+            "zq",
+            "Lq",
+            "r_q"
+          ],
+          "syntactic_label": "Variable",
+          "semantic_tags": [
+            "CUDA Parallel Computing",
+            "Array Indexing",
+            "Point Coordinates",
+            "Distance Calculation",
+            "Signal Processing"
+          ],
+          "description": "These tokens represent variables used in CUDA kernels to perform parallel computations.  Specifically, they seem to be coordinates (x, y, z) for points in 3D space (xq, yq, zq representing query points and similar for other variables).  The code calculates distances between points, suggesting applications in areas like nearest neighbor search or signal processing.  Lq appears to represent a length or size parameter, and r_q and q_q are likely used in more complex calculations involving real and imaginary parts, possibly related to correlation or convolution operations."
+        }
+      ]
+    },
+    "c76": {
+      "encoder_cluster": {
+        "id": "c76",
+        "unique_tokens": [
+          "getDRho",
+          "drho",
+          "getRho"
+        ],
+        "syntactic_label": "Functions",
+        "semantic_tags": [
+          "Numerical Calculation",
+          "Physics Simulation",
+          "Array Manipulation",
+          "Debugging Output",
+          "Scientific Computing"
+        ],
+        "description": "The tokens `getDRho` and `getRho` represent C++ functions.  `getDRho` and `getRho` compute values based on input arrays (`psi`, `dpsi`, `occNo`) and store the results in output arrays (`drho`, `rho`). The functions include debugging output using `printf` statements. The code suggests a numerical calculation, possibly related to a physics simulation, given the use of arrays and the variable names (e.g., `psi`, `occNo`, `drho`, `rho`). The `const` keyword indicates that the input arrays are not modified within the functions."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c61",
+          "unique_tokens": [
+            "getRho_cuda",
+            "possible_plaintext_str_cuda",
+            "getDRho_cuda",
+            "input_str_cuda",
+            "runFilterCuda"
+          ],
+          "syntactic_label": "CUDA Kernel Functions",
+          "semantic_tags": [
+            "Parallel Computing",
+            "GPU Acceleration",
+            "Signal Processing",
+            "Numerical Computation",
+            "Cryptography"
+          ],
+          "description": "These tokens represent CUDA kernel functions designed for parallel execution on a GPU.  `getRho_cuda` and `getDRho_cuda` likely perform numerical computations, possibly related to density calculations. `kernelXor` suggests a cryptographic operation (bitwise XOR). `runFilterCuda` implements a filtering operation, common in signal processing. The functions leverage CUDA's parallel capabilities for efficient computation."
+        }
+      ]
+    },
+    "c122": {
+      "encoder_cluster": {
+        "id": "c122",
+        "unique_tokens": [
+          "imagPart",
+          "realPart"
+        ],
+        "syntactic_label": "Variables",
+        "semantic_tags": [
+          "Numerical Computation",
+          "Complex Number Representation",
+          "Signal Processing",
+          "Mathematical Operations",
+          "Algorithm Implementation"
+        ],
+        "description": "The tokens 'realPart' and 'imagPart' are variables used to store the real and imaginary components of a complex number, respectively.  This is evident from their use within a loop that calculates a sum of squares of real and imaginary parts, suggesting a numerical computation involving complex numbers. The context strongly indicates signal processing or a similar algorithm where complex number manipulation is central."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c92",
+          "unique_tokens": [
+            "realPart",
+            "imagPart"
+          ],
+          "syntactic_label": "Variables",
+          "semantic_tags": [
+            "Complex Number Representation",
+            "CUDA Parallel Processing",
+            "Numerical Computation",
+            "Signal Processing",
+            "BYU Algorithm"
+          ],
+          "description": "The tokens 'realPart' and 'imagPart' are variables used within a CUDA kernel function ('cudaBYUSimplified') to represent the real and imaginary parts of a complex number.  This is part of a numerical computation, likely related to signal processing, that uses the BYU algorithm. The variables are crucial for performing parallel calculations on complex numbers across multiple threads in a CUDA environment."
+        }
+      ]
+    },
+    "c130": {
+      "encoder_cluster": {
+        "id": "c130",
+        "unique_tokens": [
+          "corrSum",
+          "MMDOuterProdComputeWithSum",
+          "uSum"
+        ],
+        "syntactic_label": "Variable",
+        "semantic_tags": [
+          "Signal Processing",
+          "Inner Product",
+          "Summation",
+          "Numerical Computation",
+          "Array Manipulation"
+        ],
+        "description": "These tokens represent variables used in numerical computation, specifically within signal processing algorithms.  corrSum likely stores a sum of correlations, MMDOuterProdComputeWithSum is a function name (not a variable in itself, but it's included in the token list), and uSum accumulates a sum of squared magnitudes.  The code snippets show array manipulations and calculations involving inner products, which are common in signal processing and numerical analysis."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c337",
+          "unique_tokens": [
+            "r_sum",
+            "uSum",
+            "corrSum",
+            "sum",
+            "MMDOuterProdComputeWithSum"
+          ],
+          "syntactic_label": "Variable",
+          "semantic_tags": [
+            "Parallel Reduction",
+            "Matrix Multiplication",
+            "Vector Operations",
+            "CUDA Kernel",
+            "Summation"
+          ],
+          "description": "These tokens represent variables used within CUDA kernels to perform various operations, primarily involving summation and matrix/vector multiplications.  'r_sum' and 'c' likely represent dimensions, 'sum' is an accumulator, 'uSum' and 'corrSum' are intermediate sums, and 'MMDOuterProdComputeWithSum' is a kernel function name indicating an outer product computation with summation."
+        }
+      ]
+    },
+    "c137": {
+      "encoder_cluster": {
+        "id": "c137",
+        "unique_tokens": [
+          "voxelCount",
+          "arrayCount",
+          "compCount",
+          "corrValidCount"
+        ],
+        "syntactic_label": "Integer Variables",
+        "semantic_tags": [
+          "Array Length",
+          "Data Count",
+          "Iteration Control",
+          "Image Processing",
+          "Computation"
+        ],
+        "description": "These integer variables represent counts or lengths of arrays used to control loops and manage data within image processing or computational functions.  They are crucial for determining the bounds of iterations and the size of data structures."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c303",
+          "unique_tokens": [
+            "voxelCount",
+            "arrayCount",
+            "compCount",
+            "corrValidCount"
+          ],
+          "syntactic_label": "Variable",
+          "semantic_tags": [
+            "Array Size",
+            "Data Dimension",
+            "Kernel Parameter",
+            "CUDA Thread Management",
+            "Parallel Processing"
+          ],
+          "description": "These tokens represent integer variables that store the sizes or counts of data arrays. They are used as parameters in CUDA kernels to control the number of threads and the range of data processed by each thread.  This is crucial for efficient parallel processing in CUDA, ensuring that each thread operates on a valid portion of the data."
+        }
+      ]
+    },
+    "c153": {
+      "encoder_cluster": {
+        "id": "c153",
+        "unique_tokens": [
+          "inputScore",
+          "outputScore"
+        ],
+        "syntactic_label": "Array Parameters",
+        "semantic_tags": [
+          "Top-k Selection",
+          "Thresholding",
+          "Array Manipulation",
+          "Score Filtering",
+          "Index Management"
+        ],
+        "description": "The tokens `inputScore` and `outputScore` represent array parameters in the `getTopkNum` function.  They are used to pass and receive floating-point arrays containing scores. The function processes these arrays to select the top-k scores above a given threshold, managing their indices and performing array manipulations. The semantic tags reflect the core operations of score filtering, index management, and top-k selection."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c48",
+          "unique_tokens": [
+            "inputScore",
+            "scores",
+            "resizedClsScore",
+            "outputScore"
+          ],
+          "syntactic_label": "Array Parameters",
+          "semantic_tags": [
+            "CUDA Kernel Arguments",
+            "Parallel Processing",
+            "Score Processing",
+            "Object Detection",
+            "Thresholding"
+          ],
+          "description": "These tokens represent arrays passed as parameters to CUDA kernels.  They are used to process scores (probabilities) in parallel, likely within the context of an object detection or classification task.  The code uses these arrays to filter scores based on a threshold, performing operations like top-k selection or data filtering before Non-Maximum Suppression (NMS).  The `inputScore`, `scores`, `resizedClsScore`, and `outputScore` arrays are central to the parallel computation of scores within the kernels."
+        }
+      ]
+    },
+    "c160": {
+      "encoder_cluster": {
+        "id": "c160",
+        "unique_tokens": [
+          "mul_Scalar_matrix",
+          "dmul_Scalar_matrix",
+          "fill_matrix",
+          "matrix",
+          "dsubtract_matrix",
+          "addMatrix"
+        ],
+        "syntactic_label": "Functions",
+        "semantic_tags": [
+          "Matrix Operations",
+          "Linear Algebra",
+          "Scalar Multiplication",
+          "Matrix Addition",
+          "Matrix Subtraction"
+        ],
+        "description": "These tokens represent functions performing common linear algebra operations on matrices.  They manipulate matrix data, performing scalar multiplication, addition, subtraction, and filling matrices with values. The functions use array-based matrix representation and operate on matrix elements directly."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c493",
+          "unique_tokens": [
+            "matrix",
+            "mul_Scalar_matrix",
+            "dsubtract_matrix",
+            "fill_matrix",
+            "dmul_Scalar_matrix"
+          ],
+          "syntactic_label": "Kernel Functions",
+          "semantic_tags": [
+            "Matrix Multiplication",
+            "Matrix Subtraction",
+            "Scalar Multiplication",
+            "Matrix Initialization",
+            "CUDA Parallel Computing"
+          ],
+          "description": "These tokens represent CUDA kernel functions performing matrix operations.  `matrix` is a data structure, while `mul_Scalar_matrix`, `dsubtract_matrix`, `fill_matrix`, and `dmul_Scalar_matrix` are kernel functions that perform scalar multiplication, matrix subtraction, matrix initialization, and double-precision scalar multiplication on matrices respectively, leveraging CUDA's parallel processing capabilities."
+        }
+      ]
+    },
+    "c187": {
+      "encoder_cluster": {
+        "id": "c187",
+        "unique_tokens": [
+          "outputIndex",
+          "inputIndex",
+          "anchorIndex",
+          "keyIndex",
+          "classIndex",
+          "sampleIndex",
+          "clsIndex"
+        ],
+        "syntactic_label": "Array Index Variables",
+        "semantic_tags": [
+          "Array Indexing",
+          "Data Processing",
+          "Algorithm Implementation",
+          "Image Processing",
+          "Signal Processing"
+        ],
+        "description": "These tokens represent integer variables used as indices to access and manipulate elements within arrays.  The context shows they are crucial for navigating multi-dimensional arrays (e.g., representing image pixels, signal samples, or feature vectors) during various operations like filtering, thresholding, and data transformation.  The code snippets demonstrate their use in accessing and modifying array elements based on calculated indices, highlighting their role in efficient data manipulation within the algorithms."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c326",
+          "unique_tokens": [
+            "sampleIndex",
+            "keyIndex",
+            "anchorIndex",
+            "outputIndex",
+            "inputIndex",
+            "clsIndex",
+            "classIndex"
+          ],
+          "syntactic_label": "Array Index Variables",
+          "semantic_tags": [
+            "Parallel Processing",
+            "Index Management",
+            "CUDA Thread Indexing",
+            "Memory Access",
+            "Data Parallelism"
+          ],
+          "description": "These variables represent indices used to access elements within arrays processed in parallel by CUDA kernels.  They are crucial for managing memory access and distributing work across threads.  The indices are often calculated based on thread and block IDs to ensure each thread operates on a unique portion of the data.  This is fundamental to CUDA's data-parallel programming model."
+        }
+      ]
+    },
+    "c198": {
+      "encoder_cluster": {
+        "id": "c198",
+        "unique_tokens": [
+          "totalPixels",
+          "availablePixels"
+        ],
+        "syntactic_label": "Variable",
+        "semantic_tags": [
+          "Image Processing",
+          "Matrix Multiplication",
+          "Pixel Manipulation",
+          "Linear Algebra",
+          "Distance Calculation"
+        ],
+        "description": "The tokens 'totalPixels' and 'availablePixels' are variables representing the total number of pixels and the number of available pixels for processing, respectively.  They are used as parameters in functions performing matrix multiplication and distance calculations, which are common operations in image processing algorithms.  The semantic tags reflect the core functionality of the code snippets, which involve manipulating pixels within a matrix context."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c246",
+          "unique_tokens": [
+            "availablePixels",
+            "totalPixels"
+          ],
+          "syntactic_label": "Variable",
+          "semantic_tags": [
+            "Image Processing",
+            "Parallel Computing",
+            "CUDA Programming",
+            "Matrix Multiplication",
+            "Pixel Manipulation"
+          ],
+          "description": "These variables represent the number of available and total pixels in an image.  They are used to control the parallel processing of pixel data across CUDA threads.  In the context of the provided CUDA kernels, `availablePixels` likely represents the subset of pixels processed by a particular kernel invocation, while `totalPixels` represents the total number of pixels in the image.  They are crucial for distributing the workload efficiently across multiple threads and managing memory access."
+        }
+      ]
+    },
+    "c209": {
+      "encoder_cluster": {
+        "id": "c209",
+        "unique_tokens": [
+          "grayscale",
+          "depth_scale",
+          "apply_grayscale"
+        ],
+        "syntactic_label": "Function Names",
+        "semantic_tags": [
+          "Image Processing",
+          "Grayscale Conversion",
+          "Depth Scaling",
+          "Computer Vision",
+          "Pixel Manipulation"
+        ],
+        "description": "These tokens represent the names of C++ functions.  `grayscale` and `apply_grayscale` perform grayscale conversion on image data, manipulating pixel values to remove color information.  `depth_scale` is used as a parameter within a function that processes depth data, likely converting disparity values to depth values. The functions use pointers to efficiently process image data, common in image processing algorithms."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c3",
+          "unique_tokens": [
+            "weights",
+            "FFT",
+            "depth_scale",
+            "grayscale",
+            "apply_grayscale"
+          ],
+          "syntactic_label": "Variable",
+          "semantic_tags": [
+            "Image Processing",
+            "Filtering",
+            "Depth Sensing",
+            "Parallel Computing",
+            "CUDA"
+          ],
+          "description": "These tokens represent variables used in CUDA kernels for image processing tasks.  'weights' likely holds filter coefficients, 'FFT' represents Fast Fourier Transform data, 'depth_scale' is a scaling factor for depth data, 'grayscale' is a function name for grayscale conversion, and 'apply_grayscale' is a kernel function applying grayscale transformation.  The context shows they are used within parallel kernels to perform operations on image data, demonstrating parallel computing using CUDA."
+        }
+      ]
+    },
+    "c224": {
+      "encoder_cluster": {
+        "id": "c224",
+        "unique_tokens": [
+          "kmeans_average",
+          "x_average"
+        ],
+        "syntactic_label": "Function Names",
+        "semantic_tags": [
+          "K-means Clustering",
+          "Average Calculation",
+          "Data Processing",
+          "Numerical Computation",
+          "Array Manipulation"
+        ],
+        "description": "kmeans_average and x_average are function names in C++.  kmeans_average calculates the average of data points for each cluster in a k-means clustering algorithm. x_average likely represents an array storing the average of a dataset used in a computation (MMDOuterProdComputeWithSum) that involves calculating the outer product and summing elements.  The functions utilize arrays (pointers in this case) for data manipulation and numerical computation."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c75",
+          "unique_tokens": [
+            "d_output",
+            "kmeans_average",
+            "x_average",
+            "device_output"
+          ],
+          "syntactic_label": "Device Pointer Variables",
+          "semantic_tags": [
+            "CUDA Parallel Computing",
+            "Device Memory Management",
+            "Kernel Function Arguments",
+            "Data Transfer",
+            "Parallel Algorithm Implementation"
+          ],
+          "description": "These tokens represent variables that hold pointers to memory allocated on the CUDA device.  They are used as arguments to kernel functions, indicating where the kernel should read from or write to in device memory.  This is fundamental to CUDA programming, enabling parallel processing of data on the GPU.  The context shows their use in different CUDA kernels for tasks like k-means averaging, image processing, and other parallel computations."
+        }
+      ]
+    },
+    "c254": {
+      "encoder_cluster": {
+        "id": "c254",
+        "unique_tokens": [
+          "totalScoreNum",
+          "pixelNum",
+          "getTopkNum",
+          "classNum",
+          "priorNum",
+          "devideNum",
+          "imageNum"
+        ],
+        "syntactic_label": "Variable",
+        "semantic_tags": [
+          "Image Processing",
+          "Dimension Variables",
+          "Array Indexing",
+          "Data Manipulation",
+          "Computer Vision"
+        ],
+        "description": "These tokens represent integer variables that store dimensions or counts related to image data.  They are used for array indexing and data manipulation within image processing functions.  In the context of computer vision, these variables define the structure and size of image data and intermediate results."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c494",
+          "unique_tokens": [
+            "imageNum",
+            "totalScoreNum",
+            "getTopkNum",
+            "classNum",
+            "pixelNum",
+            "devideNum",
+            "priorNum"
+          ],
+          "syntactic_label": "Variable",
+          "semantic_tags": [
+            "Image Processing",
+            "Parallel Computing",
+            "Array Indexing",
+            "Data Manipulation",
+            "CUDA Programming"
+          ],
+          "description": "These tokens represent variables used in CUDA kernels for image processing tasks.  They define dimensions, counts, and indices for efficient parallel data access and manipulation within the GPU.  For example, `imageNum` represents the number of images, `pixelNum` the number of pixels, `classNum` the number of classes, etc.  These variables are crucial for managing data flow and computation across multiple threads in a CUDA program."
+        }
+      ]
+    },
+    "c281": {
+      "encoder_cluster": {
+        "id": "c281",
+        "unique_tokens": [
+          "anchorH",
+          "preH",
+          "imageH"
+        ],
+        "syntactic_label": "Variables",
+        "semantic_tags": [
+          "Image Processing",
+          "Dimension",
+          "Bounding Box",
+          "Convolutional Neural Network",
+          "Computer Vision"
+        ],
+        "description": "The tokens anchorH, preH, and imageH are variables representing height dimensions in different contexts.  anchorH represents the height of an anchor box within an object detection algorithm. preH represents a pre-calculated height value used to predict bounding boxes. imageH represents the height of an image in a convolution operation.  These variables are crucial for calculations related to object detection and image processing within a CNN framework."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c148",
+          "unique_tokens": [
+            "imageH",
+            "preH",
+            "anchorH"
+          ],
+          "syntactic_label": "Variable",
+          "semantic_tags": [
+            "Image Processing",
+            "Dimension",
+            "CUDA Kernel",
+            "Parallel Computing",
+            "Height"
+          ],
+          "description": "These variables represent height dimensions in image processing operations within CUDA kernels.  'imageH' is the height of the input image, 'preH' likely represents a pre-calculated or intermediate height value, and 'anchorH' seems to be the height of an anchor box, a common element in object detection algorithms.  Their use within the __global__ functions indicates parallel processing across the height dimension of the image."
+        }
+      ]
+    },
+    "c286": {
+      "encoder_cluster": {
+        "id": "c286",
+        "unique_tokens": [
+          "heapPtr",
+          "keyCharPtr"
+        ],
+        "syntactic_label": "Pointer Variables",
+        "semantic_tags": [
+          "Memory Management",
+          "Heap Manipulation",
+          "Data Processing",
+          "Cryptography",
+          "Pointer Arithmetic"
+        ],
+        "description": "Both `heapPtr` and `keyCharPtr` are declared as pointer variables in C++.  `heapPtr` points to an integer array representing a heap data structure, used for heap manipulation within the `resetHeap_cpu` function. `keyCharPtr` points to a character array derived from an unsigned integer key, used for cryptographic operations (XOR) in the `kernelXor` function.  The significance lies in their role in directly manipulating memory locations, enabling efficient data processing and cryptographic key usage."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c486",
+          "unique_tokens": [
+            "heapPtr",
+            "keyCharPtr"
+          ],
+          "syntactic_label": "Pointer Variables",
+          "semantic_tags": [
+            "CUDA Memory Management",
+            "Parallel Processing",
+            "Kernel Function Arguments",
+            "Device Memory Access",
+            "Data Transfer"
+          ],
+          "description": "Both `heapPtr` and `keyCharPtr` are pointer variables used within CUDA kernel functions.  `heapPtr` points to an integer array representing a heap data structure, used for managing memory within the kernel. `keyCharPtr` points to a character array derived from an unsigned integer, used for XOR encryption in parallel.  These pointers are crucial for accessing and manipulating data residing in the device's memory during parallel computation."
+        }
+      ]
+    },
+    "c349": {
+      "encoder_cluster": {
+        "id": "c349",
+        "unique_tokens": [
+          "boxes_for_nms",
+          "boxes_before_nms"
+        ],
+        "syntactic_label": "Array Parameters",
+        "semantic_tags": [
+          "Bounding Box Processing",
+          "Non-Maximum Suppression",
+          "Image Processing",
+          "Computer Vision",
+          "Array Manipulation"
+        ],
+        "description": "The tokens represent C++ array parameters passed to a function.  `boxes_before_nms` is an input array containing bounding box coordinates before non-maximum suppression (NMS). `boxes_for_nms` is an output array where the processed bounding box coordinates are stored after applying an offset. The function performs element-wise addition of an offset to the bounding box coordinates, effectively adjusting their positions. This is a common operation in object detection and image processing pipelines, particularly within the context of NMS."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c143",
+          "unique_tokens": [
+            "boxes_for_nms",
+            "get_boxes_for_nms",
+            "boxes_before_nms"
+          ],
+          "syntactic_label": "CUDA arrays",
+          "semantic_tags": [
+            "GPU Parallel Processing",
+            "Non-Maximum Suppression",
+            "Bounding Box Manipulation",
+            "CUDA Kernel",
+            "Array Indexing"
+          ],
+          "description": "The tokens represent arrays used within a CUDA kernel (get_boxes_for_nms).  boxes_before_nms is an input array containing bounding box coordinates. boxes_for_nms is an output array where the processed bounding boxes are stored. The kernel processes these arrays in parallel across multiple threads on the GPU.  The code performs operations on each element of the arrays, adding an offset to the coordinates. This is likely part of a Non-Maximum Suppression (NMS) algorithm, a common step in object detection where bounding boxes are refined."
+        }
+      ]
+    },
+    "c402": {
+      "encoder_cluster": {
+        "id": "c402",
+        "unique_tokens": [
+          "sumQ",
+          "filtered_Q"
+        ],
+        "syntactic_label": "Variable",
+        "semantic_tags": [
+          "Signal Processing",
+          "Filtering",
+          "Convolution",
+          "Accumulator",
+          "Numerical Computation"
+        ],
+        "description": "sumQ and filtered_Q are variables.  sumQ acts as an accumulator during the convolution operation, summing the results of multiplying input signal samples with filter coefficients. filtered_Q stores the result of the convolution operation applied to the Q component of the input signal.  These variables are central to the implementation of a digital filter."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c64",
+          "unique_tokens": [
+            "filtered_Q",
+            "sumQ",
+            "Q"
+          ],
+          "syntactic_label": "Array Identifier",
+          "semantic_tags": [
+            "Parallel Computing",
+            "CUDA Kernel",
+            "Signal Processing",
+            "Filtering",
+            "Convolution"
+          ],
+          "description": "The tokens `filtered_Q`, `sumQ`, and `Q` are identifiers representing arrays used within CUDA kernels.  `Q` appears to be an input array, likely containing signal data. `filtered_Q` is an output array storing the results of a filtering operation (convolution), and `sumQ` is an intermediate variable accumulating values during the filtering process.  The code implements parallel processing using CUDA to perform a convolution operation, a common task in signal processing."
+        }
+      ]
+    },
+    "c434": {
+      "encoder_cluster": {
+        "id": "c434",
+        "unique_tokens": [
+          "q_i",
+          "data_i",
+          "r_i"
+        ],
+        "syntactic_label": "Array Indexing Variables",
+        "semantic_tags": [
+          "Array Manipulation",
+          "Signal Processing",
+          "Numerical Computation",
+          "Distance Calculation",
+          "Image Processing"
+        ],
+        "description": "The tokens q_i, data_i, and r_i are used as indices to access elements within arrays (xi, xq, sr, si, data).  This is evident in the for loops iterating through array elements using these variables.  The code snippets suggest signal processing or numerical computation, potentially related to image processing, given the use of distance calculations and array operations on image data."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c68",
+          "unique_tokens": [
+            "q_i",
+            "N_mobil",
+            "data_i",
+            "r_i",
+            "i"
+          ],
+          "syntactic_label": "Array Index/Variable",
+          "semantic_tags": [
+            "Parallel Computing",
+            "Array Manipulation",
+            "CUDA Programming",
+            "GPU Acceleration",
+            "Kernel Function"
+          ],
+          "description": "These tokens represent array indices or variables used within CUDA kernel functions to access and manipulate data within arrays on the GPU.  'q_i', 'N_mobil', 'data_i', 'r_i', and 'i' are used in different kernels to perform various operations, such as calculating distances, updating states, and performing array additions. The context shows that they are integral parts of parallel algorithms implemented using CUDA."
+        }
+      ]
+    },
+    "c472": {
+      "encoder_cluster": {
+        "id": "c472",
+        "unique_tokens": [
+          "cnt",
+          "count",
+          "pcount"
+        ],
+        "syntactic_label": "Integer Variable",
+        "semantic_tags": [
+          "Iteration Counter",
+          "Data Counting",
+          "Array Indexing",
+          "Loop Control",
+          "Computational Variable"
+        ],
+        "description": "The tokens 'cnt', 'count', and 'pcount' are all integer variables.  They function primarily as counters in loops, controlling the number of iterations, and as indices to access elements within arrays.  Their semantic significance lies in managing iteration, counting data points, and indexing into arrays for processing. In the provided examples, they are crucial for controlling the flow of computation within loops and for accessing elements in arrays, which are fundamental operations in C++ programming."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c59",
+          "unique_tokens": [
+            "["
+          ],
+          "syntactic_label": "Kernel Functions",
+          "semantic_tags": [
+            "Parallel Computing",
+            "GPU Programming",
+            "CUDA",
+            "Kernel Launch",
+            "Array Processing"
+          ],
+          "description": "These tokens represent CUDA kernel functions.  The __global__ keyword indicates that these functions are executed on the GPU. Each function performs a specific parallel operation on an array or arrays, utilizing thread and block indices (threadIdx.x, blockIdx.x, blockDim.x, gridDim.x) to distribute the workload across multiple threads and blocks.  The functions demonstrate fundamental CUDA programming concepts such as data parallelism and memory access patterns."
+        }
+      ]
+    },
+    "c478": {
+      "encoder_cluster": {
+        "id": "c478",
+        "unique_tokens": [
+          "patchSize",
+          "reductionSize",
+          "featureSize"
+        ],
+        "syntactic_label": "Integer Variable",
+        "semantic_tags": [
+          "Array Indexing",
+          "Image Processing",
+          "Data Dimension",
+          "Parameter",
+          "Algorithm Control"
+        ],
+        "description": "These tokens represent integer variables that define the size or dimensions of data structures, specifically in the context of image processing or similar algorithms.  They control loop iterations and array indexing, determining how data is accessed and processed within functions like `permuteData_cpu`, `distanceMatCalc`, and `InitReduction`.  `patchSize` likely refers to the size of a patch in image processing, `reductionSize` to the size of a reduction array, and `featureSize` to the number of features in a data point."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c255",
+          "unique_tokens": [
+            "patchSize",
+            "featureSize",
+            "stepSize",
+            "reductionSize"
+          ],
+          "syntactic_label": "Variable",
+          "semantic_tags": [
+            "Kernel Parameters",
+            "Array Dimensions",
+            "Parallel Processing",
+            "Data Size",
+            "CUDA Memory Management"
+          ],
+          "description": "These tokens represent variables that define the size of data structures or parameters used within CUDA kernels.  They are crucial for controlling the execution of parallel operations and managing memory allocation within the GPU.  `patchSize` and `featureSize` likely define the dimensions of data processed by the kernels, while `stepSize` and `reductionSize` are involved in parallel reduction operations or data partitioning strategies."
+        }
+      ]
+    },
+    "c498": {
+      "encoder_cluster": {
+        "id": "c498",
+        "unique_tokens": [
+          "locData",
+          "canData",
+          "srcData",
+          "dstData",
+          "getCanBusData"
+        ],
+        "syntactic_label": "Array Pointer Parameters",
+        "semantic_tags": [
+          "Array Processing",
+          "Data Transformation",
+          "Numerical Computation",
+          "Image Processing",
+          "Deep Learning"
+        ],
+        "description": "These tokens represent array pointers used to pass data to functions.  The functions perform operations on these arrays, such as calculations in decode_cpu (likely part of object detection or bounding box regression in a deep learning context), and element-wise operations in LreluForward and LreluBackward (Leaky ReLU activation and its gradient). getCanBusData suggests CAN bus data processing. The semantic tags reflect the common use cases of such array-based operations."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c179",
+          "unique_tokens": [
+            "getCanBusData",
+            "locData",
+            "dstData",
+            "srcData",
+            "permuteData",
+            "canData",
+            "data"
+          ],
+          "syntactic_label": "CUDA Kernel Function Parameters",
+          "semantic_tags": [
+            "Parallel Processing",
+            "GPU Memory Access",
+            "Data Transfer",
+            "Array Manipulation",
+            "CUDA Programming"
+          ],
+          "description": "These tokens represent parameters passed to CUDA kernel functions.  They are pointers to data arrays (e.g., srcData, dstData, locData, canData) or variables specifying array sizes (e.g., size, data_size, dims) and other parameters needed for computation.  The functions operate on these data arrays in parallel across multiple threads and blocks on the GPU.  The semantic tags reflect the core aspects of CUDA programming: parallel processing using kernels, managing data on the GPU memory, transferring data between CPU and GPU, and manipulating data arrays within the kernels."
+        }
+      ]
+    }
+  }
+}

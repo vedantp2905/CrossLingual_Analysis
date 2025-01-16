@@ -1,0 +1,22 @@
+{
+  "Data Structures": 2695,
+  "Control Flow": 1665,
+  "Exception Handling": 1522,
+  "Object Manipulation": 979,
+  "String Manipulation": 891,
+  "AWS SDK": 828,
+  "Data Processing": 784,
+  "Method Invocation": 640,
+  "Object Instantiation": 597,
+  "Conditional Logic": 500,
+  "Input/Output": 459,
+  "Object Serialization": 432,
+  "Object-Oriented Programming": 378,
+  "Object Creation": 359,
+  "API Interaction": 339,
+  "Method Chaining": 337,
+  "Method Definition": 336,
+  "File I/O": 314,
+  "Functional Programming": 306,
+  "Iteration": 306
+}
