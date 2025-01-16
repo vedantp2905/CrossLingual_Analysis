@@ -1,0 +1,2145 @@
+{
+  "layer": 12,
+  "alignments": {
+    "c59": {
+      "encoder_cluster": {
+        "id": "c59",
+        "unique_tokens": [
+          "w",
+          "(",
+          ","
+        ],
+        "syntactic_label": "Function Parameter, Opening Parenthesis, Comma",
+        "semantic_tags": [
+          "Array Processing",
+          "Numerical Computation",
+          "In-place Scaling",
+          "Function Arguments",
+          "C++ Syntax"
+        ],
+        "description": "The tokens represent parts of a C++ function signature.  'w' is likely a placeholder for a variable name (though not shown in the provided context, it's a common variable name for width). '(' is the opening parenthesis indicating the start of the parameter list. ',' is a comma separating function parameters. The code snippet shows a function that scales an array in-place. The parameters define the array, the scaling factor, and the array's size."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c192",
+          "unique_tokens": [
+            "(",
+            "100",
+            ","
+          ],
+          "syntactic_label": "Function Parameter",
+          "semantic_tags": [
+            "Kernel Launch",
+            "Array Processing",
+            "Parallel Computing",
+            "Data Parallelism",
+            "GPU Programming"
+          ],
+          "description": "The tokens represent parameters passed to CUDA kernel functions.  The integer '100' likely represents a dimension or size parameter. The parentheses '(' and ')' are used to enclose the parameter lists of the kernel functions. These are fundamental aspects of CUDA programming, defining the data that the kernel will operate on and the context in which it executes.  The code demonstrates parallel processing of arrays on a GPU."
+        },
+        {
+          "id": "c257",
+          "unique_tokens": [
+            "cc",
+            "(",
+            "int",
+            "[",
+            ",",
+            "rcpb",
+            "simd_f_t"
+          ],
+          "syntactic_label": "CUDA Kernel Parameters and Data Types",
+          "semantic_tags": [
+            "CUDA Kernel Launch",
+            "Parallel Computing",
+            "Data Parallelism",
+            "Thread Indexing",
+            "Floating Point Arithmetic"
+          ],
+          "description": "The tokens represent elements crucial for defining and executing CUDA kernels.  'cc' likely refers to compute capability (though not directly present in the examples),  '(', and ')' are parentheses for function parameters, 'int' is an integer data type, '[' and ']' are array access operators, ',' is a comma separator, 'rcpb' might be a custom data type or function related to reciprocal, and 'simd_f_t' suggests a SIMD-friendly floating-point type. These elements work together to define kernel parameters, data types, and thread indexing within the kernel functions, enabling parallel computation across multiple threads."
+        },
+        {
+          "id": "c486",
+          "unique_tokens": [
+            "(",
+            ",",
+            "/"
+          ],
+          "syntactic_label": "Punctuation",
+          "semantic_tags": [
+            "Kernel Function Definition",
+            "Array Indexing",
+            "Parallel Computing",
+            "CUDA Programming",
+            "Data Parallelism"
+          ],
+          "description": "These tokens are punctuation marks used in the CUDA kernel function definition.  The '(' and ')' define the function's parameter list, while the ',' separates the parameters. The '/' is not present in the provided example."
+        },
+        {
+          "id": "c12",
+          "unique_tokens": [
+            "(",
+            "sum",
+            "[",
+            ",",
+            "="
+          ],
+          "syntactic_label": "Operators and Identifiers",
+          "semantic_tags": [
+            "Array Initialization",
+            "Parallel Computing",
+            "Kernel Launch",
+            "Data Parallelism",
+            "CUDA Programming"
+          ],
+          "description": "The tokens represent fundamental elements in CUDA C/C++.  '(' and '[' are opening parentheses used for function calls and array indexing. ',' is a separator in function arguments and array indices. '=' is the assignment operator. 'sum' (while not directly present as a token in the provided examples, it's implied by the operations) represents an arithmetic operation often used in parallel reductions. These tokens are crucial for expressing parallel algorithms in CUDA, enabling the efficient processing of data across multiple threads and blocks."
+        },
+        {
+          "id": "c269",
+          "unique_tokens": [
+            "(",
+            ","
+          ],
+          "syntactic_label": "Parentheses",
+          "semantic_tags": [
+            "Kernel Function Arguments",
+            "Array Indexing",
+            "Thread Indexing",
+            "Conditional Statements",
+            "CUDA Parallelism"
+          ],
+          "description": "The parentheses are used in multiple ways in these CUDA kernel functions.  They enclose function arguments, index arrays (e.g., accessing elements of the input arrays L, r, X, array), and are part of the expressions calculating the thread index (tid) within a block and the overall index (i, u, idx) of the element each thread processes.  They also delimit conditional statements (if statements) that control the execution flow based on thread ID and array bounds.  The overall semantic significance is to define the structure and behavior of parallel computations within the CUDA kernels."
+        },
+        {
+          "id": "c47",
+          "unique_tokens": [
+            "%d",
+            "\\n",
+            "(",
+            ",",
+            "printf",
+            ")",
+            "\""
+          ],
+          "syntactic_label": "Printf Function and Format Specifiers",
+          "semantic_tags": [
+            "Debugging",
+            "Output",
+            "Printf",
+            "C-style IO",
+            "Kernel Execution"
+          ],
+          "description": "The tokens are part of a printf statement used for debugging or displaying information.  %d is a format specifier for integers, \\n is a newline character, ( and ) are parentheses for function arguments, , is a comma separating arguments, and \" is a quote used for string literals within the printf function.  In the context of CUDA, this would likely be used to print debugging information from a kernel or host code interacting with CUDA kernels."
+        },
+        {
+          "id": "c80",
+          "unique_tokens": [
+            "rows",
+            ",",
+            "("
+          ],
+          "syntactic_label": "Variable,Comma,Opening Parenthesis",
+          "semantic_tags": [
+            "Array Indexing",
+            "Kernel Launch Configuration",
+            "Parallel Processing",
+            "CUDA Memory Management",
+            "Data Initialization"
+          ],
+          "description": "The token 'rows' is likely a variable representing the number of rows in a matrix or array.  The comma acts as a separator in function parameter lists. The opening parenthesis indicates the start of a function's parameter list. These tokens are fundamental in CUDA for defining kernel functions and managing data within parallel processing contexts."
+        },
+        {
+          "id": "c273",
+          "unique_tokens": [
+            "(",
+            ">=",
+            ","
+          ],
+          "syntactic_label": "Operators",
+          "semantic_tags": [
+            "Kernel Launch",
+            "Parallel Computing",
+            "Array Access",
+            "Thread Indexing",
+            "GPU Programming"
+          ],
+          "description": "These tokens are operators used in CUDA C/C++ code.  The '(' is an opening parenthesis used for function arguments and array indexing. '>=' is a comparison operator, and ',' is a comma operator used as a separator in function arguments and array indexing.  In the context of the provided code, these operators are essential for defining the kernel function, indexing into arrays on the GPU, and performing parallel computations. The code demonstrates a simple vector addition kernel where each thread adds corresponding elements of two input arrays and stores the result in an output array. The operators are crucial for managing the parallel execution and data access within the kernel."
+        },
+        {
+          "id": "c433",
+          "unique_tokens": [
+            "*",
+            ">=",
+            "(",
+            ",",
+            "=",
+            "void"
+          ],
+          "syntactic_label": "CUDA Kernel Function Definition Components",
+          "semantic_tags": [
+            "CUDA Kernel Launch",
+            "Parallel Computing",
+            "GPU Programming",
+            "Array Processing",
+            "Thread Indexing"
+          ],
+          "description": "The tokens represent essential components in defining and launching a CUDA kernel.  '*' is the pointer dereference operator, '>=' is a comparison operator (though not directly used in this example, it's common in CUDA code for conditional operations), '(' and ')' are parentheses for function arguments, ',' is a comma separating function arguments, '=' is the assignment operator, and 'void' specifies the return type of the kernel function.  The overall code snippet defines a kernel function 'gpu_add' that performs element-wise addition of two arrays on the GPU.  The significance lies in the parallel execution of this kernel across multiple threads on the GPU, enabling efficient array processing."
+        },
+        {
+          "id": "c19",
+          "unique_tokens": [
+            "const",
+            "*",
+            ",",
+            "("
+          ],
+          "syntactic_label": "CUDA Kernel Function Parameters",
+          "semantic_tags": [
+            "Parallel Computing",
+            "GPU Programming",
+            "Memory Access",
+            "Kernel Launch",
+            "Data Parallelism"
+          ],
+          "description": "These tokens represent parameters passed to CUDA kernel functions.  'const' indicates a constant parameter. '*' denotes a pointer, crucial for accessing and modifying data on the GPU. ',' separates parameters. '(' initiates the parameter list.  These are fundamental to defining how data is transferred to and manipulated within parallel kernels on the GPU."
+        },
+        {
+          "id": "c463",
+          "unique_tokens": [
+            "(",
+            "rows",
+            ",",
+            "=",
+            ";",
+            "+"
+          ],
+          "syntactic_label": "CUDA Kernel Operators and Parameters",
+          "semantic_tags": [
+            "Parallel Computing",
+            "Kernel Launch",
+            "Array Processing",
+            "Thread Indexing",
+            "GPU Programming"
+          ],
+          "description": "These tokens represent fundamental elements of CUDA C/C++ kernel functions.  '(' and ')' are opening and closing parentheses used for function arguments and array indexing.  'rows' would typically represent the number of rows in an array (though not explicitly shown in the examples). ',' is used as a separator in function arguments and array indices. '=' is the assignment operator, assigning values to array elements or variables. ';' is the statement terminator. '+' is the addition operator, frequently used for parallel array addition."
+        },
+        {
+          "id": "c119",
+          "unique_tokens": [
+            "(",
+            "int",
+            "->",
+            ",",
+            "<"
+          ],
+          "syntactic_label": "CUDA Kernel Parameters and Operators",
+          "semantic_tags": [
+            "CUDA Kernel Launch",
+            "Parallel Processing",
+            "Thread Indexing",
+            "Data Parallelism",
+            "GPU Computing"
+          ],
+          "description": "The tokens represent essential components of CUDA kernel definitions and operations.  '(' and ',' are used for parameter lists in kernel function declarations. 'int' is a data type specifying integer parameters. '->' is not directly part of the CUDA C syntax shown but is likely part of a lambda expression (not shown in the provided code snippets) that might be used in a higher-level CUDA API. '<' is used in the comparison operator in the conditional statement. These elements are fundamental for defining and executing parallel kernels on a GPU, enabling data parallelism and efficient computation."
+        },
+        {
+          "id": "c253",
+          "unique_tokens": [
+            "(",
+            "==",
+            ",",
+            "100",
+            ";",
+            "{"
+          ],
+          "syntactic_label": "CUDA Kernel Function Components",
+          "semantic_tags": [
+            "Parallel Computing",
+            "Kernel Launch",
+            "Thread Indexing",
+            "Data Parallelism",
+            "GPU Acceleration"
+          ],
+          "description": "These tokens are essential components of a CUDA kernel function.  The '(' initiates the parameter list, ',' separates parameters, '==' is a comparison operator used within the kernel, '100' could represent a constant value (though not directly shown in this example), ';' terminates a statement, and '{' begins the kernel function body.  The overall code demonstrates a simple SAXPY operation (a*x + y) implemented using CUDA for parallel processing on a GPU. The tokens directly contribute to defining the kernel's signature, parameters, and its internal logic."
+        },
+        {
+          "id": "c221",
+          "unique_tokens": [
+            ",",
+            "{",
+            "("
+          ],
+          "syntactic_label": "Punctuation",
+          "semantic_tags": [
+            "Kernel Function Definition",
+            "Array Indexing",
+            "Parallel Computing",
+            "CUDA Programming",
+            "GPU Acceleration"
+          ],
+          "description": "The comma (,) acts as a separator in function arguments and within array indexing. The opening curly brace ({) signifies the start of the kernel function body, while the opening parenthesis (() indicates the start of function arguments or array indexing."
+        },
+        {
+          "id": "c413",
+          "unique_tokens": [
+            "char",
+            ",",
+            "unsigned",
+            "("
+          ],
+          "syntactic_label": "Data Type Specifiers and Opening Parenthesis",
+          "semantic_tags": [
+            "CUDA Kernel",
+            "Data Parallelism",
+            "Memory Access",
+            "Thread Indexing",
+            "Data Types"
+          ],
+          "description": "These tokens represent fundamental elements in CUDA C/C++.  'char', 'unsigned', and 'int' specify data types for variables within CUDA kernels.  The opening parenthesis '(' is used to define function parameters and in other contexts.  The comma ',' separates parameters in function definitions.  These are crucial for defining the structure and behavior of CUDA kernels, which are functions executed on the GPU. The examples show how these data types are used to define arrays and variables that are accessed and manipulated by threads within the kernels."
+        }
+      ]
+    },
+    "c76": {
+      "encoder_cluster": {
+        "id": "c76",
+        "unique_tokens": [
+          "&",
+          "("
+        ],
+        "syntactic_label": "& as Address-of Operator, ( as Opening Parenthesis",
+        "semantic_tags": [
+          "Pointer Arithmetic",
+          "Array Manipulation",
+          "Memory Management",
+          "Function Parameters",
+          "CPU Operations"
+        ],
+        "description": "The '&' operator is used to obtain the memory address of a variable, crucial for pointer arithmetic and array manipulation in C++.  The '(' operator is used for function parameter lists and in the for loop initialization.  These are fundamental to C++'s low-level memory management and CPU operations."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c381",
+          "unique_tokens": [
+            "*",
+            "&",
+            "(",
+            "="
+          ],
+          "syntactic_label": "Operators",
+          "semantic_tags": [
+            "Pointer Arithmetic",
+            "Memory Access",
+            "Parallel Computing",
+            "CUDA Programming",
+            "Kernel Function"
+          ],
+          "description": "These tokens are operators in C/C++ used extensively in CUDA programming.  '*' is the dereference operator used to access the value pointed to by a pointer. '&' is the address-of operator, providing the memory address of a variable. '(' and ')' are used for grouping and function calls. '=' is the assignment operator. In the context of the provided CUDA kernel function, these operators are crucial for manipulating pointers to arrays (a, b, c) which hold the data processed in parallel by multiple threads.  The function demonstrates basic parallel addition of elements in arrays a and b, storing the result in array c."
+        }
+      ]
+    },
+    "c108": {
+      "encoder_cluster": {
+        "id": "c108",
+        "unique_tokens": [
+          "*",
+          "("
+        ],
+        "syntactic_label": "Pointer Dereference and Array Indexing, Opening Parenthesis",
+        "semantic_tags": [
+          "Array Manipulation",
+          "CPU Computation",
+          "In-place Operation",
+          "Parallel Processing",
+          "Numerical Computation"
+        ],
+        "description": "The '*' indicates a pointer dereference, accessing the value at a memory address.  The '(' is used for function argument lists and loop initialization. In the context of the provided C++ code snippets, these tokens are fundamental to array manipulation and numerical computation on the CPU.  The code performs element-wise operations on arrays, suggesting potential for parallel processing optimizations."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c449",
+          "unique_tokens": [
+            "*",
+            "(",
+            "="
+          ],
+          "syntactic_label": "Operators",
+          "semantic_tags": [
+            "Pointer Dereference",
+            "Assignment",
+            "Array Indexing",
+            "CUDA Kernel Launch",
+            "Parallel Computing"
+          ],
+          "description": "The '*' operator signifies pointer dereference, essential for accessing array elements in CUDA.  The '(' and ')' are used for function calls and parameter grouping. The '=' is the assignment operator, assigning values to array elements within the CUDA kernels. These tokens are fundamental to CUDA programming, enabling parallel processing of arrays on the GPU."
+        },
+        {
+          "id": "c169",
+          "unique_tokens": [
+            "*",
+            "nvoid",
+            "("
+          ],
+          "syntactic_label": "CUDA Kernel Declaration Components",
+          "semantic_tags": [
+            "Kernel Launch",
+            "Parallel Computing",
+            "GPU Programming",
+            "Thread Indexing",
+            "Memory Access"
+          ],
+          "description": "The tokens *, __global__, void, and ( are integral parts of CUDA kernel declarations.  * indicates a pointer, essential for memory management on the GPU.  __global__ specifies that the function is a CUDA kernel, executable by multiple threads on the GPU. void signifies the function's return type (no value returned). The opening parenthesis ( initiates the parameter list, defining the data the kernel operates on. These tokens are fundamental to defining and launching parallel computations on the GPU."
+        },
+        {
+          "id": "c41",
+          "unique_tokens": [
+            "*",
+            "1",
+            "==",
+            "("
+          ],
+          "syntactic_label": "Operators and Literals",
+          "semantic_tags": [
+            "Array Indexing",
+            "Arithmetic Operations",
+            "CUDA Kernel",
+            "Parallel Computing",
+            "Conditional Execution"
+          ],
+          "description": "The tokens *, 1, ==, and ( represent arithmetic operators, a literal integer, a comparison operator, and an opening parenthesis, respectively.  In the context of CUDA, they are used within kernel functions to perform array indexing (using * for pointer arithmetic), arithmetic operations (such as subtraction and division), comparisons (for conditional execution), and to define the scope of expressions.  These are fundamental elements in expressing parallel computations within CUDA kernels."
+        },
+        {
+          "id": "c425",
+          "unique_tokens": [
+            "*",
+            "[",
+            "(",
+            "="
+          ],
+          "syntactic_label": "Operators",
+          "semantic_tags": [
+            "Pointer Dereference",
+            "Array Indexing",
+            "Multiplication",
+            "Assignment",
+            "Kernel Launch"
+          ],
+          "description": "The tokens *, [, (, and = represent fundamental operators in CUDA C/C++.  '*' is used for pointer dereferencing and multiplication. '[' and ']' are used for array indexing to access elements within arrays. '(' and ')' are used for function calls and grouping expressions. '=' is the assignment operator. These operators are crucial for performing arithmetic operations, accessing data in memory, and assigning values within CUDA kernels."
+        },
+        {
+          "id": "c19",
+          "unique_tokens": [
+            "const",
+            "*",
+            ",",
+            "("
+          ],
+          "syntactic_label": "CUDA Kernel Function Parameters",
+          "semantic_tags": [
+            "Parallel Computing",
+            "GPU Programming",
+            "Memory Access",
+            "Kernel Launch",
+            "Data Parallelism"
+          ],
+          "description": "These tokens represent parameters passed to CUDA kernel functions.  'const' indicates a constant parameter. '*' denotes a pointer, crucial for accessing and modifying data on the GPU. ',' separates parameters. '(' initiates the parameter list.  These are fundamental to defining how data is transferred to and manipulated within parallel kernels on the GPU."
+        },
+        {
+          "id": "c381",
+          "unique_tokens": [
+            "*",
+            "&",
+            "(",
+            "="
+          ],
+          "syntactic_label": "Operators",
+          "semantic_tags": [
+            "Pointer Arithmetic",
+            "Memory Access",
+            "Parallel Computing",
+            "CUDA Programming",
+            "Kernel Function"
+          ],
+          "description": "These tokens are operators in C/C++ used extensively in CUDA programming.  '*' is the dereference operator used to access the value pointed to by a pointer. '&' is the address-of operator, providing the memory address of a variable. '(' and ')' are used for grouping and function calls. '=' is the assignment operator. In the context of the provided CUDA kernel function, these operators are crucial for manipulating pointers to arrays (a, b, c) which hold the data processed in parallel by multiple threads.  The function demonstrates basic parallel addition of elements in arrays a and b, storing the result in array c."
+        }
+      ]
+    },
+    "c111": {
+      "encoder_cluster": {
+        "id": "c111",
+        "unique_tokens": [
+          "int",
+          "h",
+          ","
+        ],
+        "syntactic_label": "Variable Declaration",
+        "semantic_tags": [
+          "Array Indexing",
+          "Loop Control",
+          "Integer Variable",
+          "Function Parameter",
+          "Data Processing"
+        ],
+        "description": "The token 'int' declares integer variables used as loop counters ('idx', 'u', 't_id') and array sizes ('N', 'size') in C++ functions.  These variables are crucial for controlling loops that iterate over arrays ('array', 'L', 'r', 'c', 'a', 'b') and performing element-wise operations. The functions demonstrate basic array manipulation and data processing."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c257",
+          "unique_tokens": [
+            "cc",
+            "(",
+            "int",
+            "[",
+            ",",
+            "rcpb",
+            "simd_f_t"
+          ],
+          "syntactic_label": "CUDA Kernel Parameters and Data Types",
+          "semantic_tags": [
+            "CUDA Kernel Launch",
+            "Parallel Computing",
+            "Data Parallelism",
+            "Thread Indexing",
+            "Floating Point Arithmetic"
+          ],
+          "description": "The tokens represent elements crucial for defining and executing CUDA kernels.  'cc' likely refers to compute capability (though not directly present in the examples),  '(', and ')' are parentheses for function parameters, 'int' is an integer data type, '[' and ']' are array access operators, ',' is a comma separator, 'rcpb' might be a custom data type or function related to reciprocal, and 'simd_f_t' suggests a SIMD-friendly floating-point type. These elements work together to define kernel parameters, data types, and thread indexing within the kernel functions, enabling parallel computation across multiple threads."
+        },
+        {
+          "id": "c481",
+          "unique_tokens": [
+            "const",
+            "start",
+            "int",
+            ","
+          ],
+          "syntactic_label": "Data Type and Variable Declaration",
+          "semantic_tags": [
+            "Kernel Function Arguments",
+            "Data Parallelism",
+            "Index Calculation",
+            "Array Processing",
+            "CUDA Programming"
+          ],
+          "description": "The tokens 'const', 'start', and 'int' are used in the context of CUDA kernel function parameters and variable declarations.  'const' indicates a constant value, 'int' declares integer variables, and 'start' (while not shown in the provided examples, is likely an integer variable) is used for indexing or iteration within the kernels. These tokens are fundamental to CUDA programming, enabling data parallelism by defining the data types and variables used in the parallel execution of the kernels.  The integer variables are frequently used in index calculations to access elements of arrays or to control loop iterations within the kernels."
+        },
+        {
+          "id": "c482",
+          "unique_tokens": [
+            "",
+            "int",
+            ","
+          ],
+          "syntactic_label": "Data Type and Variable",
+          "semantic_tags": [
+            "Kernel Function",
+            "Parallel Computing",
+            "Data Parallelism",
+            "CUDA Programming",
+            "Array Processing"
+          ],
+          "description": "The token 'int' represents an integer data type in C/C++, commonly used to declare variables. In this CUDA kernel function, 'int j' is a variable used as an index to access elements of the input and output arrays.  The commas are used as separators in the function's parameter list and within the array indexing expression. The context shows this code is part of a CUDA kernel, performing element-wise addition of two arrays ('a' and 'b') and storing the result in 'c'. The use of 'int j' is crucial for assigning each thread a unique index to process a specific element of the arrays, enabling data parallelism."
+        },
+        {
+          "id": "c132",
+          "unique_tokens": [
+            "*",
+            "int",
+            "3",
+            ",",
+            "box_index",
+            "{"
+          ],
+          "syntactic_label": "CUDA Kernel Parameters and Variables",
+          "semantic_tags": [
+            "Kernel Launch Configuration",
+            "Parallel Processing",
+            "Array Indexing",
+            "Data Parallelism",
+            "CUDA Programming"
+          ],
+          "description": "The tokens represent essential elements in CUDA kernel functions.  'int' is a data type, '3' could be a literal value (though not explicitly used in the provided examples), '*' is the dereference operator used to access array elements, ',' is a separator, 'box_index' appears to be a variable (though not used in the provided examples), and '{' signifies the start of a kernel function body. These elements are fundamental to defining and executing parallel computations on a GPU using CUDA."
+        },
+        {
+          "id": "c172",
+          "unique_tokens": [
+            "*",
+            "int",
+            ","
+          ],
+          "syntactic_label": "CUDA Kernel Parameters and Data Types",
+          "semantic_tags": [
+            "Parallel Computing",
+            "CUDA Kernel Launch",
+            "Data Initialization",
+            "Array Processing",
+            "Thread Indexing"
+          ],
+          "description": "The tokens *, int, and , represent fundamental elements in CUDA kernel definitions and operations.  '*' is used to declare pointers (crucial for accessing device memory). 'int' is a data type for integer variables, frequently used for indexing and loop counters within kernels.  ',' acts as a separator in function parameter lists and array indexing.  The context shows these tokens within the definitions of CUDA kernels (__global__ void ...), where they define parameters (e.g., array size N, pointer to array a) and are used for thread indexing (threadIdx, blockIdx, blockDim, gridDim) to manage parallel execution across multiple threads and blocks.  The code snippets demonstrate data initialization and array processing within the parallel context of CUDA."
+        },
+        {
+          "id": "c76",
+          "unique_tokens": [
+            "start",
+            "int",
+            "<",
+            "rand_d",
+            ",",
+            ")",
+            "+"
+          ],
+          "syntactic_label": "CUDA Kernel Parameters and Operators",
+          "semantic_tags": [
+            "CUDA Kernel Launch",
+            "Parallel Processing",
+            "Data Initialization",
+            "Index Calculation",
+            "Memory Access"
+          ],
+          "description": "The tokens represent essential components of CUDA kernel functions.  'int' indicates integer data types. '<' is a less-than operator used in loop conditions. 'rand_d' would likely represent a random number generation function (though not directly present in the examples). ',' acts as a separator in function arguments.  '(' and ')' are opening and closing parentheses for function calls and loops. '+' is an addition operator used for index calculation and data manipulation within the kernels. These tokens are crucial for defining kernel parameters, controlling parallel execution, and managing data access within the CUDA threads."
+        },
+        {
+          "id": "c180",
+          "unique_tokens": [
+            "*",
+            "int",
+            "last_i",
+            ",",
+            ")",
+            "known_sum"
+          ],
+          "syntactic_label": "CUDA Kernel Parameters and Variables",
+          "semantic_tags": [
+            "Kernel Launch",
+            "Parallel Processing",
+            "Matrix Diagonal Addition",
+            "CUDA Memory Access",
+            "In-place Operation"
+          ],
+          "description": "The tokens represent elements crucial to a CUDA kernel.  '*' is a pointer dereference operator accessing matrix elements. 'int' is a data type for integer variables like 'last_i' (likely an index) and 'dim' (matrix dimension). ',' acts as a separator in parameter lists and variable declarations. ')' closes a function parameter list. 'known_sum' might be a variable storing a cumulative sum (though not present in the provided code snippet). These tokens are essential for defining the kernel's input parameters, managing thread indices, and performing in-place matrix diagonal addition within the parallel execution context of CUDA."
+        },
+        {
+          "id": "c55",
+          "unique_tokens": [
+            "data_cols",
+            "int",
+            "i",
+            ",",
+            "<"
+          ],
+          "syntactic_label": "Variables and Operators",
+          "semantic_tags": [
+            "Kernel Function",
+            "Parallel Computing",
+            "Index Variable",
+            "Data Parallelism",
+            "CUDA Programming"
+          ],
+          "description": "The tokens represent variables and operators within a CUDA kernel function.  'data_cols' would likely represent the number of data columns (though not directly shown in the example). 'int' is a data type declaration. 'i' is an index variable used to iterate through array elements in parallel across threads. ',' is a comma operator separating arguments or variables. '<' is a comparison operator used in a conditional statement."
+        },
+        {
+          "id": "c119",
+          "unique_tokens": [
+            "(",
+            "int",
+            "->",
+            ",",
+            "<"
+          ],
+          "syntactic_label": "CUDA Kernel Parameters and Operators",
+          "semantic_tags": [
+            "CUDA Kernel Launch",
+            "Parallel Processing",
+            "Thread Indexing",
+            "Data Parallelism",
+            "GPU Computing"
+          ],
+          "description": "The tokens represent essential components of CUDA kernel definitions and operations.  '(' and ',' are used for parameter lists in kernel function declarations. 'int' is a data type specifying integer parameters. '->' is not directly part of the CUDA C syntax shown but is likely part of a lambda expression (not shown in the provided code snippets) that might be used in a higher-level CUDA API. '<' is used in the comparison operator in the conditional statement. These elements are fundamental for defining and executing parallel kernels on a GPU, enabling data parallelism and efficient computation."
+        }
+      ]
+    },
+    "c127": {
+      "encoder_cluster": {
+        "id": "c127",
+        "unique_tokens": [
+          "int",
+          "{"
+        ],
+        "syntactic_label": "Data Type and Loop Counter",
+        "semantic_tags": [
+          "Array Processing",
+          "Loop Iteration",
+          "Integer Variable",
+          "Mathematical Operations",
+          "CPU Computation"
+        ],
+        "description": "The token 'int' declares integer variables used as loop counters in the provided C++ functions. These functions perform various array operations such as addition, multiplication, and diagonal addition. The '{' token marks the beginning of function bodies, encapsulating the loop structures and array manipulations."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c36",
+          "unique_tokens": [
+            "int",
+            "{",
+            "(",
+            "n"
+          ],
+          "syntactic_label": "Data Type and Loop Variable",
+          "semantic_tags": [
+            "Kernel Function Parameter",
+            "Loop Index",
+            "Array Indexing",
+            "Parallel Processing",
+            "CUDA Thread Indexing"
+          ],
+          "description": "The token 'int' is used to declare integer variables, primarily as loop indices and array sizes within CUDA kernel functions.  The '{' and '(' tokens represent the start of a code block and function arguments respectively. The variable 'n' is frequently used to represent the size of arrays or data structures processed in parallel by CUDA threads. These tokens are fundamental to defining the structure and behavior of CUDA kernels, enabling parallel computation across multiple threads."
+        }
+      ]
+    },
+    "c140": {
+      "encoder_cluster": {
+        "id": "c140",
+        "unique_tokens": [
+          "int",
+          ";",
+          ","
+        ],
+        "syntactic_label": "Data Type, Statement Separator, Comma Operator",
+        "semantic_tags": [
+          "Loop Control",
+          "Array Indexing",
+          "Integer Variable Declaration",
+          "Function Parameter",
+          "CPU Computation"
+        ],
+        "description": "The token 'int' declares integer variables used for loop counters and array indices.  The token ';' acts as a statement separator, terminating declarations and loop iterations. The token ',' is used as a comma operator in function parameter lists and within loops."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c257",
+          "unique_tokens": [
+            "cc",
+            "(",
+            "int",
+            "[",
+            ",",
+            "rcpb",
+            "simd_f_t"
+          ],
+          "syntactic_label": "CUDA Kernel Parameters and Data Types",
+          "semantic_tags": [
+            "CUDA Kernel Launch",
+            "Parallel Computing",
+            "Data Parallelism",
+            "Thread Indexing",
+            "Floating Point Arithmetic"
+          ],
+          "description": "The tokens represent elements crucial for defining and executing CUDA kernels.  'cc' likely refers to compute capability (though not directly present in the examples),  '(', and ')' are parentheses for function parameters, 'int' is an integer data type, '[' and ']' are array access operators, ',' is a comma separator, 'rcpb' might be a custom data type or function related to reciprocal, and 'simd_f_t' suggests a SIMD-friendly floating-point type. These elements work together to define kernel parameters, data types, and thread indexing within the kernel functions, enabling parallel computation across multiple threads."
+        },
+        {
+          "id": "c481",
+          "unique_tokens": [
+            "const",
+            "start",
+            "int",
+            ","
+          ],
+          "syntactic_label": "Data Type and Variable Declaration",
+          "semantic_tags": [
+            "Kernel Function Arguments",
+            "Data Parallelism",
+            "Index Calculation",
+            "Array Processing",
+            "CUDA Programming"
+          ],
+          "description": "The tokens 'const', 'start', and 'int' are used in the context of CUDA kernel function parameters and variable declarations.  'const' indicates a constant value, 'int' declares integer variables, and 'start' (while not shown in the provided examples, is likely an integer variable) is used for indexing or iteration within the kernels. These tokens are fundamental to CUDA programming, enabling data parallelism by defining the data types and variables used in the parallel execution of the kernels.  The integer variables are frequently used in index calculations to access elements of arrays or to control loop iterations within the kernels."
+        },
+        {
+          "id": "c482",
+          "unique_tokens": [
+            "",
+            "int",
+            ","
+          ],
+          "syntactic_label": "Data Type and Variable",
+          "semantic_tags": [
+            "Kernel Function",
+            "Parallel Computing",
+            "Data Parallelism",
+            "CUDA Programming",
+            "Array Processing"
+          ],
+          "description": "The token 'int' represents an integer data type in C/C++, commonly used to declare variables. In this CUDA kernel function, 'int j' is a variable used as an index to access elements of the input and output arrays.  The commas are used as separators in the function's parameter list and within the array indexing expression. The context shows this code is part of a CUDA kernel, performing element-wise addition of two arrays ('a' and 'b') and storing the result in 'c'. The use of 'int j' is crucial for assigning each thread a unique index to process a specific element of the arrays, enabling data parallelism."
+        },
+        {
+          "id": "c132",
+          "unique_tokens": [
+            "*",
+            "int",
+            "3",
+            ",",
+            "box_index",
+            "{"
+          ],
+          "syntactic_label": "CUDA Kernel Parameters and Variables",
+          "semantic_tags": [
+            "Kernel Launch Configuration",
+            "Parallel Processing",
+            "Array Indexing",
+            "Data Parallelism",
+            "CUDA Programming"
+          ],
+          "description": "The tokens represent essential elements in CUDA kernel functions.  'int' is a data type, '3' could be a literal value (though not explicitly used in the provided examples), '*' is the dereference operator used to access array elements, ',' is a separator, 'box_index' appears to be a variable (though not used in the provided examples), and '{' signifies the start of a kernel function body. These elements are fundamental to defining and executing parallel computations on a GPU using CUDA."
+        },
+        {
+          "id": "c172",
+          "unique_tokens": [
+            "*",
+            "int",
+            ","
+          ],
+          "syntactic_label": "CUDA Kernel Parameters and Data Types",
+          "semantic_tags": [
+            "Parallel Computing",
+            "CUDA Kernel Launch",
+            "Data Initialization",
+            "Array Processing",
+            "Thread Indexing"
+          ],
+          "description": "The tokens *, int, and , represent fundamental elements in CUDA kernel definitions and operations.  '*' is used to declare pointers (crucial for accessing device memory). 'int' is a data type for integer variables, frequently used for indexing and loop counters within kernels.  ',' acts as a separator in function parameter lists and array indexing.  The context shows these tokens within the definitions of CUDA kernels (__global__ void ...), where they define parameters (e.g., array size N, pointer to array a) and are used for thread indexing (threadIdx, blockIdx, blockDim, gridDim) to manage parallel execution across multiple threads and blocks.  The code snippets demonstrate data initialization and array processing within the parallel context of CUDA."
+        },
+        {
+          "id": "c76",
+          "unique_tokens": [
+            "start",
+            "int",
+            "<",
+            "rand_d",
+            ",",
+            ")",
+            "+"
+          ],
+          "syntactic_label": "CUDA Kernel Parameters and Operators",
+          "semantic_tags": [
+            "CUDA Kernel Launch",
+            "Parallel Processing",
+            "Data Initialization",
+            "Index Calculation",
+            "Memory Access"
+          ],
+          "description": "The tokens represent essential components of CUDA kernel functions.  'int' indicates integer data types. '<' is a less-than operator used in loop conditions. 'rand_d' would likely represent a random number generation function (though not directly present in the examples). ',' acts as a separator in function arguments.  '(' and ')' are opening and closing parentheses for function calls and loops. '+' is an addition operator used for index calculation and data manipulation within the kernels. These tokens are crucial for defining kernel parameters, controlling parallel execution, and managing data access within the CUDA threads."
+        },
+        {
+          "id": "c180",
+          "unique_tokens": [
+            "*",
+            "int",
+            "last_i",
+            ",",
+            ")",
+            "known_sum"
+          ],
+          "syntactic_label": "CUDA Kernel Parameters and Variables",
+          "semantic_tags": [
+            "Kernel Launch",
+            "Parallel Processing",
+            "Matrix Diagonal Addition",
+            "CUDA Memory Access",
+            "In-place Operation"
+          ],
+          "description": "The tokens represent elements crucial to a CUDA kernel.  '*' is a pointer dereference operator accessing matrix elements. 'int' is a data type for integer variables like 'last_i' (likely an index) and 'dim' (matrix dimension). ',' acts as a separator in parameter lists and variable declarations. ')' closes a function parameter list. 'known_sum' might be a variable storing a cumulative sum (though not present in the provided code snippet). These tokens are essential for defining the kernel's input parameters, managing thread indices, and performing in-place matrix diagonal addition within the parallel execution context of CUDA."
+        },
+        {
+          "id": "c55",
+          "unique_tokens": [
+            "data_cols",
+            "int",
+            "i",
+            ",",
+            "<"
+          ],
+          "syntactic_label": "Variables and Operators",
+          "semantic_tags": [
+            "Kernel Function",
+            "Parallel Computing",
+            "Index Variable",
+            "Data Parallelism",
+            "CUDA Programming"
+          ],
+          "description": "The tokens represent variables and operators within a CUDA kernel function.  'data_cols' would likely represent the number of data columns (though not directly shown in the example). 'int' is a data type declaration. 'i' is an index variable used to iterate through array elements in parallel across threads. ',' is a comma operator separating arguments or variables. '<' is a comparison operator used in a conditional statement."
+        },
+        {
+          "id": "c119",
+          "unique_tokens": [
+            "(",
+            "int",
+            "->",
+            ",",
+            "<"
+          ],
+          "syntactic_label": "CUDA Kernel Parameters and Operators",
+          "semantic_tags": [
+            "CUDA Kernel Launch",
+            "Parallel Processing",
+            "Thread Indexing",
+            "Data Parallelism",
+            "GPU Computing"
+          ],
+          "description": "The tokens represent essential components of CUDA kernel definitions and operations.  '(' and ',' are used for parameter lists in kernel function declarations. 'int' is a data type specifying integer parameters. '->' is not directly part of the CUDA C syntax shown but is likely part of a lambda expression (not shown in the provided code snippets) that might be used in a higher-level CUDA API. '<' is used in the comparison operator in the conditional statement. These elements are fundamental for defining and executing parallel kernels on a GPU, enabling data parallelism and efficient computation."
+        }
+      ]
+    },
+    "c149": {
+      "encoder_cluster": {
+        "id": "c149",
+        "unique_tokens": [
+          "(",
+          ","
+        ],
+        "syntactic_label": "Opening and Closing Parentheses",
+        "semantic_tags": [
+          "Loop Control",
+          "Array Indexing",
+          "In-place Operation",
+          "Mathematical Operations",
+          "CPU Computation"
+        ],
+        "description": "The parentheses are used in function declarations to define parameters and in the for loop to control the loop's execution.  They also play a crucial role in array indexing, enabling access to specific elements within the arrays. The code snippets demonstrate in-place operations on arrays, performing mathematical additions and assignments directly within the array memory. These operations are explicitly designed for CPU computation, as indicated by the '_cpu' suffix in the function names."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c192",
+          "unique_tokens": [
+            "(",
+            "100",
+            ","
+          ],
+          "syntactic_label": "Function Parameter",
+          "semantic_tags": [
+            "Kernel Launch",
+            "Array Processing",
+            "Parallel Computing",
+            "Data Parallelism",
+            "GPU Programming"
+          ],
+          "description": "The tokens represent parameters passed to CUDA kernel functions.  The integer '100' likely represents a dimension or size parameter. The parentheses '(' and ')' are used to enclose the parameter lists of the kernel functions. These are fundamental aspects of CUDA programming, defining the data that the kernel will operate on and the context in which it executes.  The code demonstrates parallel processing of arrays on a GPU."
+        },
+        {
+          "id": "c486",
+          "unique_tokens": [
+            "(",
+            ",",
+            "/"
+          ],
+          "syntactic_label": "Punctuation",
+          "semantic_tags": [
+            "Kernel Function Definition",
+            "Array Indexing",
+            "Parallel Computing",
+            "CUDA Programming",
+            "Data Parallelism"
+          ],
+          "description": "These tokens are punctuation marks used in the CUDA kernel function definition.  The '(' and ')' define the function's parameter list, while the ',' separates the parameters. The '/' is not present in the provided example."
+        },
+        {
+          "id": "c269",
+          "unique_tokens": [
+            "(",
+            ","
+          ],
+          "syntactic_label": "Parentheses",
+          "semantic_tags": [
+            "Kernel Function Arguments",
+            "Array Indexing",
+            "Thread Indexing",
+            "Conditional Statements",
+            "CUDA Parallelism"
+          ],
+          "description": "The parentheses are used in multiple ways in these CUDA kernel functions.  They enclose function arguments, index arrays (e.g., accessing elements of the input arrays L, r, X, array), and are part of the expressions calculating the thread index (tid) within a block and the overall index (i, u, idx) of the element each thread processes.  They also delimit conditional statements (if statements) that control the execution flow based on thread ID and array bounds.  The overall semantic significance is to define the structure and behavior of parallel computations within the CUDA kernels."
+        },
+        {
+          "id": "c80",
+          "unique_tokens": [
+            "rows",
+            ",",
+            "("
+          ],
+          "syntactic_label": "Variable,Comma,Opening Parenthesis",
+          "semantic_tags": [
+            "Array Indexing",
+            "Kernel Launch Configuration",
+            "Parallel Processing",
+            "CUDA Memory Management",
+            "Data Initialization"
+          ],
+          "description": "The token 'rows' is likely a variable representing the number of rows in a matrix or array.  The comma acts as a separator in function parameter lists. The opening parenthesis indicates the start of a function's parameter list. These tokens are fundamental in CUDA for defining kernel functions and managing data within parallel processing contexts."
+        },
+        {
+          "id": "c273",
+          "unique_tokens": [
+            "(",
+            ">=",
+            ","
+          ],
+          "syntactic_label": "Operators",
+          "semantic_tags": [
+            "Kernel Launch",
+            "Parallel Computing",
+            "Array Access",
+            "Thread Indexing",
+            "GPU Programming"
+          ],
+          "description": "These tokens are operators used in CUDA C/C++ code.  The '(' is an opening parenthesis used for function arguments and array indexing. '>=' is a comparison operator, and ',' is a comma operator used as a separator in function arguments and array indexing.  In the context of the provided code, these operators are essential for defining the kernel function, indexing into arrays on the GPU, and performing parallel computations. The code demonstrates a simple vector addition kernel where each thread adds corresponding elements of two input arrays and stores the result in an output array. The operators are crucial for managing the parallel execution and data access within the kernel."
+        },
+        {
+          "id": "c19",
+          "unique_tokens": [
+            "const",
+            "*",
+            ",",
+            "("
+          ],
+          "syntactic_label": "CUDA Kernel Function Parameters",
+          "semantic_tags": [
+            "Parallel Computing",
+            "GPU Programming",
+            "Memory Access",
+            "Kernel Launch",
+            "Data Parallelism"
+          ],
+          "description": "These tokens represent parameters passed to CUDA kernel functions.  'const' indicates a constant parameter. '*' denotes a pointer, crucial for accessing and modifying data on the GPU. ',' separates parameters. '(' initiates the parameter list.  These are fundamental to defining how data is transferred to and manipulated within parallel kernels on the GPU."
+        },
+        {
+          "id": "c221",
+          "unique_tokens": [
+            ",",
+            "{",
+            "("
+          ],
+          "syntactic_label": "Punctuation",
+          "semantic_tags": [
+            "Kernel Function Definition",
+            "Array Indexing",
+            "Parallel Computing",
+            "CUDA Programming",
+            "GPU Acceleration"
+          ],
+          "description": "The comma (,) acts as a separator in function arguments and within array indexing. The opening curly brace ({) signifies the start of the kernel function body, while the opening parenthesis (() indicates the start of function arguments or array indexing."
+        },
+        {
+          "id": "c413",
+          "unique_tokens": [
+            "char",
+            ",",
+            "unsigned",
+            "("
+          ],
+          "syntactic_label": "Data Type Specifiers and Opening Parenthesis",
+          "semantic_tags": [
+            "CUDA Kernel",
+            "Data Parallelism",
+            "Memory Access",
+            "Thread Indexing",
+            "Data Types"
+          ],
+          "description": "These tokens represent fundamental elements in CUDA C/C++.  'char', 'unsigned', and 'int' specify data types for variables within CUDA kernels.  The opening parenthesis '(' is used to define function parameters and in other contexts.  The comma ',' separates parameters in function definitions.  These are crucial for defining the structure and behavior of CUDA kernels, which are functions executed on the GPU. The examples show how these data types are used to define arrays and variables that are accessed and manipulated by threads within the kernels."
+        }
+      ]
+    },
+    "c152": {
+      "encoder_cluster": {
+        "id": "c152",
+        "unique_tokens": [
+          "P",
+          "{"
+        ],
+        "syntactic_label": "Function Parameter and Function Body",
+        "semantic_tags": [
+          "Array Processing",
+          "In-place Operation",
+          "Numerical Computation",
+          "Vectorization",
+          "CPU-bound"
+        ],
+        "description": "The token 'P' represents a function parameter, specifically a pointer to an array in the given C++ code snippets. The curly braces '{}' define the function body, which contains the core logic for processing the array.  The semantic tags reflect the common operations performed within these functions: processing arrays, performing operations directly on the array (in-place), and the numerical nature of the computations.  These functions are likely CPU-bound, meaning their performance is primarily limited by the CPU's processing speed."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c480",
+          "unique_tokens": [
+            "vol_flux_x",
+            "*",
+            "{",
+            "ptr_double"
+          ],
+          "syntactic_label": "Variable and Pointer",
+          "semantic_tags": [
+            "CUDA Kernel",
+            "Parallel Computing",
+            "Memory Access",
+            "Pointer Arithmetic",
+            "Floating Point Operations"
+          ],
+          "description": "vol_flux_x is likely a variable representing a volume flux in the x-direction.  The asterisk (*) is the multiplication operator. The curly braces ({}) denote a code block. ptr_double suggests a pointer to a double-precision floating-point variable. These elements are typical in CUDA code for performing parallel computations on arrays or matrices, often involving pointer arithmetic for memory access within the kernel."
+        },
+        {
+          "id": "c226",
+          "unique_tokens": [
+            "*",
+            "OPS_ACC",
+            "{",
+            "}"
+          ],
+          "syntactic_label": "CUDA Kernel Declaration and Body",
+          "semantic_tags": [
+            "Parallel Computing",
+            "GPU Programming",
+            "Kernel Launch",
+            "Thread Indexing",
+            "Data Parallelism"
+          ],
+          "description": "The tokens *, OPS_ACC, {, and } are part of CUDA C/C++ syntax.  * is used for pointer declaration. OPS_ACC is assumed to be a macro or placeholder (not standard CUDA). { and } define the body of CUDA kernels.  The provided code snippets show various CUDA kernels, each designed to perform a specific computation in parallel across multiple threads on a GPU. The kernels use threadIdx and blockIdx to determine the index of each thread within a block and the block within a grid, enabling parallel access and manipulation of data arrays."
+        }
+      ]
+    },
+    "c216": {
+      "encoder_cluster": {
+        "id": "c216",
+        "unique_tokens": [
+          "\"",
+          "(",
+          "{"
+        ],
+        "syntactic_label": "Punctuation",
+        "semantic_tags": [
+          "Array Processing",
+          "Loop Control",
+          "Function Definition",
+          "Mathematical Operations",
+          "Parallel Computing"
+        ],
+        "description": "These tokens are fundamental punctuation symbols in C++.  The comma (,) separates function parameters and loop variables. The opening parenthesis '(' initiates function parameter lists and loop conditions, while the opening curly brace '{' marks the beginning of a code block within a function.  These are essential for defining functions and controlling the flow of execution within loops, which are common in array processing and parallel computing contexts."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c36",
+          "unique_tokens": [
+            "int",
+            "{",
+            "(",
+            "n"
+          ],
+          "syntactic_label": "Data Type and Loop Variable",
+          "semantic_tags": [
+            "Kernel Function Parameter",
+            "Loop Index",
+            "Array Indexing",
+            "Parallel Processing",
+            "CUDA Thread Indexing"
+          ],
+          "description": "The token 'int' is used to declare integer variables, primarily as loop indices and array sizes within CUDA kernel functions.  The '{' and '(' tokens represent the start of a code block and function arguments respectively. The variable 'n' is frequently used to represent the size of arrays or data structures processed in parallel by CUDA threads. These tokens are fundamental to defining the structure and behavior of CUDA kernels, enabling parallel computation across multiple threads."
+        },
+        {
+          "id": "c78",
+          "unique_tokens": [
+            "*",
+            "(",
+            "const",
+            "=",
+            "{",
+            "void"
+          ],
+          "syntactic_label": "CUDA Kernel Function Components",
+          "semantic_tags": [
+            "Kernel Launch",
+            "Parallel Computing",
+            "GPU Programming",
+            "Memory Access",
+            "Thread Indexing"
+          ],
+          "description": "The tokens represent essential components of CUDA kernel functions.  '*' is the dereference operator, '(' and ')' are parentheses for function arguments and indexing, 'const' indicates a constant parameter, '=' is the assignment operator, '{' and '}' are curly braces defining the kernel function body, and 'void' specifies the return type of the kernel function. These elements are fundamental to defining and executing parallel computations on a CUDA-enabled GPU.  The context shows how these tokens are used to define the structure and behavior of CUDA kernels that perform array operations and other parallel tasks."
+        },
+        {
+          "id": "c84",
+          "unique_tokens": [
+            "(",
+            "n",
+            "simd_cf_t",
+            "srslte_simd_cfi_storeu",
+            "{",
+            "simd_f_t"
+          ],
+          "syntactic_label": "Function Parameters, Variable Declaration, Data Type",
+          "semantic_tags": [
+            "SIMD Vectorization",
+            "CUDA Kernel",
+            "Parallel Processing",
+            "Data Structures",
+            "Memory Access"
+          ],
+          "description": "The tokens represent function parameters and variable declarations within a CUDA kernel.  '(' and ')' are opening and closing parentheses for function parameters. 'n' might be part of a variable name or loop counter. 'simd_cf_t' and 'simd_f_t' are likely custom data types designed for Single Instruction Multiple Data (SIMD) operations, indicating vectorization. 'srslte_simd_cfi_storeu' suggests a function call related to storing data using SIMD instructions. The '{' indicates the start of a code block within the kernel function.  These elements are crucial for writing efficient parallel code in CUDA, leveraging SIMD capabilities for performance optimization."
+        },
+        {
+          "id": "c253",
+          "unique_tokens": [
+            "(",
+            "==",
+            ",",
+            "100",
+            ";",
+            "{"
+          ],
+          "syntactic_label": "CUDA Kernel Function Components",
+          "semantic_tags": [
+            "Parallel Computing",
+            "Kernel Launch",
+            "Thread Indexing",
+            "Data Parallelism",
+            "GPU Acceleration"
+          ],
+          "description": "These tokens are essential components of a CUDA kernel function.  The '(' initiates the parameter list, ',' separates parameters, '==' is a comparison operator used within the kernel, '100' could represent a constant value (though not directly shown in this example), ';' terminates a statement, and '{' begins the kernel function body.  The overall code demonstrates a simple SAXPY operation (a*x + y) implemented using CUDA for parallel processing on a GPU. The tokens directly contribute to defining the kernel's signature, parameters, and its internal logic."
+        },
+        {
+          "id": "c122",
+          "unique_tokens": [
+            "(",
+            "n",
+            "if",
+            "else",
+            "{"
+          ],
+          "syntactic_label": "CUDA Keywords and Control Flow",
+          "semantic_tags": [
+            "Parallel Computing",
+            "Kernel Functions",
+            "Conditional Execution",
+            "Thread Indexing",
+            "GPU Programming"
+          ],
+          "description": "The tokens represent fundamental elements of CUDA C/C++ programming.  '(' and '{' are used for function definition and code blocks. 'if' and 'else' are conditional statements controlling execution flow within each kernel. 'n' represents the size of data processed, often used in loop bounds or array sizes. These are crucial for defining and controlling the execution of parallel kernels on a GPU."
+        },
+        {
+          "id": "c475",
+          "unique_tokens": [
+            ")",
+            "{",
+            "(",
+            "main"
+          ],
+          "syntactic_label": "Kernel Function Definition Components",
+          "semantic_tags": [
+            "CUDA Kernel",
+            "Parallel Computing",
+            "GPU Programming",
+            "Array Processing",
+            "In-place Operation"
+          ],
+          "description": "The tokens represent essential parts of CUDA kernel function definitions.  'main' is not directly present but implied as the entry point of the program that launches these kernels. '(' and ')' are used for function parameter lists, and '{' and '}' enclose the kernel's body, defining the code executed on the GPU.  These are fundamental to parallel processing on CUDA-enabled devices."
+        },
+        {
+          "id": "c221",
+          "unique_tokens": [
+            ",",
+            "{",
+            "("
+          ],
+          "syntactic_label": "Punctuation",
+          "semantic_tags": [
+            "Kernel Function Definition",
+            "Array Indexing",
+            "Parallel Computing",
+            "CUDA Programming",
+            "GPU Acceleration"
+          ],
+          "description": "The comma (,) acts as a separator in function arguments and within array indexing. The opening curly brace ({) signifies the start of the kernel function body, while the opening parenthesis (() indicates the start of function arguments or array indexing."
+        },
+        {
+          "id": "c190",
+          "unique_tokens": [
+            "(",
+            "n",
+            "}",
+            "\\",
+            "fprintf",
+            ";",
+            "{"
+          ],
+          "syntactic_label": "CUDA Kernel Components",
+          "semantic_tags": [
+            "Kernel Function Definition",
+            "Loop Control",
+            "Parallel Processing",
+            "Memory Access",
+            "CUDA Syntax"
+          ],
+          "description": "These tokens represent fundamental elements of CUDA kernel functions.  '(' and ')' are used for function parameter lists. '{' and '}' define the kernel function body. ';' acts as a statement terminator. '\\' is used for line continuation (though not explicitly shown in these examples, it's a possibility within longer CUDA code). 'fprintf' would be used for debugging output (though not present in these examples, it's a common CUDA practice). 'n' is likely an integer variable representing data size.  The overall significance is that these tokens are essential for defining and structuring parallel computations within CUDA kernels."
+        }
+      ]
+    },
+    "c229": {
+      "encoder_cluster": {
+        "id": "c229",
+        "unique_tokens": [
+          "*",
+          "int",
+          "indices"
+        ],
+        "syntactic_label": "Pointer Arithmetic and Array Indexing",
+        "semantic_tags": [
+          "Array Manipulation",
+          "In-place Operation",
+          "Numerical Computation",
+          "C-style array",
+          "Vectorized operation"
+        ],
+        "description": "The token '*' represents a pointer to a float array.  'int' is used to declare integer variables for array indices and loop counters. 'indices' (inferred from context) refers to the integer indices used to access elements within the float arrays. The code snippets demonstrate in-place operations on float arrays using pointer arithmetic and array indexing, common in numerical computation and vectorized operations."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c132",
+          "unique_tokens": [
+            "*",
+            "int",
+            "3",
+            ",",
+            "box_index",
+            "{"
+          ],
+          "syntactic_label": "CUDA Kernel Parameters and Variables",
+          "semantic_tags": [
+            "Kernel Launch Configuration",
+            "Parallel Processing",
+            "Array Indexing",
+            "Data Parallelism",
+            "CUDA Programming"
+          ],
+          "description": "The tokens represent essential elements in CUDA kernel functions.  'int' is a data type, '3' could be a literal value (though not explicitly used in the provided examples), '*' is the dereference operator used to access array elements, ',' is a separator, 'box_index' appears to be a variable (though not used in the provided examples), and '{' signifies the start of a kernel function body. These elements are fundamental to defining and executing parallel computations on a GPU using CUDA."
+        },
+        {
+          "id": "c325",
+          "unique_tokens": [
+            "*",
+            "int"
+          ],
+          "syntactic_label": "Data Type and Variable",
+          "semantic_tags": [
+            "Kernel Function Argument",
+            "Array Indexing",
+            "Data Parallelism",
+            "CUDA Programming",
+            "Integer Variable"
+          ],
+          "description": "In these CUDA kernel functions, 'int' is used to declare integer variables such as loop counters ('i' and 'idx') and the size of the array ('n').  The asterisk '*' is used as a pointer dereference operator to access elements within arrays passed as arguments to the kernel functions. These elements are then used in parallel computations across multiple threads."
+        },
+        {
+          "id": "c136",
+          "unique_tokens": [
+            "*",
+            "hist",
+            "int",
+            "2",
+            ")"
+          ],
+          "syntactic_label": "CUDA Kernel Components",
+          "semantic_tags": [
+            "Parallel Computing",
+            "Kernel Launch",
+            "Thread Indexing",
+            "Memory Access",
+            "Data Parallelism"
+          ],
+          "description": "The tokens represent fundamental elements of CUDA kernels.  '*' is the dereference operator accessing memory locations. 'hist' would likely be a variable name (though not shown in the provided context, it's a common CUDA variable). 'int' is a data type. '2' is a literal integer, often used for array indexing or loop counters. ')' is a closing parenthesis, typically used in function calls or expressions.  These tokens are crucial for defining and executing parallel computations on the GPU. The context sentences show the structure of CUDA kernels, including thread indexing ('blockIdx.x', 'threadIdx.x', 'blockDim.x', 'gridDim.x'), conditional statements, and array access, all essential for data-parallel operations."
+        },
+        {
+          "id": "c265",
+          "unique_tokens": [
+            "*",
+            "classes",
+            "(",
+            "int",
+            "square",
+            ";",
+            "+"
+          ],
+          "syntactic_label": "CUDA Kernel Function Components",
+          "semantic_tags": [
+            "Parallel Computing",
+            "Kernel Launch",
+            "Thread Indexing",
+            "Vector Multiplication",
+            "CUDA Programming"
+          ],
+          "description": "The tokens represent essential elements of a CUDA kernel function.  '*' is the multiplication operator, 'classes' refers to the class of the kernel function (although not explicitly shown in this snippet, it's implied), '(' and ')' are opening and closing parentheses for function arguments, 'int' is a data type declaration, 'square' is likely part of a variable name (though not directly present in the example), ';' is a statement terminator, and '+' is an addition operator used in thread index calculation.  These elements are fundamental to defining and executing parallel computations on a GPU using CUDA."
+        },
+        {
+          "id": "c11",
+          "unique_tokens": [
+            "*",
+            "(",
+            "n",
+            "int",
+            "="
+          ],
+          "syntactic_label": "CUDA Kernel Function Parameters and Variable Declaration",
+          "semantic_tags": [
+            "CUDA Kernel Launch",
+            "Parallel Processing",
+            "Array Summation",
+            "Thread Indexing",
+            "Data Parallelism"
+          ],
+          "description": "The tokens represent elements crucial to defining and launching a CUDA kernel.  '*' is a pointer, '(' and ')' are parentheses for function parameters, 'n' is part of the variable name 'nx' (likely representing array size), 'int' is a data type declaration, and '=' is the assignment operator.  These elements work together to define the kernel function's input parameters (pointers to arrays 'a', 'b', 'c', and array size 'nx'), and declare an integer variable 'gid' for thread indexing within the kernel."
+        },
+        {
+          "id": "c172",
+          "unique_tokens": [
+            "*",
+            "int",
+            ","
+          ],
+          "syntactic_label": "CUDA Kernel Parameters and Data Types",
+          "semantic_tags": [
+            "Parallel Computing",
+            "CUDA Kernel Launch",
+            "Data Initialization",
+            "Array Processing",
+            "Thread Indexing"
+          ],
+          "description": "The tokens *, int, and , represent fundamental elements in CUDA kernel definitions and operations.  '*' is used to declare pointers (crucial for accessing device memory). 'int' is a data type for integer variables, frequently used for indexing and loop counters within kernels.  ',' acts as a separator in function parameter lists and array indexing.  The context shows these tokens within the definitions of CUDA kernels (__global__ void ...), where they define parameters (e.g., array size N, pointer to array a) and are used for thread indexing (threadIdx, blockIdx, blockDim, gridDim) to manage parallel execution across multiple threads and blocks.  The code snippets demonstrate data initialization and array processing within the parallel context of CUDA."
+        },
+        {
+          "id": "c491",
+          "unique_tokens": [
+            "float",
+            "*",
+            "double",
+            "int",
+            "rand_d",
+            "FLT"
+          ],
+          "syntactic_label": "Data Types and Variables",
+          "semantic_tags": [
+            "CUDA Kernel Functions",
+            "Parallel Computing",
+            "Data Parallelism",
+            "Array Processing",
+            "GPU Programming"
+          ],
+          "description": "These tokens represent fundamental data types (float, double, int) used in CUDA kernel functions to define variables and perform arithmetic operations on arrays.  The context shows these types are used within the `__global__` functions, indicating parallel processing on the GPU.  `rand_d` and `FLT` likely represent specific functions or constants related to random number generation or floating-point precision within the CUDA environment."
+        },
+        {
+          "id": "c239",
+          "unique_tokens": [
+            "*",
+            "(",
+            "n",
+            "int",
+            "char",
+            ")"
+          ],
+          "syntactic_label": "CUDA Kernel Function Parameters and Data Types",
+          "semantic_tags": [
+            "CUDA Kernel Launch",
+            "Parallel Memory Access",
+            "Data Initialization",
+            "Integer Data Type",
+            "Pointer"
+          ],
+          "description": "The tokens represent fundamental elements in CUDA kernel function definitions and data handling.  '*' is the pointer operator, '(' and ')' are parentheses for function parameter lists, 'n' (assuming it's part of a variable name) is an integer variable, 'int' is the integer data type, and 'char' is the character data type.  These are crucial for defining kernel functions that operate on data in parallel across multiple threads and blocks on the GPU. The examples show how integer pointers ('int *') are used to pass data to and from the GPU, and how integer variables ('int') are used for loop counters and data values within the kernel functions."
+        },
+        {
+          "id": "c180",
+          "unique_tokens": [
+            "*",
+            "int",
+            "last_i",
+            ",",
+            ")",
+            "known_sum"
+          ],
+          "syntactic_label": "CUDA Kernel Parameters and Variables",
+          "semantic_tags": [
+            "Kernel Launch",
+            "Parallel Processing",
+            "Matrix Diagonal Addition",
+            "CUDA Memory Access",
+            "In-place Operation"
+          ],
+          "description": "The tokens represent elements crucial to a CUDA kernel.  '*' is a pointer dereference operator accessing matrix elements. 'int' is a data type for integer variables like 'last_i' (likely an index) and 'dim' (matrix dimension). ',' acts as a separator in parameter lists and variable declarations. ')' closes a function parameter list. 'known_sum' might be a variable storing a cumulative sum (though not present in the provided code snippet). These tokens are essential for defining the kernel's input parameters, managing thread indices, and performing in-place matrix diagonal addition within the parallel execution context of CUDA."
+        },
+        {
+          "id": "c21",
+          "unique_tokens": [
+            "*",
+            "(",
+            "n",
+            "int",
+            "y",
+            "&",
+            "<"
+          ],
+          "syntactic_label": "CUDA C Syntax Components",
+          "semantic_tags": [
+            "Kernel Functions",
+            "Parallel Computing",
+            "Memory Access",
+            "Thread Indexing",
+            "Data Parallelism"
+          ],
+          "description": "The tokens represent fundamental elements of CUDA C syntax used in defining and executing kernel functions.  '*' is the dereference operator, '(' and ')' are parentheses for function arguments and expressions, 'n' and 'int' represent integer data types and variables, 'y' is a variable identifier, '&' is the address-of operator (though not explicitly shown in these examples, it's implicit in pointer arithmetic), and '<' is a comparison operator. These tokens are crucial for managing threads, accessing memory, and performing parallel computations within the CUDA execution model."
+        }
+      ]
+    },
+    "c248": {
+      "encoder_cluster": {
+        "id": "c248",
+        "unique_tokens": [
+          "\"",
+          "}",
+          "("
+        ],
+        "syntactic_label": "Punctuation",
+        "semantic_tags": [
+          "Array Indexing",
+          "Loop Control",
+          "Function Definition",
+          "C++ Syntax",
+          "Mathematical Operations"
+        ],
+        "description": "These tokens are essential punctuation symbols in C++.  The comma (,) separates function arguments, the closing curly brace (}) signifies the end of function bodies and code blocks, and the opening parenthesis (() marks the beginning of function parameter lists and loop conditions.  They are fundamental to the syntax and structure of the C++ functions, enabling the definition of functions that perform array operations and mathematical calculations within loops."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c82",
+          "unique_tokens": [
+            "grid",
+            "(",
+            "}",
+            "\\"
+          ],
+          "syntactic_label": "CUDA Kernel Launch Configuration",
+          "semantic_tags": [
+            "Parallel Computing",
+            "CUDA Kernel",
+            "Grid Dimension",
+            "Thread Management",
+            "GPU Programming"
+          ],
+          "description": "The tokens 'grid', '(', and '}' are part of the CUDA kernel launch configuration.  'grid' refers to the grid of blocks launched on the GPU. '(' indicates the start of the kernel launch parameters, and '}' closes the kernel function definition.  These elements are fundamental to CUDA programming, enabling parallel execution of code on the GPU."
+        },
+        {
+          "id": "c459",
+          "unique_tokens": [
+            "}",
+            "(",
+            "n",
+            "\\"
+          ],
+          "syntactic_label": "CUDA Kernel Components",
+          "semantic_tags": [
+            "Parallel Computing",
+            "Kernel Function",
+            "Thread Indexing",
+            "Memory Access",
+            "CUDA Programming"
+          ],
+          "description": "The tokens represent essential parts of CUDA kernel functions.  '{' and '}' define the kernel's body.  '(' and ')' are used in function declarations and calls. 'n' (likely representing N in the context) is a parameter often used for array sizes or data dimensions, crucial for parallel processing.  These elements are fundamental to defining and executing parallel computations on a GPU using CUDA."
+        },
+        {
+          "id": "c190",
+          "unique_tokens": [
+            "(",
+            "n",
+            "}",
+            "\\",
+            "fprintf",
+            ";",
+            "{"
+          ],
+          "syntactic_label": "CUDA Kernel Components",
+          "semantic_tags": [
+            "Kernel Function Definition",
+            "Loop Control",
+            "Parallel Processing",
+            "Memory Access",
+            "CUDA Syntax"
+          ],
+          "description": "These tokens represent fundamental elements of CUDA kernel functions.  '(' and ')' are used for function parameter lists. '{' and '}' define the kernel function body. ';' acts as a statement terminator. '\\' is used for line continuation (though not explicitly shown in these examples, it's a possibility within longer CUDA code). 'fprintf' would be used for debugging output (though not present in these examples, it's a common CUDA practice). 'n' is likely an integer variable representing data size.  The overall significance is that these tokens are essential for defining and structuring parallel computations within CUDA kernels."
+        },
+        {
+          "id": "c86",
+          "unique_tokens": [
+            "(",
+            "n",
+            "}",
+            "\\",
+            "if",
+            "else"
+          ],
+          "syntactic_label": "Control Flow Keywords and Punctuation",
+          "semantic_tags": [
+            "Conditional Execution",
+            "Parallel Computing",
+            "Kernel Function",
+            "CUDA Programming",
+            "GPU Programming"
+          ],
+          "description": "The tokens (, n, }, \\, if, else represent essential elements of CUDA kernel functions.  'if' and 'else' control conditional execution within each thread, determining which operations are performed based on thread index and data size.  '{' and '}' define code blocks, while '(' and ')' are used for function arguments and expressions.  The backslash '\\' is not directly part of the CUDA syntax in these examples but may be used in preprocessor directives or file paths related to CUDA code. The 'n' is likely part of a variable name or loop counter within the kernel functions. These elements are crucial for managing the parallel execution of threads on the GPU, enabling efficient computation across multiple threads."
+        }
+      ]
+    },
+    "c270": {
+      "encoder_cluster": {
+        "id": "c270",
+        "unique_tokens": [
+          "*",
+          "("
+        ],
+        "syntactic_label": "Pointer Dereference and Array Indexing, Opening Parenthesis",
+        "semantic_tags": [
+          "Array Manipulation",
+          "Pointer Arithmetic",
+          "CPU Computation",
+          "Numerical Computation",
+          "Vectorized Operations"
+        ],
+        "description": "The '*' token is used for pointer dereference, enabling access to the values pointed to by the pointers.  In the context of the provided code, it's used in conjunction with array indexing (e.g., X[i * INCX]) to access and modify elements within arrays. The '(' token is used as an Opening Parenthesis to define function parameters and control flow structures (for loops). These tokens are fundamental to C++ programming, particularly when working with arrays and pointers for numerical computation and vectorized operations."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c449",
+          "unique_tokens": [
+            "*",
+            "(",
+            "="
+          ],
+          "syntactic_label": "Operators",
+          "semantic_tags": [
+            "Pointer Dereference",
+            "Assignment",
+            "Array Indexing",
+            "CUDA Kernel Launch",
+            "Parallel Computing"
+          ],
+          "description": "The '*' operator signifies pointer dereference, essential for accessing array elements in CUDA.  The '(' and ')' are used for function calls and parameter grouping. The '=' is the assignment operator, assigning values to array elements within the CUDA kernels. These tokens are fundamental to CUDA programming, enabling parallel processing of arrays on the GPU."
+        },
+        {
+          "id": "c169",
+          "unique_tokens": [
+            "*",
+            "nvoid",
+            "("
+          ],
+          "syntactic_label": "CUDA Kernel Declaration Components",
+          "semantic_tags": [
+            "Kernel Launch",
+            "Parallel Computing",
+            "GPU Programming",
+            "Thread Indexing",
+            "Memory Access"
+          ],
+          "description": "The tokens *, __global__, void, and ( are integral parts of CUDA kernel declarations.  * indicates a pointer, essential for memory management on the GPU.  __global__ specifies that the function is a CUDA kernel, executable by multiple threads on the GPU. void signifies the function's return type (no value returned). The opening parenthesis ( initiates the parameter list, defining the data the kernel operates on. These tokens are fundamental to defining and launching parallel computations on the GPU."
+        },
+        {
+          "id": "c41",
+          "unique_tokens": [
+            "*",
+            "1",
+            "==",
+            "("
+          ],
+          "syntactic_label": "Operators and Literals",
+          "semantic_tags": [
+            "Array Indexing",
+            "Arithmetic Operations",
+            "CUDA Kernel",
+            "Parallel Computing",
+            "Conditional Execution"
+          ],
+          "description": "The tokens *, 1, ==, and ( represent arithmetic operators, a literal integer, a comparison operator, and an opening parenthesis, respectively.  In the context of CUDA, they are used within kernel functions to perform array indexing (using * for pointer arithmetic), arithmetic operations (such as subtraction and division), comparisons (for conditional execution), and to define the scope of expressions.  These are fundamental elements in expressing parallel computations within CUDA kernels."
+        },
+        {
+          "id": "c425",
+          "unique_tokens": [
+            "*",
+            "[",
+            "(",
+            "="
+          ],
+          "syntactic_label": "Operators",
+          "semantic_tags": [
+            "Pointer Dereference",
+            "Array Indexing",
+            "Multiplication",
+            "Assignment",
+            "Kernel Launch"
+          ],
+          "description": "The tokens *, [, (, and = represent fundamental operators in CUDA C/C++.  '*' is used for pointer dereferencing and multiplication. '[' and ']' are used for array indexing to access elements within arrays. '(' and ')' are used for function calls and grouping expressions. '=' is the assignment operator. These operators are crucial for performing arithmetic operations, accessing data in memory, and assigning values within CUDA kernels."
+        },
+        {
+          "id": "c19",
+          "unique_tokens": [
+            "const",
+            "*",
+            ",",
+            "("
+          ],
+          "syntactic_label": "CUDA Kernel Function Parameters",
+          "semantic_tags": [
+            "Parallel Computing",
+            "GPU Programming",
+            "Memory Access",
+            "Kernel Launch",
+            "Data Parallelism"
+          ],
+          "description": "These tokens represent parameters passed to CUDA kernel functions.  'const' indicates a constant parameter. '*' denotes a pointer, crucial for accessing and modifying data on the GPU. ',' separates parameters. '(' initiates the parameter list.  These are fundamental to defining how data is transferred to and manipulated within parallel kernels on the GPU."
+        },
+        {
+          "id": "c381",
+          "unique_tokens": [
+            "*",
+            "&",
+            "(",
+            "="
+          ],
+          "syntactic_label": "Operators",
+          "semantic_tags": [
+            "Pointer Arithmetic",
+            "Memory Access",
+            "Parallel Computing",
+            "CUDA Programming",
+            "Kernel Function"
+          ],
+          "description": "These tokens are operators in C/C++ used extensively in CUDA programming.  '*' is the dereference operator used to access the value pointed to by a pointer. '&' is the address-of operator, providing the memory address of a variable. '(' and ')' are used for grouping and function calls. '=' is the assignment operator. In the context of the provided CUDA kernel function, these operators are crucial for manipulating pointers to arrays (a, b, c) which hold the data processed in parallel by multiple threads.  The function demonstrates basic parallel addition of elements in arrays a and b, storing the result in array c."
+        }
+      ]
+    },
+    "c313": {
+      "encoder_cluster": {
+        "id": "c313",
+        "unique_tokens": [
+          "\"",
+          "(",
+          "{"
+        ],
+        "syntactic_label": "Punctuation",
+        "semantic_tags": [
+          "Array Initialization",
+          "Loop Control",
+          "Function Definition",
+          "C++ Syntax",
+          "Data Processing"
+        ],
+        "description": "These tokens represent fundamental punctuation in C++.  The comma (,) separates function arguments and loop variables. The opening parenthesis '(' initiates function arguments and loop conditions. The opening curly brace '{' begins the function body and loop block, defining the scope of the code within the functions.  They are essential for the structure and functionality of the C++ code, enabling the definition of functions and the control flow within loops that process array data."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c36",
+          "unique_tokens": [
+            "int",
+            "{",
+            "(",
+            "n"
+          ],
+          "syntactic_label": "Data Type and Loop Variable",
+          "semantic_tags": [
+            "Kernel Function Parameter",
+            "Loop Index",
+            "Array Indexing",
+            "Parallel Processing",
+            "CUDA Thread Indexing"
+          ],
+          "description": "The token 'int' is used to declare integer variables, primarily as loop indices and array sizes within CUDA kernel functions.  The '{' and '(' tokens represent the start of a code block and function arguments respectively. The variable 'n' is frequently used to represent the size of arrays or data structures processed in parallel by CUDA threads. These tokens are fundamental to defining the structure and behavior of CUDA kernels, enabling parallel computation across multiple threads."
+        },
+        {
+          "id": "c78",
+          "unique_tokens": [
+            "*",
+            "(",
+            "const",
+            "=",
+            "{",
+            "void"
+          ],
+          "syntactic_label": "CUDA Kernel Function Components",
+          "semantic_tags": [
+            "Kernel Launch",
+            "Parallel Computing",
+            "GPU Programming",
+            "Memory Access",
+            "Thread Indexing"
+          ],
+          "description": "The tokens represent essential components of CUDA kernel functions.  '*' is the dereference operator, '(' and ')' are parentheses for function arguments and indexing, 'const' indicates a constant parameter, '=' is the assignment operator, '{' and '}' are curly braces defining the kernel function body, and 'void' specifies the return type of the kernel function. These elements are fundamental to defining and executing parallel computations on a CUDA-enabled GPU.  The context shows how these tokens are used to define the structure and behavior of CUDA kernels that perform array operations and other parallel tasks."
+        },
+        {
+          "id": "c84",
+          "unique_tokens": [
+            "(",
+            "n",
+            "simd_cf_t",
+            "srslte_simd_cfi_storeu",
+            "{",
+            "simd_f_t"
+          ],
+          "syntactic_label": "Function Parameters, Variable Declaration, Data Type",
+          "semantic_tags": [
+            "SIMD Vectorization",
+            "CUDA Kernel",
+            "Parallel Processing",
+            "Data Structures",
+            "Memory Access"
+          ],
+          "description": "The tokens represent function parameters and variable declarations within a CUDA kernel.  '(' and ')' are opening and closing parentheses for function parameters. 'n' might be part of a variable name or loop counter. 'simd_cf_t' and 'simd_f_t' are likely custom data types designed for Single Instruction Multiple Data (SIMD) operations, indicating vectorization. 'srslte_simd_cfi_storeu' suggests a function call related to storing data using SIMD instructions. The '{' indicates the start of a code block within the kernel function.  These elements are crucial for writing efficient parallel code in CUDA, leveraging SIMD capabilities for performance optimization."
+        },
+        {
+          "id": "c253",
+          "unique_tokens": [
+            "(",
+            "==",
+            ",",
+            "100",
+            ";",
+            "{"
+          ],
+          "syntactic_label": "CUDA Kernel Function Components",
+          "semantic_tags": [
+            "Parallel Computing",
+            "Kernel Launch",
+            "Thread Indexing",
+            "Data Parallelism",
+            "GPU Acceleration"
+          ],
+          "description": "These tokens are essential components of a CUDA kernel function.  The '(' initiates the parameter list, ',' separates parameters, '==' is a comparison operator used within the kernel, '100' could represent a constant value (though not directly shown in this example), ';' terminates a statement, and '{' begins the kernel function body.  The overall code demonstrates a simple SAXPY operation (a*x + y) implemented using CUDA for parallel processing on a GPU. The tokens directly contribute to defining the kernel's signature, parameters, and its internal logic."
+        },
+        {
+          "id": "c122",
+          "unique_tokens": [
+            "(",
+            "n",
+            "if",
+            "else",
+            "{"
+          ],
+          "syntactic_label": "CUDA Keywords and Control Flow",
+          "semantic_tags": [
+            "Parallel Computing",
+            "Kernel Functions",
+            "Conditional Execution",
+            "Thread Indexing",
+            "GPU Programming"
+          ],
+          "description": "The tokens represent fundamental elements of CUDA C/C++ programming.  '(' and '{' are used for function definition and code blocks. 'if' and 'else' are conditional statements controlling execution flow within each kernel. 'n' represents the size of data processed, often used in loop bounds or array sizes. These are crucial for defining and controlling the execution of parallel kernels on a GPU."
+        },
+        {
+          "id": "c475",
+          "unique_tokens": [
+            ")",
+            "{",
+            "(",
+            "main"
+          ],
+          "syntactic_label": "Kernel Function Definition Components",
+          "semantic_tags": [
+            "CUDA Kernel",
+            "Parallel Computing",
+            "GPU Programming",
+            "Array Processing",
+            "In-place Operation"
+          ],
+          "description": "The tokens represent essential parts of CUDA kernel function definitions.  'main' is not directly present but implied as the entry point of the program that launches these kernels. '(' and ')' are used for function parameter lists, and '{' and '}' enclose the kernel's body, defining the code executed on the GPU.  These are fundamental to parallel processing on CUDA-enabled devices."
+        },
+        {
+          "id": "c221",
+          "unique_tokens": [
+            ",",
+            "{",
+            "("
+          ],
+          "syntactic_label": "Punctuation",
+          "semantic_tags": [
+            "Kernel Function Definition",
+            "Array Indexing",
+            "Parallel Computing",
+            "CUDA Programming",
+            "GPU Acceleration"
+          ],
+          "description": "The comma (,) acts as a separator in function arguments and within array indexing. The opening curly brace ({) signifies the start of the kernel function body, while the opening parenthesis (() indicates the start of function arguments or array indexing."
+        },
+        {
+          "id": "c190",
+          "unique_tokens": [
+            "(",
+            "n",
+            "}",
+            "\\",
+            "fprintf",
+            ";",
+            "{"
+          ],
+          "syntactic_label": "CUDA Kernel Components",
+          "semantic_tags": [
+            "Kernel Function Definition",
+            "Loop Control",
+            "Parallel Processing",
+            "Memory Access",
+            "CUDA Syntax"
+          ],
+          "description": "These tokens represent fundamental elements of CUDA kernel functions.  '(' and ')' are used for function parameter lists. '{' and '}' define the kernel function body. ';' acts as a statement terminator. '\\' is used for line continuation (though not explicitly shown in these examples, it's a possibility within longer CUDA code). 'fprintf' would be used for debugging output (though not present in these examples, it's a common CUDA practice). 'n' is likely an integer variable representing data size.  The overall significance is that these tokens are essential for defining and structuring parallel computations within CUDA kernels."
+        }
+      ]
+    },
+    "c317": {
+      "encoder_cluster": {
+        "id": "c317",
+        "unique_tokens": [
+          "for",
+          "}",
+          "("
+        ],
+        "syntactic_label": "For Loop Control Flow",
+        "semantic_tags": [
+          "Loop Iteration",
+          "Array Processing",
+          "Parallel Computing",
+          "Vectorized Operations",
+          "CPU Computation"
+        ],
+        "description": "The tokens 'for', '}', and '(' are integral parts of the 'for' loop construct in C++.  The 'for' keyword initiates the loop, '{' marks the beginning of the loop body, and ')' concludes the loop's initialization, condition, and increment expressions.  Semantically, these loops are used extensively for array processing, often in the context of parallel or vectorized computations on a CPU. The examples show various array operations like scaling, addition, and element-wise multiplication, all within the structure of a 'for' loop."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c82",
+          "unique_tokens": [
+            "grid",
+            "(",
+            "}",
+            "\\"
+          ],
+          "syntactic_label": "CUDA Kernel Launch Configuration",
+          "semantic_tags": [
+            "Parallel Computing",
+            "CUDA Kernel",
+            "Grid Dimension",
+            "Thread Management",
+            "GPU Programming"
+          ],
+          "description": "The tokens 'grid', '(', and '}' are part of the CUDA kernel launch configuration.  'grid' refers to the grid of blocks launched on the GPU. '(' indicates the start of the kernel launch parameters, and '}' closes the kernel function definition.  These elements are fundamental to CUDA programming, enabling parallel execution of code on the GPU."
+        },
+        {
+          "id": "c459",
+          "unique_tokens": [
+            "}",
+            "(",
+            "n",
+            "\\"
+          ],
+          "syntactic_label": "CUDA Kernel Components",
+          "semantic_tags": [
+            "Parallel Computing",
+            "Kernel Function",
+            "Thread Indexing",
+            "Memory Access",
+            "CUDA Programming"
+          ],
+          "description": "The tokens represent essential parts of CUDA kernel functions.  '{' and '}' define the kernel's body.  '(' and ')' are used in function declarations and calls. 'n' (likely representing N in the context) is a parameter often used for array sizes or data dimensions, crucial for parallel processing.  These elements are fundamental to defining and executing parallel computations on a GPU using CUDA."
+        },
+        {
+          "id": "c190",
+          "unique_tokens": [
+            "(",
+            "n",
+            "}",
+            "\\",
+            "fprintf",
+            ";",
+            "{"
+          ],
+          "syntactic_label": "CUDA Kernel Components",
+          "semantic_tags": [
+            "Kernel Function Definition",
+            "Loop Control",
+            "Parallel Processing",
+            "Memory Access",
+            "CUDA Syntax"
+          ],
+          "description": "These tokens represent fundamental elements of CUDA kernel functions.  '(' and ')' are used for function parameter lists. '{' and '}' define the kernel function body. ';' acts as a statement terminator. '\\' is used for line continuation (though not explicitly shown in these examples, it's a possibility within longer CUDA code). 'fprintf' would be used for debugging output (though not present in these examples, it's a common CUDA practice). 'n' is likely an integer variable representing data size.  The overall significance is that these tokens are essential for defining and structuring parallel computations within CUDA kernels."
+        },
+        {
+          "id": "c86",
+          "unique_tokens": [
+            "(",
+            "n",
+            "}",
+            "\\",
+            "if",
+            "else"
+          ],
+          "syntactic_label": "Control Flow Keywords and Punctuation",
+          "semantic_tags": [
+            "Conditional Execution",
+            "Parallel Computing",
+            "Kernel Function",
+            "CUDA Programming",
+            "GPU Programming"
+          ],
+          "description": "The tokens (, n, }, \\, if, else represent essential elements of CUDA kernel functions.  'if' and 'else' control conditional execution within each thread, determining which operations are performed based on thread index and data size.  '{' and '}' define code blocks, while '(' and ')' are used for function arguments and expressions.  The backslash '\\' is not directly part of the CUDA syntax in these examples but may be used in preprocessor directives or file paths related to CUDA code. The 'n' is likely part of a variable name or loop counter within the kernel functions. These elements are crucial for managing the parallel execution of threads on the GPU, enabling efficient computation across multiple threads."
+        }
+      ]
+    },
+    "c404": {
+      "encoder_cluster": {
+        "id": "c404",
+        "unique_tokens": [
+          "c",
+          "r",
+          "C"
+        ],
+        "syntactic_label": "Array Identifiers",
+        "semantic_tags": [
+          "Array Processing",
+          "Numerical Computation",
+          "Parallel Computing",
+          "Data Structures",
+          "Vectorized Operations"
+        ],
+        "description": "The tokens 'c', 'r', and 'C' represent array identifiers in the C++ code.  They are used to refer to arrays of data (specifically, 'c' appears to be an output array in multiple functions). The context shows these arrays are used in numerical computations, likely within a parallel computing context given the functions' names and the use of arrays. The semantic tags reflect the data structures used and the operations performed on them."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c156",
+          "unique_tokens": [
+            "val",
+            "j",
+            "c",
+            "r"
+          ],
+          "syntactic_label": "Array Indices/Variables",
+          "semantic_tags": [
+            "Parallel Computing",
+            "Array Processing",
+            "CUDA Programming",
+            "Thread Indexing",
+            "GPU Acceleration"
+          ],
+          "description": "The tokens 'val', 'j', 'c', and 'r' are not directly present in the provided CUDA kernel code snippets. However, based on common CUDA programming practices, these tokens would likely represent integer variables or array indices.  In the context of the given kernels, they would be used to access and manipulate elements within arrays processed on the GPU.  'c' is explicitly used as an array in the first kernel. The other tokens would likely serve similar roles in other parts of a larger CUDA program, managing array indices or acting as loop counters within parallel threads."
+        }
+      ]
+    },
+    "c436": {
+      "encoder_cluster": {
+        "id": "c436",
+        "unique_tokens": [
+          "unsigned",
+          "short",
+          "char"
+        ],
+        "syntactic_label": "Data Type Keywords",
+        "semantic_tags": [
+          "Data Type Declaration",
+          "Integer Representation",
+          "Memory Management",
+          "Variable Declaration",
+          "Numeric Operations"
+        ],
+        "description": "These tokens represent fundamental data type keywords in C++.  `unsigned`, `short`, and `char` are used to declare variables of different sizes and properties (unsigned integers, short integers, and characters).  The context shows their use in function parameters and variable declarations, indicating their role in defining the type and size of data processed within the functions.  The functions themselves perform array manipulations, suggesting that these data types are integral to the efficient storage and manipulation of numerical data within the code."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c413",
+          "unique_tokens": [
+            "char",
+            ",",
+            "unsigned",
+            "("
+          ],
+          "syntactic_label": "Data Type Specifiers and Opening Parenthesis",
+          "semantic_tags": [
+            "CUDA Kernel",
+            "Data Parallelism",
+            "Memory Access",
+            "Thread Indexing",
+            "Data Types"
+          ],
+          "description": "These tokens represent fundamental elements in CUDA C/C++.  'char', 'unsigned', and 'int' specify data types for variables within CUDA kernels.  The opening parenthesis '(' is used to define function parameters and in other contexts.  The comma ',' separates parameters in function definitions.  These are crucial for defining the structure and behavior of CUDA kernels, which are functions executed on the GPU. The examples show how these data types are used to define arrays and variables that are accessed and manipulated by threads within the kernels."
+        }
+      ]
+    },
+    "c491": {
+      "encoder_cluster": {
+        "id": "c491",
+        "unique_tokens": [
+          "scale",
+          "(",
+          "="
+        ],
+        "syntactic_label": "Variable and Assignment Operator",
+        "semantic_tags": [
+          "Array Processing",
+          "Numerical Computation",
+          "In-place Operation",
+          "Scalar Multiplication",
+          "Vectorized Operation"
+        ],
+        "description": "The token 'scale' represents a variable, likely a floating-point number, used as a scaling factor. The '=' is the assignment operator, and '(' is used to define the function parameter list.  These tokens are part of functions performing numerical computations on arrays, specifically scalar multiplication of array elements. The functions are designed for vectorized operations, enhancing performance."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c62",
+          "unique_tokens": [
+            "*",
+            "(",
+            "]",
+            "sum",
+            "scale",
+            "="
+          ],
+          "syntactic_label": "Operators and Identifiers",
+          "semantic_tags": [
+            "Array Indexing",
+            "Parallel Computation",
+            "Arithmetic Operations",
+            "CUDA Kernel",
+            "Data Parallelism"
+          ],
+          "description": "The tokens *, (, ], sum, scale, and = are used in various CUDA kernels.  '*' is used for multiplication, '(' and ')' are parentheses for grouping expressions, ']' is used for array indexing, 'sum' and 'scale' are likely variable names representing data or operations, and '=' is the assignment operator.  These tokens are fundamental to performing arithmetic operations and array manipulations within the parallel context of CUDA kernels, enabling data parallelism across multiple threads."
+        }
+      ]
+    },
+    "c497": {
+      "encoder_cluster": {
+        "id": "c497",
+        "unique_tokens": [
+          "&",
+          "("
+        ],
+        "syntactic_label": "& as Address-of Operator, ( as Opening Parenthesis",
+        "semantic_tags": [
+          "Pointer Arithmetic",
+          "Matrix Multiplication",
+          "Scalar Multiplication",
+          "Linear Algebra",
+          "C++ Function"
+        ],
+        "description": "The '&' symbol is the address-of operator in C++, used here to pass the address of the double arrays 'a' and 'c' to the function. This allows the function to modify the original arrays directly. The '(' symbol is an opening parenthesis, part of the function's parameter list and the for loop's initialization."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c381",
+          "unique_tokens": [
+            "*",
+            "&",
+            "(",
+            "="
+          ],
+          "syntactic_label": "Operators",
+          "semantic_tags": [
+            "Pointer Arithmetic",
+            "Memory Access",
+            "Parallel Computing",
+            "CUDA Programming",
+            "Kernel Function"
+          ],
+          "description": "These tokens are operators in C/C++ used extensively in CUDA programming.  '*' is the dereference operator used to access the value pointed to by a pointer. '&' is the address-of operator, providing the memory address of a variable. '(' and ')' are used for grouping and function calls. '=' is the assignment operator. In the context of the provided CUDA kernel function, these operators are crucial for manipulating pointers to arrays (a, b, c) which hold the data processed in parallel by multiple threads.  The function demonstrates basic parallel addition of elements in arrays a and b, storing the result in array c."
+        }
+      ]
+    }
+  }
+}

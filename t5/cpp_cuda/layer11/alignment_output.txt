@@ -1,0 +1,124 @@
+{('short', 'short'), ('char', 'char')}
+Source Cluster 12 Target Cluster 237
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('s', 's'), ('u', 'u'), ('f', 'f')}
+Source Cluster 63 Target Cluster 108
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{('s', 's'), ('u', 'u'), ('f', 'f')}
+Source Cluster 63 Target Cluster 174
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{('s', 's'), ('u', 'u'), ('f', 'f')}
+Source Cluster 63 Target Cluster 322
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{('128', ')'), ('256', ';')}
+Source Cluster 83 Target Cluster 391
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('index', 'index'), ('id', 'id')}
+Source Cluster 96 Target Cluster 141
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{('index', 'index'), ('id', 'id')}
+Source Cluster 96 Target Cluster 297
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('imagPart', 'imagPart'), ('realPart', 'realPart')}
+Source Cluster 120 Target Cluster 65
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{('imagPart', 'imagPart'), ('realPart', 'realPart')}
+Source Cluster 120 Target Cluster 336
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{('cpu_matrix_mul', 'gpu_matrix_mul'), ('CDFfunction', 'CDFfunction'), ('vectorMatrixMult', 'vectorMatrixMult'), ('matmul', 'matmul'), ('residual', 'residual'), ('Dot', 'Kernel_Dot_reduction2'), ('distanceMatCalc', 'distanceMatCalc'), ('kernelXor', 'kernelXor'), ('cpuReduce', 'gpuReduceRecursive'), ('colorConvert', 'colorConvert'), ('cpu_matrix_mult', 'gpu_matrix_mult'), ('matrMult', 'gpuMatrMultD'), ('Backwardsub', 'Backwardsub'), ('Match', 'Match'), ('matrix_mult', 'gpu_matrix_mult'), ('mul', 'matrixmul')}
+Source Cluster 150 Target Cluster 403
+Source Cluster Size 16 Target Cluster Size 33
+10 16
+{('alpha', 'alpha'), ('a', 'a')}
+Source Cluster 162 Target Cluster 137
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('nlf_up_forward_cpu', 'nlf_up_forward'), ('nlf_down_forward_cpu', 'nlf_down_forward'), ('nlf_filter_left_backward_cpu', 'nlf_filter_left_backward'), ('nlf_filter_down_backward_cpu', 'nlf_filter_down_backward')}
+Source Cluster 164 Target Cluster 115
+Source Cluster Size 6 Target Cluster Size 7
+4 6
+{('imagPart', 'imagPart'), ('realPart', 'realPart')}
+Source Cluster 165 Target Cluster 336
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('boxes', 'boxes'), ('points', 'points'), ('weights', 'weights')}
+Source Cluster 209 Target Cluster 282
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('boxes_for_nms', 'boxes_for_nms'), ('boxes_before_nms', 'boxes_before_nms')}
+Source Cluster 270 Target Cluster 271
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('dec_index', 'dec_index'), ('bit_index', 'bit_index'), ('sampleIndex', 'sampleIndex')}
+Source Cluster 281 Target Cluster 474
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{('sumQ', 'sumQ'), ('filtered_Q', 'filtered_Q')}
+Source Cluster 319 Target Cluster 416
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('top_data', 'top_data'), ('bottom_data', 'bottom_data')}
+Source Cluster 333 Target Cluster 372
+Source Cluster Size 2 Target Cluster Size 2
+2 2
+{('bit_decisions', 'bit_decisions'), ('curr_decision', 'curr_decision'), ('frontPrune', 'frontPrune')}
+Source Cluster 340 Target Cluster 187
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('Lq', 'Lq'), ('Ysize', 'Ysize'), ('Xsize', 'Xsize'), ('Zsize', 'Zsize')}
+Source Cluster 373 Target Cluster 164
+Source Cluster Size 4 Target Cluster Size 4
+3 4
+{('scores_out', 'scores_out'), ('labels_out', 'labels_out'), ('vec_out', '['), ('boxes_out', 'boxes_out')}
+Source Cluster 400 Target Cluster 354
+Source Cluster Size 4 Target Cluster Size 3
+3 4
+{('void', 'void'), ('inline', '__global__')}
+Source Cluster 404 Target Cluster 380
+Source Cluster Size 2 Target Cluster Size 2
+2 2
+{('priorNum', 'priorNum'), ('devideNum', 'devideNum')}
+Source Cluster 457 Target Cluster 332
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{('r_q', 'r_q'), ('q_q', 'q_q')}
+Source Cluster 492 Target Cluster 65
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{('totalPixels', 'totalPixels'), ('availablePixels', 'availablePixels')}
+Source Cluster 499 Target Cluster 375
+Source Cluster Size 2 Target Cluster Size 2
+2 2
+Aligned Clusters: 500
+Source Cluster 12 is aligned to Target Clusters: 237
+Source Cluster 63 is aligned to Target Clusters: 322, 108, 174
+Source Cluster 83 is aligned to Target Clusters: 391
+Source Cluster 96 is aligned to Target Clusters: 297, 141
+Source Cluster 120 is aligned to Target Clusters: 336, 65
+Source Cluster 150 is aligned to Target Clusters: 403
+Source Cluster 162 is aligned to Target Clusters: 137
+Source Cluster 164 is aligned to Target Clusters: 115
+Source Cluster 165 is aligned to Target Clusters: 336
+Source Cluster 209 is aligned to Target Clusters: 282
+Source Cluster 270 is aligned to Target Clusters: 271
+Source Cluster 281 is aligned to Target Clusters: 474
+Source Cluster 319 is aligned to Target Clusters: 416
+Source Cluster 333 is aligned to Target Clusters: 372
+Source Cluster 340 is aligned to Target Clusters: 187
+Source Cluster 373 is aligned to Target Clusters: 164
+Source Cluster 400 is aligned to Target Clusters: 354
+Source Cluster 404 is aligned to Target Clusters: 380
+Source Cluster 457 is aligned to Target Clusters: 332
+Source Cluster 492 is aligned to Target Clusters: 65
+Source Cluster 499 is aligned to Target Clusters: 375
+
+Alignment results saved to: LLM_labelling/t5/cpp_cuda/layer11/cluster_alignments.json

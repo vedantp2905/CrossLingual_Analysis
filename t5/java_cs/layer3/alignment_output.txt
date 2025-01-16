@@ -1,0 +1,915 @@
+{(')', ')'), ('(', '('), ('>', '>')}
+Source Cluster 6 Target Cluster 94
+Source Cluster Size 3 Target Cluster Size 2
+2 3
+{(')', ')'), ('(', '('), ('>', '>')}
+Source Cluster 6 Target Cluster 119
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{(')', ')'), ('(', '('), ('>', '>')}
+Source Cluster 6 Target Cluster 121
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('(', '('), ('>', '>')}
+Source Cluster 6 Target Cluster 124
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{(')', ')'), ('(', '('), ('>', '>')}
+Source Cluster 6 Target Cluster 273
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{(')', ')'), ('(', '('), ('>', '>')}
+Source Cluster 6 Target Cluster 319
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{(')', ')'), ('(', '('), ('>', '>')}
+Source Cluster 6 Target Cluster 454
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 9 Target Cluster 14
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 9 Target Cluster 49
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 9 Target Cluster 63
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 9 Target Cluster 90
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 9 Target Cluster 171
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 9 Target Cluster 299
+Source Cluster Size 3 Target Cluster Size 2
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 9 Target Cluster 312
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 9 Target Cluster 318
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 9 Target Cluster 324
+Source Cluster Size 3 Target Cluster Size 3
+3 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 9 Target Cluster 431
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 9 Target Cluster 469
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{('}', '}'), (';', ';')}
+Source Cluster 62 Target Cluster 63
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 62 Target Cluster 324
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 62 Target Cluster 431
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 64 Target Cluster 63
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 64 Target Cluster 324
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 64 Target Cluster 431
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('oldObjectId', 'oldObjectId'), ('"', '"'), ('!', '!'), (',', ','), ('int', 'int'), (')', ')'), ('.', '.'), ('Append', 'append'), ('(', '('), ('StringBuilder', 'StringBuilder'), ('name=', 'name='), ('AppendFormat', 'append'), ('sb', 'sb'), ('ToString', 'toString'), ('originalText', 'originalText'), (';', ';'), ('ptg', 'ptg'), ('}', '}'), ('=', '='), ('newObjectId', 'newObjectId'), (']', ']')}
+Source Cluster 72 Target Cluster 322
+Source Cluster Size 27 Target Cluster Size 50
+18 27
+{(')', ')'), ('(', '(')}
+Source Cluster 82 Target Cluster 94
+Source Cluster Size 2 Target Cluster Size 2
+2 2
+{(')', ')'), ('(', '(')}
+Source Cluster 82 Target Cluster 124
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('pattern', 'pattern'), ('deletePriorCommits', 'deletePriorCommits'), ('infoStream', 'infoStream'), ('queriesMade', 'queriesMade'), ('ruleIndex', 'ruleIndex'), ('action', 'action'), ('m_end', 'end'), ('constant', 'constant'), ('field', 'field'), ('y', 'y'), ('qqNames', 'qqName'), ('queryScorer', 'queryScorer'), ('EstimatedSegmentSize', 'estimatedSegmentSize'), ('main', 'main'), ('factory', 'factory'), ('maxBufferedBlocks', 'maxBufferedBlocks'), ('m_maxScan', 'maxScan'), ('capacityIncrement', 'capacityIncrement'), ('atn', 'atn'), ('range', 'range'), ('parentsFilter', 'parentsFilter'), ('grammarType', 'grammarType'), ('startIndex', 'startIndex'), ('_crossValidationRatio', 'crossValidationRatio'), ('postTag', 'postTag'), ('input', 'input'), ('ReaderIndex', 'readerIndex'), ('honorIgnores', 'honorIgnores'), ('grid', 'grid'), ('followState', 'followState'), ('m_lambda', 'lambda'), ('matcher', 'matcher'), ('sheetName', 'sheetName'), ('offsetLimit', 'offsetLimit'), ('Format', 'format'), ('fragListBuilder', 'fragListBuilder'), ('encoder', 'encoder'), ('context', 'context'), ('source', 'source'), ('SubIndex', 'subIndex'), ('=', '='), ('realTextFirstCharacterOffset', 'realTextFirstCharacterOffset'), ('diffAlg', 'diffAlg'), ('tag', 'tag'), ('pm', 'pm'), ('count', 'count'), ('pivot', 'pivot'), ('endOffset', 'endOffset'), ('tmpDocs', 'tmpDocs'), ('propertyValue', 'propertyValue'), ('outermostPrecedenceReturn', 'outermostPrecedenceReturn'), ('state', 'state'), ('bi', 'bi'), ('returnStates', 'returnStates'), ('outputs', 'outputs'), ('password', 'password'), ('tmpOffsets', 'tmpOffsets'), ('lv', 'lv'), ('thresh', 'thresh'), ('type', 'type'), ('maxTokenType', 'maxTokenType'), ('tokenizerFactory', 'tokenizerFactory'), ('iwc', 'iwc'), ('fieldMatch', 'fieldMatch'), ('m_source', 'source'), ('_escherClientAnchor', '_escherClientAnchor'), ('fieldQuery', 'fieldQuery'), ('valueSecure', 'valueSecure'), ('fv', 'fv'), ('m_blockSize', 'blockSize'), ('comparer', 'comparator'), ('Term', 'Term'), ('delimiter', 'delimiter'), ('index', 'index'), ('operatorInfix', 'operatorInfix'), ('file', 'file'), ('fieldDelimiter', 'fieldDelimiter'), ('token', 'token'), ('docMap', 'docMap'), ('m_qfield', 'qfield'), ('extensionFieldDelimiter', 'extensionFieldDelimiter'), ('repo', 'repo'), ('w', 'w'), ('m_vs', 'vs'), ('joinQuery', 'joinQuery'), ('_testRatio', 'testRatio'), ('m_distribution', 'distribution'), ('collator', 'collator'), ('pool', 'pool'), ('patternTree', 'patternTree'), ('m_collectionModel', 'collectionModel'), ('bytesUsed', 'bytesUsed'), ('fragmentSize', 'fragmentSize'), ('name', 'name'), ('lexerActionExecutor', 'lexerActionExecutor'), ('bytes', 'bytes'), ('tokenName', 'tokenName'), ('cache', 'cache'), ('deserializationOptions', 'deserializationOptions'), ('Image', 'image'), ('expand', 'expand'), ('ifSource', 'ifSource'), ('_root', '_root'), ('limit', 'limit'), ('threshold', 'threshold'), ('denominator', 'denominator'), ('Sheetname', 'getSheetname'), ('nameFinder', 'nameFinder'), ('sheet', 'sheet'), ('TotalDocCount', 'totalMaxDoc'), ('groupValue', 'groupValue'), ('bitsPerValue', 'bitsPerValue'), ('truncated', 'truncated'), ('row', 'row'), ('_note', 'note'), ('c', 'c'), ('traverseEmptyCells', 'traverseEmptyCells'), ('trueSource', 'trueSource'), ('actionIndex', 'actionIndex'), ('m_bytesRef', 'bytesRef'), ('field_2_numShapeIdsUsed', 'field_2_numShapeIdsUsed'), ('docFreqThresh', 'docFreqThresh'), ('TopLevelParser', 'topLevelParser'), ('m_term', 'term'), ('m_header', 'header'), ('m_ctx', 'ctx'), ('deadEndConfigs', 'deadEndConfigs'), ('forward', 'forward'), ('wrapped', 'wrapped'), ('subTo', 'subTo'), ('maxGoodPoints', 'maxGoodPoints'), ('allocator', 'allocator'), ('m_boundaryChars', 'boundaryChars'), ('phoneticTextFirstCharacterOffset', 'phoneticTextFirstCharacterOffset'), ('provider', 'provider'), ('config', 'config'), ('resource', 'resource'), ('m_start', 'start'), ('partNumber', 'partNumber'), ('_writer', 'writer'), ('column', 'column'), ('blip', 'blip'), ('field_2_first_col', 'field_2_first_col'), ('termText', 'termText'), ('ignoreCase', 'ignoreCase'), ('str', 'str'), ('fs', 'fs'), ('Doc', 'doc'), ('Kind', 'kind'), ('buffer', 'buffer'), ('m_indexedBytes', 'indexedBytes'), ('p', 'p'), ('workingTree', 'workingTree'), ('m_normalization', 'normalization'), ('REINTERESTING', 'REINTERESTING'), ('flags', 'flags'), ('S1', 's1'), ('id', 'id'), ('engine', 'engine'), ('changeSkip', 'changeSkip'), ('_value', '_value'), ('TotalTermFreq', 'totalTermFreq'), ('Output', '.'), ('S2', 's2'), ('nameValPairs', 'nameValPairs'), ('parser', 'parser'), ('preservePositionIncrements', 'preservePositionIncrements'), ('maxHorizontalContext', 'maxHorizontalContext'), ('label', 'label'), ('uri', 'uri'), ('os', 'os'), ('refs', 'refs'), ('defaultField', 'defaultField'), ('Score', 'score'), ('multiplier', 'multiplier'), ('m_maxLevels', 'maxLevels'), ('predIndex', 'predIndex'), ('func', 'func'), ('defaultFieldNames', 'defaultFieldNames'), ('channel', 'channel'), ('m_sims', 'sims'), ('String', 'String'), ('failingPaths', 'failingPaths'), ('letChildReport', 'letChildReport'), ('to', 'to'), ('isCtxDependent', 'isCtxDependent'), ('lexer', 'lexer'), ('realTextLength', 'realTextLength'), ('repository', 'repository'), ('TermsEnum', 'TermsEnum'), ('numerator', 'numerator'), ('maxBasicQueries', 'maxBasicQueries'), ('tokenType', 'tokenType'), ('unSafeParser', 'unSafeParser'), ('fst', 'fst'), ('credentials', 'credentials'), ('src', 'src'), ('description', 'description'), ('pred', 'pred'), ('myanmarAsWords', 'myanmarAsWords'), ('startOffset', 'startOffset'), ('RawQueryString', 'rawQueryString'), ('_escherChildAnchor', '_escherChildAnchor'), ('externalWorkbookNumber', 'externalWorkbookNumber'), ('preTag', 'preTag'), ('format', 'format'), ('chars', 'chars'), ('analyzer', 'analyzer'), ('nodeName', 'nodeName'), ('fieldsToAdd', 'fieldsToAdd'), ('sort', 'sort'), ('s', 's'), ('m_initSize', 'initSize'), ('value', 'value'), ('dst', 'dst'), ('keepScores', 'keepScores'), ('stemmer', 'stemmer'), ('_tokenSource', 'tokenSource'), ('fieldNames', 'fieldNames'), ('TypeOfValue', 'value'), ('Label', 'label'), ('decisionToDFA', 'decisionToDFA'), ('valueCount', 'valueCount'), ('rowNumber', 'rowNumber'), ('q', 'q'), ('scoreMode', 'scoreMode'), ('height', 'height'), ('values', 'values'), ('Value', 'value'), ('preserveOriginal', 'preserveOriginal'), ('eTag', 'eTag'), ('useRomaji', 'useRomaji'), ('b', 'b'), ('promptText', 'promptText'), ('LikeText', 'likeText'), ('function', 'function'), ('phraseHighlight', 'phraseHighlight'), ('maxNumTerms', 'maxNumTerms'), ('fieldOp', 'fieldOp'), ('parents', 'parents'), ('size', 'size'), ('errors', 'errors'), ('Start', 'start'), ('m_str', 'string'), ('defVal', 'defVal'), ('f', 'f'), ('fragmentsBuilder', 'fragmentsBuilder'), ('NumDocs', 'numDocs'), ('m_charset', 'charset'), ('cjkAsWords', 'cjkAsWords'), ('dv', 'dv'), ('n', 'n'), ('reader', 'reader'), ('nameName', 'nameName'), ('username', 'username'), ('Components', 'components'), ('dirCache', 'dirCache'), ('strategy', 'strategy'), ('m_input', 'input'), ('from', 'from'), ('passedThroughNonGreedyDecision', 'passedThroughNonGreedyDecision'), ('revstr', 'revstr'), ('bucket', 'bucket'), ('sharedContextCache', 'sharedContextCache'), ('infos', 'infos'), ('End', 'end'), ('Shape', 'shape'), ('fields', 'fields'), ('digest', 'digest'), ('fieldName', 'fieldName'), ('TaxonomyReader', 'TaxonomyReader'), ('alt', 'alt'), ('slopFactor', 'slopFactor'), ('m_sources', 'sources'), ('roleArn', 'longLivedCredentials'), ('_string', '_string'), ('Analyzer', 'Analyzer'), ('depth', 'depth'), ('reuseStrategy', 'reuseStrategy'), ('buf', 'buf'), ('set', 'set'), ('Hits', 'hits'), ('charFilterFactories', 'charFilterFactories'), ('postings', 'postings'), ('k1', 'k1'), ('termAtt', 'super'), ('query', 'query'), ('status', 'status'), ('indexField', 'indexField'), ('subFrom', 'subFrom'), ('.', '.'), ('intervals', 'intervals'), ('childListener', 'childListener'), ('decision', 'decision'), ('m_indexedField', 'indexedField'), ('words', 'words'), ('dir', 'dir'), ('unlimited', 'unlimited'), ('out1', 'out'), ('DocFreq', 'docFreq'), ('Length', 'length'), ('mask', 'mask'), ('inOrder', 'inOrder'), ('workbook', 'workbook'), ('m_field', 'field'), ('monitor', 'monitor'), ('prefix', 'prefix'), ('queryID', 'queryID'), ('iter', 'iter'), ('data', 'data'), ('field_1_drawingGroupId', 'field_1_drawingGroupId'), ('precedence', 'precedence'), ('field_1_first_row', 'field_1_first_row'), ('accessKeySecret', 'accessKeySecret'), ('parent', 'parent'), ('subSlices', 'subSlices'), ('interval', 'interval'), ('desc', 'desc'), ('Protect', 'setProtect'), ('Searcher', 'searcher'), ('x', 'x'), ('tokenFilterFactories', 'tokenFilterFactories'), ('normalizer', 'normalizer'), ('mode', 'mode'), ('articles', 'articles'), ('task', 'task'), ('falseSource', 'falseSource'), ('lastColumnNumber', 'lastColumnNumber')}
+Source Cluster 85 Target Cluster 185
+Source Cluster Size 371 Target Cluster Size 428
+292 371
+{('=', '='), (')', ')'), ('.', '.'), (';', ';'), ('request', 'request')}
+Source Cluster 103 Target Cluster 178
+Source Cluster Size 5 Target Cluster Size 8
+4 5
+{(')', ')'), (',', ',')}
+Source Cluster 111 Target Cluster 75
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('why', 'why'), (',', ',')}
+Source Cluster 111 Target Cluster 318
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{(')', ')'), ('why', 'why'), (',', ',')}
+Source Cluster 111 Target Cluster 321
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{(')', ')'), ('why', 'why'), (',', ',')}
+Source Cluster 111 Target Cluster 469
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{('}', '}'), (';', ';')}
+Source Cluster 127 Target Cluster 63
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 127 Target Cluster 324
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 127 Target Cluster 431
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('{', '{'), ('"', '"'), ('++', '++'), ('PColor', 'PColor'), ('s', 's'), ('k', 'k'), ('sb', 'sb'), (')', ')'), ('i', 'i'), ('Append', 'append'), ('(', '('), (';', ';'), ('[', '[')}
+Source Cluster 136 Target Cluster 117
+Source Cluster Size 14 Target Cluster Size 18
+9 14
+{('return', 'return'), (')', ')'), ('}', '}'), ('.', '.'), ('(', '('), (';', ';')}
+Source Cluster 155 Target Cluster 52
+Source Cluster Size 6 Target Cluster Size 11
+4 6
+{('return', 'return'), (')', ')'), ('}', '}'), ('.', '.'), ('(', '('), (';', ';')}
+Source Cluster 155 Target Cluster 204
+Source Cluster Size 6 Target Cluster Size 8
+4 6
+{('return', 'return'), (')', ')'), ('}', '}'), ('.', '.'), ('(', '('), (';', ';')}
+Source Cluster 155 Target Cluster 277
+Source Cluster Size 6 Target Cluster Size 13
+5 6
+{(')', ')'), ('{', '{')}
+Source Cluster 179 Target Cluster 14
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 179 Target Cluster 49
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 179 Target Cluster 75
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 179 Target Cluster 90
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 179 Target Cluster 312
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 179 Target Cluster 348
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 179 Target Cluster 421
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 179 Target Cluster 489
+Source Cluster Size 2 Target Cluster Size 2
+2 2
+{(')', ')'), (';', ';')}
+Source Cluster 186 Target Cluster 14
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), (';', ';')}
+Source Cluster 186 Target Cluster 49
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{(')', ')'), (';', ';')}
+Source Cluster 186 Target Cluster 90
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), (';', ';')}
+Source Cluster 186 Target Cluster 299
+Source Cluster Size 2 Target Cluster Size 2
+2 2
+{(')', ')'), (';', ';')}
+Source Cluster 186 Target Cluster 312
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), (';', ';')}
+Source Cluster 186 Target Cluster 324
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('0', '0'), ('"', '"'), (')', ')'), ('-', '-'), ('.', '.'), ('(', '('), ('Count', 'size'), ('+', '+'), ('return', 'return'), ('!=', '!='), ('>', '>'), ('1', '1'), ('bytes', 'bytes'), (';', ';'), ('{', '{'), ('\\n', '\\n'), ('buffer', 'buffer'), (':', ':'), ('Length', 'length'), ('<', '<'), ('}', '}'), ('throw', 'throw'), ('pAt', 'pAt'), ('offset', 'offset'), ('=', '='), ('++', '++'), ('+=', '+='), ('&&', '&&'), ('==', '=='), (']', ']')}
+Source Cluster 193 Target Cluster 55
+Source Cluster Size 34 Target Cluster Size 61
+21 34
+{('0', '0'), ('"', '"'), (')', ')'), ('-', '-'), ('.', '.'), ('(', '('), ('Count', 'size'), ('+', '+'), ('return', 'return'), ('!=', '!='), ('>', '>'), ('1', '1'), ('bytes', 'bytes'), (';', ';'), ('{', '{'), ('\\n', '\\n'), ('buffer', 'buffer'), (':', ':'), ('max', 'max'), ('Length', 'length'), ('<', '<'), ('}', '}'), ('throw', 'throw'), ('pAt', 'pAt'), ('offset', 'offset'), ('=', '='), ('++', '++'), ('%', '%'), ('originalLength', 'originalLength'), ('+=', '+='), ('&&', '&&'), ('==', '=='), (']', ']')}
+Source Cluster 193 Target Cluster 399
+Source Cluster Size 34 Target Cluster Size 54
+22 34
+{('0', '0'), ('"', '"'), (')', ')'), ('-', '-'), ('.', '.'), ('(', '('), ('Count', 'size'), ('+', '+'), ('return', 'return'), ('!=', '!='), ('>', '>'), ('1', '1'), ('bytes', 'bytes'), (';', ';'), ('{', '{'), ('\\n', '\\n'), ('buffer', 'buffer'), (':', ':'), ('max', 'max'), ('Length', 'length'), ('<', '<'), ('}', '}'), ('throw', 'throw'), ('pAt', 'pAt'), ('offset', 'offset'), ('=', '='), ('++', '++'), ('%', '%'), ('originalLength', 'originalLength'), ('+=', '+='), ('&&', '&&'), ('==', '=='), (']', ']')}
+Source Cluster 193 Target Cluster 487
+Source Cluster Size 34 Target Cluster Size 53
+25 34
+{(')', ')'), ('}', '}'), ('return', 'return'), (';', ';')}
+Source Cluster 198 Target Cluster 324
+Source Cluster Size 4 Target Cluster Size 3
+3 4
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 199 Target Cluster 14
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 199 Target Cluster 49
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 199 Target Cluster 57
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 199 Target Cluster 75
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 199 Target Cluster 90
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 199 Target Cluster 171
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 199 Target Cluster 312
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 199 Target Cluster 348
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 199 Target Cluster 421
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 199 Target Cluster 469
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 199 Target Cluster 489
+Source Cluster Size 3 Target Cluster Size 2
+2 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 3
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 15
+Source Cluster Size 3 Target Cluster Size 2
+3 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 45
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 50
+Source Cluster Size 3 Target Cluster Size 1
+2 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 59
+Source Cluster Size 3 Target Cluster Size 3
+3 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 86
+Source Cluster Size 3 Target Cluster Size 6
+3 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 87
+Source Cluster Size 3 Target Cluster Size 2
+2 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 94
+Source Cluster Size 3 Target Cluster Size 2
+2 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 119
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 124
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 191
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 202
+Source Cluster Size 3 Target Cluster Size 1
+2 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 244
+Source Cluster Size 3 Target Cluster Size 6
+3 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 263
+Source Cluster Size 3 Target Cluster Size 2
+2 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 273
+Source Cluster Size 3 Target Cluster Size 6
+3 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 281
+Source Cluster Size 3 Target Cluster Size 1
+2 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 303
+Source Cluster Size 3 Target Cluster Size 1
+2 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 319
+Source Cluster Size 3 Target Cluster Size 5
+3 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 368
+Source Cluster Size 3 Target Cluster Size 1
+2 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 377
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 417
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 454
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{('charset', '('), ('nio', '('), ('.', '.')}
+Source Cluster 204 Target Cluster 494
+Source Cluster Size 3 Target Cluster Size 1
+2 3
+{('termsFileName', '.'), ('var', '(')}
+Source Cluster 206 Target Cluster 15
+Source Cluster Size 3 Target Cluster Size 2
+2 3
+{('termsFileName', '.'), ('var', '(')}
+Source Cluster 206 Target Cluster 59
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{('termsFileName', '.'), ('var', '(')}
+Source Cluster 206 Target Cluster 86
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{('termsFileName', '.'), ('var', '('), ('grid', 'grid')}
+Source Cluster 206 Target Cluster 244
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{('termsFileName', '.'), ('var', '('), ('grid', 'grid')}
+Source Cluster 206 Target Cluster 273
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{('termsFileName', '.'), ('var', '('), ('grid', 'grid')}
+Source Cluster 206 Target Cluster 319
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('}', '}'), (';', ';')}
+Source Cluster 211 Target Cluster 63
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 211 Target Cluster 324
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 211 Target Cluster 431
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('"', '"'), ('+', '+'), (',', ','), (')', ')'), ('.', '.'), ('(', '('), (';', ';')}
+Source Cluster 225 Target Cluster 97
+Source Cluster Size 7 Target Cluster Size 16
+6 7
+{('"', '"'), ('+', '+'), (',', ','), (')', ')'), ('.', '.'), ('(', '('), (';', ';')}
+Source Cluster 225 Target Cluster 105
+Source Cluster Size 7 Target Cluster Size 16
+5 7
+{('"', '"'), ('+', '+'), (',', ','), (')', ')'), ('.', '.'), ('(', '('), (';', ';')}
+Source Cluster 225 Target Cluster 204
+Source Cluster Size 7 Target Cluster Size 8
+5 7
+{('"', '"'), ('+', '+'), (',', ','), (')', ')'), ('.', '.'), ('(', '('), (';', ';')}
+Source Cluster 225 Target Cluster 259
+Source Cluster Size 7 Target Cluster Size 17
+6 7
+{('"', '"'), ('+', '+'), (',', ','), (')', ')'), ('.', '.'), ('(', '('), (';', ';')}
+Source Cluster 225 Target Cluster 344
+Source Cluster Size 7 Target Cluster Size 16
+5 7
+{('"', '"'), ('+', '+'), (',', ','), (')', ')'), ('.', '.'), ('(', '('), (';', ';')}
+Source Cluster 225 Target Cluster 410
+Source Cluster Size 7 Target Cluster Size 15
+5 7
+{('"', '"'), ('+', '+'), (',', ','), (')', ')'), ('.', '.'), ('(', '('), (';', ';')}
+Source Cluster 225 Target Cluster 469
+Source Cluster Size 7 Target Cluster Size 7
+6 7
+{('}', '}'), (';', ';')}
+Source Cluster 235 Target Cluster 63
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 235 Target Cluster 324
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 235 Target Cluster 431
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('-=', '-='), ('^=', '^='), ('|=', '|='), ('bytes', 'bytes'), ('*=', '*='), ('Convert', '.'), ('&=', '&='), ('CJKScript', 'CJKBigramFilter'), ('.', '.'), ('(', '('), ('/=', '/='), (';', ';')}
+Source Cluster 255 Target Cluster 10
+Source Cluster Size 17 Target Cluster Size 26
+11 17
+{('{', '{'), ('+', '+'), ('return', 'return'), ('mutex', 'mutex'), ('other', 'other'), (':', ':'), (',', ','), (')', ')'), ('this', 'this'), ('}', '}'), ('?', '?'), ('new', 'new'), ('.', '.'), ('e', 'e'), (']', ']'), (';', ';')}
+Source Cluster 274 Target Cluster 329
+Source Cluster Size 17 Target Cluster Size 37
+11 17
+{('{', '{'), ('+', '+'), ('return', 'return'), ('mutex', 'mutex'), ('other', 'other'), (':', ':'), (',', ','), (')', ')'), ('this', 'this'), ('}', '}'), ('?', '?'), ('new', 'new'), ('.', '.'), ('e', 'e'), (']', ']'), (';', ';')}
+Source Cluster 274 Target Cluster 341
+Source Cluster Size 17 Target Cluster Size 33
+12 17
+{('{', '{'), ('+', '+'), ('return', 'return'), ('mutex', 'mutex'), ('other', 'other'), (':', ':'), (',', ','), (')', ')'), ('this', 'this'), ('}', '}'), ('?', '?'), ('new', 'new'), ('.', '.'), ('e', 'e'), (']', ']'), (';', ';')}
+Source Cluster 274 Target Cluster 343
+Source Cluster Size 17 Target Cluster Size 35
+11 17
+{('}', '}'), (';', ';')}
+Source Cluster 279 Target Cluster 63
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 279 Target Cluster 324
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 279 Target Cluster 431
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('}', '}'), ('.', '.'), ('(', '('), (';', ';')}
+Source Cluster 282 Target Cluster 52
+Source Cluster Size 5 Target Cluster Size 11
+4 5
+{(')', ')'), ('}', '}'), ('.', '.'), ('(', '('), (';', ';')}
+Source Cluster 282 Target Cluster 204
+Source Cluster Size 5 Target Cluster Size 8
+4 5
+{('skipped', 'skipped'), ('field_2_colors', '_colors'), ('interval', 'interval'), ('ctf', 'ctf'), (')', ')'), ('<=', '<='), ('i', 'i'), ('.', '.'), ('Append', 'append'), ('b', 'b'), ('(', '('), ('e', 'e'), (';', ';'), ('{', '{'), ('buffer', 'buffer'), ('<', '<'), ('++', '++'), ('j', 'j'), ('k', 'k'), ('pos', 'pos')}
+Source Cluster 285 Target Cluster 169
+Source Cluster Size 23 Target Cluster Size 42
+14 23
+{('0', '0'), ('pattern', 'pattern'), ('id', 'id'), ('runData', 'runData'), ('inCoreLimit', 'inCoreLimit'), ('-', '-'), ('functionName', 'functionName'), ('parser', 'parser'), ('name', 'name'), ('tokenName', 'tokenName'), ('recognizer', 'recognizer'), ('bufferSize', 'bufferSize'), ('field', 'field'), ('label', 'label'), ('quoted', 'quoted'), ('null', 'null'), ('tenum', 'tenum'), ('message', 'message'), ('dcb', 'dcb'), ('shapeField', 'shapeField'), ('args', 'args'), ('firstRow', 'firstRow'), ('atn', 'atn'), ('JGitText', 'JGitText'), ('list', 'list'), ('lexer', 'lexer'), (')', ')'), ('ctx', 'ctx'), ('input', 'input'), ('Initialize', 'initialise'), ('analyer', 'analyer'), ('grid', 'grid'), ('usedToolPacks', 'usedToolPacks'), ('header', 'header'), ('destination', 'destination'), ('suffix', 'suffix'), ('credentials', 'credentials'), ('mutex', 'mutex'), ('Format', 'format'), ('width', 'width'), ('row', 'row'), ('spContainer', 'spContainer'), ('errCode', 'errCode'), ('set', 'set'), ('true', 'true'), ('clauses', 'clauses'), ('weight', 'weight'), ('blockSize', 'blockSize'), ('externalWorkbookNumber', 'externalWorkbookNumber'), ('c', 'c'), ('false', 'false'), ('exc', 'exc'), ('ae', 'ae'), ('maxDoc', 'maxDoc'), ('arearef', 'arearef'), ('target', 'target'), ('analyzer', 'analyzer'), ('1', '1'), ('term', 'term'), ('ConvertToInputStream', 'convertToInputStream'), ('path', 'path'), ('state', 'state'), ('stream', 'stream'), ('propertyNumber', 'propertyNumber'), ('this', 'this'), ('workbook', 'workbook'), ('MessageFormat', 'MessageFormat'), ('type', 'type'), ('product', 'product'), ('or', 'or'), ('operator1', 'operator'), ('evaluator', 'evaluator'), ('parent', 'parent'), ('"', '"'), ('ris', 'ris'), ('reason', 'reason'), ('dedup', 'dedup'), ('(', '('), ('in1', 'in'), ('optr', 'operator'), ('ref1', 'ref'), ('file', 'file'), ('ruleName', 'ruleName'), ('new', 'new'), ('size', 'size'), ('onlySheetIndex', 'onlySheetIndex'), ('doc', 'doc'), ('cr', 'cr'), ('ruleStart', 'ruleStart'), ('match', 'match'), ('repo', 'repo'), ('noteOn', 'noteOn'), ('detailMessage', 'detailMessage'), ('errorCode', 'errorCode')}
+Source Cluster 295 Target Cluster 103
+Source Cluster Size 109 Target Cluster Size 76
+66 109
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 296 Target Cluster 14
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 296 Target Cluster 49
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 296 Target Cluster 57
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 296 Target Cluster 75
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 296 Target Cluster 90
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 296 Target Cluster 171
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 296 Target Cluster 312
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 296 Target Cluster 348
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 296 Target Cluster 421
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 296 Target Cluster 469
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{(')', ')'), ('{', '{'), ('return', 'return')}
+Source Cluster 296 Target Cluster 489
+Source Cluster Size 3 Target Cluster Size 2
+2 3
+{(')', ')'), ('(', '('), (';', ';')}
+Source Cluster 298 Target Cluster 14
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('(', '('), (';', ';')}
+Source Cluster 298 Target Cluster 49
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{(')', ')'), ('(', '('), (';', ';')}
+Source Cluster 298 Target Cluster 90
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('(', '('), (';', ';')}
+Source Cluster 298 Target Cluster 94
+Source Cluster Size 3 Target Cluster Size 2
+2 3
+{(')', ')'), ('(', '('), (';', ';')}
+Source Cluster 298 Target Cluster 119
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{(')', ')'), ('(', '('), (';', ';')}
+Source Cluster 298 Target Cluster 124
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{(')', ')'), ('(', '('), (';', ';')}
+Source Cluster 298 Target Cluster 171
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{(')', ')'), ('(', '('), (';', ';')}
+Source Cluster 298 Target Cluster 273
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{(')', ')'), ('(', '('), (';', ';')}
+Source Cluster 298 Target Cluster 299
+Source Cluster Size 3 Target Cluster Size 2
+2 3
+{(')', ')'), ('(', '('), (';', ';')}
+Source Cluster 298 Target Cluster 312
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('(', '('), (';', ';')}
+Source Cluster 298 Target Cluster 318
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{(')', ')'), ('(', '('), (';', ';')}
+Source Cluster 298 Target Cluster 319
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{(')', ')'), ('(', '('), (';', ';')}
+Source Cluster 298 Target Cluster 324
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('(', '('), (';', ';')}
+Source Cluster 298 Target Cluster 454
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{(')', ')'), ('(', '('), (';', ';')}
+Source Cluster 298 Target Cluster 469
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{(')', ')'), ('(', '(')}
+Source Cluster 302 Target Cluster 94
+Source Cluster Size 2 Target Cluster Size 2
+2 2
+{(')', ')'), ('(', '(')}
+Source Cluster 302 Target Cluster 124
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{(')', ')'), ('(', '(')}
+Source Cluster 313 Target Cluster 94
+Source Cluster Size 2 Target Cluster Size 2
+2 2
+{(')', ')'), ('(', '(')}
+Source Cluster 313 Target Cluster 124
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 330 Target Cluster 63
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 330 Target Cluster 324
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 330 Target Cluster 431
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('(', '('), ('.', '.')}
+Source Cluster 343 Target Cluster 15
+Source Cluster Size 3 Target Cluster Size 2
+2 3
+{('(', '('), ('.', '.')}
+Source Cluster 343 Target Cluster 59
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{('(', '('), ('.', '.')}
+Source Cluster 343 Target Cluster 86
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{('(', '('), ('.', '.')}
+Source Cluster 343 Target Cluster 244
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{('(', '('), ('.', '.')}
+Source Cluster 343 Target Cluster 273
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{('(', '('), ('.', '.')}
+Source Cluster 343 Target Cluster 319
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('0', '0'), ('"', '"'), ('line', 'line'), ('for', 'for'), ('if', 'if'), (',', ','), (')', ')'), ('-', '-'), ('i', 'i'), ('.', '.'), ('Append', 'append'), ('(', '('), ('input', 'input'), ('may', 'may'), ('+', '+'), ('return', 'return'), ('!=', '!='), ('start', 'start'), ('>', '>'), ('1', '1'), ('bytes', 'bytes'), ('new', 'new'), ('ToString', 'toString'), ('d', 'd'), (';', ';'), ('{', '{'), ('\\n', '\\n'), ('buffer', 'buffer'), (':', ':'), ('currentBlock', 'currentBlock'), ('Length', 'length'), ('Constants', 'Constants'), ('utf8', 'utf8'), ('<', '<'), ('}', '}'), ('throw', 'throw'), ('avg', 'avg'), ('[', '['), ('=', '='), ('10', '10'), ('++', '++'), ('j', 'j'), ('be', 'be'), ('>=', '>='), ('*', '*'), ('==', '=='), (']', ']')}
+Source Cluster 350 Target Cluster 487
+Source Cluster Size 51 Target Cluster Size 53
+34 51
+{('}', '}'), (';', ';')}
+Source Cluster 352 Target Cluster 63
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 352 Target Cluster 324
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 352 Target Cluster 431
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('{', '{'), ('foreach', 'for'), ('try', 'try'), ('for', 'for'), ('if', 'if'), ('while', 'while'), ('(', '('), ('switch', 'switch')}
+Source Cluster 371 Target Cluster 165
+Source Cluster Size 8 Target Cluster Size 17
+5 8
+{('lock', 'synchronized'), ('{', '{'), ('return', 'return'), (')', ')'), ('this', 'this'), ('throw', 'throw')}
+Source Cluster 375 Target Cluster 34
+Source Cluster Size 6 Target Cluster Size 14
+4 6
+{('lock', 'synchronized'), ('{', '{'), ('return', 'return'), (')', ')'), ('this', 'this'), ('throw', 'throw')}
+Source Cluster 375 Target Cluster 486
+Source Cluster Size 6 Target Cluster Size 9
+4 6
+{('(', '('), ('return', 'return')}
+Source Cluster 377 Target Cluster 45
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('return', 'return'), (':', ':'), ('recSize', 'recSize'), (')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 384 Target Cluster 277
+Source Cluster Size 6 Target Cluster Size 13
+4 6
+{('bool', 'boolean'), ('"', '"'), ('/', '/'), ('&', '&'), ('!', '!'), ('if', 'if'), (',', ','), (')', ')'), ('catch', 'catch'), ('.', '.'), ('Append', 'append'), ('(', '('), ('+', '+'), ('return', 'return'), ('foreach', 'for'), ('!=', '!='), ('Set', 'set'), ('bytes', 'bytes'), ('GetDeltaBase', 'getDeltaBase'), (';', ';'), ('{', '{'), ('null', 'null'), ('}', '}'), ('w', 'w'), ('buf', 'buf'), ('=', '='), ('&&', '&&'), (']', ']'), ('else', 'else')}
+Source Cluster 386 Target Cluster 399
+Source Cluster Size 33 Target Cluster Size 54
+21 33
+{('0', '0'), (',', ','), (')', ')'), ('(', '('), (';', ';')}
+Source Cluster 389 Target Cluster 1
+Source Cluster Size 8 Target Cluster Size 17
+5 8
+{('"', '"'), ('_limit', 'limit'), ('append', 'append'), (',', ','), (')', ')'), ('(', '('), (';', ';')}
+Source Cluster 402 Target Cluster 259
+Source Cluster Size 8 Target Cluster Size 17
+5 8
+{('"', '"'), ('_limit', 'limit'), ('append', 'append'), (',', ','), (')', ')'), ('(', '('), (';', ';')}
+Source Cluster 402 Target Cluster 323
+Source Cluster Size 8 Target Cluster Size 19
+5 8
+{('"', '"'), ('_limit', 'limit'), ('append', 'append'), (',', ','), (')', ')'), ('(', '('), (';', ';')}
+Source Cluster 402 Target Cluster 412
+Source Cluster Size 8 Target Cluster Size 18
+5 8
+{('}', '}'), (';', ';')}
+Source Cluster 404 Target Cluster 63
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 404 Target Cluster 324
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 404 Target Cluster 431
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(':', ':'), (')', ')'), ('}', '}'), ('(', '('), (';', ';')}
+Source Cluster 409 Target Cluster 1
+Source Cluster Size 7 Target Cluster Size 17
+5 7
+{('}', '}'), (';', ';')}
+Source Cluster 416 Target Cluster 63
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 416 Target Cluster 324
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('}', '}'), (';', ';')}
+Source Cluster 416 Target Cluster 431
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('0', '0'), ('to', 'to'), ('"', '"'), ('if', 'if'), (',', ','), (')', ')'), ('5', '5'), ('.', '.'), ('(', '('), ('+', '+'), ('return', 'return'), ('index', 'index'), ('1', '1'), ('but', 'but'), ('while', 'while'), ('new', 'new'), ('scratch', 'scratch'), ('returnType', 'returnType'), (';', ';'), ('<<', '<<'), ('{', '{'), (':', ':'), ('Add', 'add'), ('Length', 'length'), ('}', '}'), ('=', '='), ('instead', 'instead'), ('j', 'j'), ('maxCount', 'maxCount'), ('a', 'a'), ('min', 'min'), ('and', 'and'), ('==', '=='), (']', ']'), ('else', 'else')}
+Source Cluster 418 Target Cluster 343
+Source Cluster Size 37 Target Cluster Size 35
+24 37
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 421 Target Cluster 14
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 421 Target Cluster 49
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 421 Target Cluster 63
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 421 Target Cluster 90
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 421 Target Cluster 171
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 421 Target Cluster 299
+Source Cluster Size 3 Target Cluster Size 2
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 421 Target Cluster 312
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 421 Target Cluster 318
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 421 Target Cluster 324
+Source Cluster Size 3 Target Cluster Size 3
+3 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 421 Target Cluster 431
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{(')', ')'), ('}', '}'), (';', ';')}
+Source Cluster 421 Target Cluster 469
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{(')', ')'), ('{', '{')}
+Source Cluster 424 Target Cluster 14
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 424 Target Cluster 49
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 424 Target Cluster 75
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 424 Target Cluster 90
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 424 Target Cluster 312
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 424 Target Cluster 348
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 424 Target Cluster 421
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 424 Target Cluster 489
+Source Cluster Size 2 Target Cluster Size 2
+2 2
+{('=', '='), ('"', '"'), ('+', '+'), (',', ','), ('Append', 'append'), (')', ')'), ('-', '-'), ('null', 'null'), ('}', '}'), ('i', 'i'), ('ToString', 'toString'), ('.', '.'), ('b', 'b'), ('==', '=='), (']', ']'), (';', ';'), ('[', '[')}
+Source Cluster 448 Target Cluster 72
+Source Cluster Size 19 Target Cluster Size 27
+12 19
+{('=', '='), ('"', '"'), ('+', '+'), (',', ','), ('Append', 'append'), ('CFRuleRecord', 'CFRuleBase'), (')', ')'), ('-', '-'), ('null', 'null'), ('}', '}'), ('i', 'i'), ('ToString', 'toString'), ('.', '.'), ('b', 'b'), ('==', '=='), (']', ']'), (';', ';'), ('[', '[')}
+Source Cluster 448 Target Cluster 329
+Source Cluster Size 19 Target Cluster Size 37
+13 19
+{('=', '='), ('"', '"'), ('+', '+'), (',', ','), ('Append', 'append'), ('CFRuleRecord', 'CFRuleBase'), (')', ')'), ('-', '-'), ('null', 'null'), ('}', '}'), ('i', 'i'), ('ToString', 'toString'), ('.', '.'), ('b', 'b'), ('==', '=='), (']', ']'), (';', ';'), ('[', '[')}
+Source Cluster 448 Target Cluster 346
+Source Cluster Size 19 Target Cluster Size 31
+12 19
+{('=', '='), ('"', '"'), ('+', '+'), (',', ','), ('Append', 'append'), ('CFRuleRecord', 'CFRuleBase'), (')', ')'), ('-', '-'), ('null', 'null'), ('}', '}'), ('i', 'i'), ('ToString', 'toString'), ('.', '.'), ('b', 'b'), ('==', '=='), (']', ']'), (';', ';'), ('[', '[')}
+Source Cluster 448 Target Cluster 488
+Source Cluster Size 19 Target Cluster Size 43
+15 19
+{('for', 'for'), ('if', 'if'), ('catch', 'catch'), ('Append', 'append'), ('(', '('), ('return', 'return'), ('Evaluate', 'evaluate'), ('_isPaddedToQuadByteMultiple', '_isPaddedToQuadByteMultiple'), ('termsOffsets', '.'), (';', ';'), ('{', '{'), ('maxGoodPoints', 'maxGoodPoints'), (':', ':'), ('}', '}'), ('throw', 'throw'), ('GetPointer', 'getPointer'), ('Array', 'System'), ('arrays', 'arrays'), ('avg', 'avg'), ('[', '['), ('=', '='), ('default', 'default'), ('n', 'n'), ('String', 'String'), ('else', 'else')}
+Source Cluster 457 Target Cluster 427
+Source Cluster Size 25 Target Cluster Size 60
+17 25
+{(')', ')'), ('{', '{')}
+Source Cluster 477 Target Cluster 14
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 477 Target Cluster 49
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 477 Target Cluster 75
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 477 Target Cluster 90
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 477 Target Cluster 312
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 477 Target Cluster 348
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 477 Target Cluster 421
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(')', ')'), ('{', '{')}
+Source Cluster 477 Target Cluster 489
+Source Cluster Size 2 Target Cluster Size 2
+2 2
+Aligned Clusters: 500
+Source Cluster 6 is aligned to Target Clusters: 454, 273, 119, 121, 124, 94, 319
+Source Cluster 9 is aligned to Target Clusters: 324, 171, 299, 14, 431, 49, 469, 312, 90, 318, 63
+Source Cluster 62 is aligned to Target Clusters: 431, 324, 63
+Source Cluster 64 is aligned to Target Clusters: 431, 324, 63
+Source Cluster 72 is aligned to Target Clusters: 322
+Source Cluster 82 is aligned to Target Clusters: 124, 94
+Source Cluster 85 is aligned to Target Clusters: 185
+Source Cluster 103 is aligned to Target Clusters: 178
+Source Cluster 111 is aligned to Target Clusters: 321, 75, 469, 318
+Source Cluster 127 is aligned to Target Clusters: 431, 324, 63
+Source Cluster 136 is aligned to Target Clusters: 117
+Source Cluster 155 is aligned to Target Clusters: 204, 52, 277
+Source Cluster 179 is aligned to Target Clusters: 421, 489, 75, 14, 49, 312, 90, 348
+Source Cluster 186 is aligned to Target Clusters: 324, 299, 14, 49, 312, 90
+Source Cluster 193 is aligned to Target Clusters: 399, 487, 55
+Source Cluster 198 is aligned to Target Clusters: 324
+Source Cluster 199 is aligned to Target Clusters: 421, 489, 75, 171, 14, 49, 469, 312, 57, 90, 348
+Source Cluster 204 is aligned to Target Clusters: 3, 263, 15, 273, 281, 417, 45, 303, 50, 59, 319, 191, 454, 202, 86, 87, 94, 494, 368, 244, 119, 377, 124
+Source Cluster 206 is aligned to Target Clusters: 15, 273, 244, 86, 59, 319
+Source Cluster 211 is aligned to Target Clusters: 431, 324, 63
+Source Cluster 225 is aligned to Target Clusters: 97, 259, 105, 204, 469, 344, 410
+Source Cluster 235 is aligned to Target Clusters: 431, 324, 63
+Source Cluster 255 is aligned to Target Clusters: 10
+Source Cluster 274 is aligned to Target Clusters: 329, 341, 343
+Source Cluster 279 is aligned to Target Clusters: 431, 324, 63
+Source Cluster 282 is aligned to Target Clusters: 204, 52
+Source Cluster 285 is aligned to Target Clusters: 169
+Source Cluster 295 is aligned to Target Clusters: 103
+Source Cluster 296 is aligned to Target Clusters: 421, 489, 75, 171, 14, 49, 469, 312, 57, 90, 348
+Source Cluster 298 is aligned to Target Clusters: 318, 324, 454, 171, 299, 14, 49, 273, 469, 119, 312, 90, 124, 94, 319
+Source Cluster 302 is aligned to Target Clusters: 124, 94
+Source Cluster 313 is aligned to Target Clusters: 124, 94
+Source Cluster 330 is aligned to Target Clusters: 431, 324, 63
+Source Cluster 343 is aligned to Target Clusters: 15, 273, 244, 86, 59, 319
+Source Cluster 350 is aligned to Target Clusters: 487
+Source Cluster 352 is aligned to Target Clusters: 431, 324, 63
+Source Cluster 371 is aligned to Target Clusters: 165
+Source Cluster 375 is aligned to Target Clusters: 34, 486
+Source Cluster 377 is aligned to Target Clusters: 45
+Source Cluster 384 is aligned to Target Clusters: 277
+Source Cluster 386 is aligned to Target Clusters: 399
+Source Cluster 389 is aligned to Target Clusters: 1
+Source Cluster 402 is aligned to Target Clusters: 323, 259, 412
+Source Cluster 404 is aligned to Target Clusters: 431, 324, 63
+Source Cluster 409 is aligned to Target Clusters: 1
+Source Cluster 416 is aligned to Target Clusters: 431, 324, 63
+Source Cluster 418 is aligned to Target Clusters: 343
+Source Cluster 421 is aligned to Target Clusters: 324, 171, 299, 14, 431, 49, 469, 312, 90, 318, 63
+Source Cluster 424 is aligned to Target Clusters: 421, 489, 75, 14, 49, 312, 90, 348
+Source Cluster 448 is aligned to Target Clusters: 72, 329, 346, 488
+Source Cluster 457 is aligned to Target Clusters: 427
+Source Cluster 477 is aligned to Target Clusters: 421, 489, 75, 14, 49, 312, 90, 348
+
+Alignment results saved to: LLm_labelling/t5/java_cs/layer3/cluster_alignments.json

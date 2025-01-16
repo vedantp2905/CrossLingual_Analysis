@@ -1,0 +1,98 @@
+{('int', 'int'), ('float', 'float')}
+Source Cluster 86 Target Cluster 67
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('<', '<'), ('▁', '>')}
+Source Cluster 97 Target Cluster 71
+Source Cluster Size 3 Target Cluster Size 3
+2 3
+{('<', '<'), ('▁', '>')}
+Source Cluster 97 Target Cluster 208
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('(', '('), (',', ',')}
+Source Cluster 112 Target Cluster 26
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('(', '('), (',', ',')}
+Source Cluster 112 Target Cluster 288
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('(', '('), (',', ',')}
+Source Cluster 112 Target Cluster 404
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('(', '('), ('*', '*')}
+Source Cluster 122 Target Cluster 69
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('(', '('), ('*', '*')}
+Source Cluster 122 Target Cluster 307
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('(', '('), ('*', '*')}
+Source Cluster 122 Target Cluster 441
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('height', 'height'), ('width', 'width')}
+Source Cluster 136 Target Cluster 286
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('int', 'int'), (',', ',')}
+Source Cluster 406 Target Cluster 111
+Source Cluster Size 2 Target Cluster Size 2
+2 2
+{('int', 'int'), (',', ',')}
+Source Cluster 406 Target Cluster 269
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('int', 'int'), (',', ',')}
+Source Cluster 406 Target Cluster 427
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{('int', 'int'), (',', ',')}
+Source Cluster 406 Target Cluster 457
+Source Cluster Size 2 Target Cluster Size 2
+2 2
+{('(', '('), ('}', '}')}
+Source Cluster 448 Target Cluster 19
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{('(', '('), ('}', '}')}
+Source Cluster 448 Target Cluster 22
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('(', '('), ('}', '}')}
+Source Cluster 448 Target Cluster 69
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{('(', '('), ('}', '}')}
+Source Cluster 448 Target Cluster 140
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('(', '('), ('}', '}')}
+Source Cluster 448 Target Cluster 274
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('(', '('), ('}', '}')}
+Source Cluster 448 Target Cluster 287
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{('(', '('), ('}', '}')}
+Source Cluster 448 Target Cluster 336
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('(', '('), ('}', '}')}
+Source Cluster 448 Target Cluster 425
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+Aligned Clusters: 500
+Source Cluster 86 is aligned to Target Clusters: 67
+Source Cluster 97 is aligned to Target Clusters: 208, 71
+Source Cluster 112 is aligned to Target Clusters: 288, 26, 404
+Source Cluster 122 is aligned to Target Clusters: 441, 307, 69
+Source Cluster 136 is aligned to Target Clusters: 286
+Source Cluster 406 is aligned to Target Clusters: 457, 427, 269, 111
+Source Cluster 448 is aligned to Target Clusters: 69, 425, 140, 336, 274, 19, 22, 287
+
+Alignment results saved to: LLM_labelling/coderosetta/cpp_cuda/layer4/cluster_alignments.json

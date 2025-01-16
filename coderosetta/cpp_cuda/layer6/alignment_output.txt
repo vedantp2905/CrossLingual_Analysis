@@ -1,0 +1,149 @@
+{(',', ','), ('int', 'int')}
+Source Cluster 135 Target Cluster 448
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('index', 'index'), ('cnt', '[')}
+Source Cluster 198 Target Cluster 164
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('index', 'index'), ('cnt', '[')}
+Source Cluster 198 Target Cluster 322
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('index', 'index'), ('cnt', '[')}
+Source Cluster 198 Target Cluster 473
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('}', '}'), ('(', '(')}
+Source Cluster 297 Target Cluster 19
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('width', 'width'), ('height', 'height')}
+Source Cluster 309 Target Cluster 469
+Source Cluster Size 2 Target Cluster Size 2
+2 2
+{('(', '('), ('int', 'int')}
+Source Cluster 328 Target Cluster 47
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{('(', '('), ('int', 'int')}
+Source Cluster 328 Target Cluster 55
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{('(', '('), ('int', 'int')}
+Source Cluster 328 Target Cluster 60
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{('(', '('), ('int', 'int')}
+Source Cluster 328 Target Cluster 116
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('(', '('), ('int', 'int')}
+Source Cluster 328 Target Cluster 146
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{('(', '('), ('int', 'int')}
+Source Cluster 328 Target Cluster 418
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{('(', '('), ('int', 'int')}
+Source Cluster 328 Target Cluster 422
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{('(', '('), ('int', 'int')}
+Source Cluster 328 Target Cluster 448
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{('output', 'output'), ('gray', '=')}
+Source Cluster 334 Target Cluster 232
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{('}', '}'), ('(', '(')}
+Source Cluster 364 Target Cluster 13
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{('}', '}'), ('(', '(')}
+Source Cluster 364 Target Cluster 19
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{('}', '}'), ('(', '(')}
+Source Cluster 364 Target Cluster 37
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('}', '}'), ('(', '(')}
+Source Cluster 364 Target Cluster 71
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{('}', '}'), ('(', '(')}
+Source Cluster 364 Target Cluster 258
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('}', '}'), ('(', '(')}
+Source Cluster 364 Target Cluster 446
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{(',', ','), ('(', '(')}
+Source Cluster 446 Target Cluster 105
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(',', ','), ('(', '(')}
+Source Cluster 446 Target Cluster 124
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(',', ','), ('(', '(')}
+Source Cluster 446 Target Cluster 260
+Source Cluster Size 2 Target Cluster Size 2
+2 2
+{(',', ','), ('(', '(')}
+Source Cluster 446 Target Cluster 404
+Source Cluster Size 2 Target Cluster Size 3
+2 2
+{(',', ','), ('(', '(')}
+Source Cluster 446 Target Cluster 448
+Source Cluster Size 2 Target Cluster Size 4
+2 2
+{('}', '}'), ('{', '{')}
+Source Cluster 455 Target Cluster 12
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('}', '}'), ('{', '{')}
+Source Cluster 455 Target Cluster 71
+Source Cluster Size 3 Target Cluster Size 6
+2 3
+{('(', '('), ('P', '*')}
+Source Cluster 499 Target Cluster 152
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{('(', '('), ('P', '*')}
+Source Cluster 499 Target Cluster 218
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+{('(', '('), ('P', '*')}
+Source Cluster 499 Target Cluster 236
+Source Cluster Size 3 Target Cluster Size 2
+2 3
+{('(', '('), ('P', '*')}
+Source Cluster 499 Target Cluster 349
+Source Cluster Size 3 Target Cluster Size 5
+2 3
+{('(', '('), ('P', '*')}
+Source Cluster 499 Target Cluster 397
+Source Cluster Size 3 Target Cluster Size 7
+2 3
+{('(', '('), ('P', '*')}
+Source Cluster 499 Target Cluster 448
+Source Cluster Size 3 Target Cluster Size 4
+2 3
+Aligned Clusters: 500
+Source Cluster 135 is aligned to Target Clusters: 448
+Source Cluster 198 is aligned to Target Clusters: 473, 322, 164
+Source Cluster 297 is aligned to Target Clusters: 19
+Source Cluster 309 is aligned to Target Clusters: 469
+Source Cluster 328 is aligned to Target Clusters: 448, 418, 422, 47, 146, 116, 55, 60
+Source Cluster 334 is aligned to Target Clusters: 232
+Source Cluster 364 is aligned to Target Clusters: 258, 37, 71, 13, 19, 446
+Source Cluster 446 is aligned to Target Clusters: 448, 260, 105, 404, 124
+Source Cluster 455 is aligned to Target Clusters: 12, 71
+Source Cluster 499 is aligned to Target Clusters: 448, 236, 397, 152, 218, 349
+
+Alignment results saved to: LLM_labelling/coderosetta/cpp_cuda/layer6/cluster_alignments.json
