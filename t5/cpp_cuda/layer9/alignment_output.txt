@@ -1,84 +1,4 @@
-{('cos', 'b'), ('sin', 'a')}
-Source Cluster 38 Target Cluster 420
-Source Cluster Size 2 Target Cluster Size 3
-2 2
-{('scores_out', 'scores_out'), ('labels_out', 'labels_out'), ('boxes_out', 'boxes_out')}
-Source Cluster 43 Target Cluster 282
-Source Cluster Size 3 Target Cluster Size 3
-3 3
-{('fill_cpu', 'fill_kernel'), ('copy_cpu', 'copy_kernel'), ('scal_cpu', 'scal_kernel'), ('pow_cpu', 'pow_kernel'), ('mul_cpu', 'mul_kernel')}
-Source Cluster 111 Target Cluster 451
-Source Cluster Size 7 Target Cluster Size 11
-5 7
-{('filtered_Q', 'filtered_Q'), ('sumQ', 'sumQ'), ('q_q', 'q_q'), ('r_q', 'r_q')}
-Source Cluster 118 Target Cluster 175
-Source Cluster Size 4 Target Cluster Size 5
-4 4
-{('scores_out', 'scores_out'), ('labels_out', 'labels_out')}
-Source Cluster 166 Target Cluster 282
-Source Cluster Size 2 Target Cluster Size 3
-2 2
-{('memHeight', '-'), ('End', '-'), ('Start', '+')}
-Source Cluster 179 Target Cluster 74
-Source Cluster Size 4 Target Cluster Size 6
-3 4
-{('nlf_filter_down_backward_cpu', 'nlf_filter_down_backward'), ('convertEdgeMaskToFloatCpu', 'convertEdgeMaskToFloatDevice'), ('nlf_up_forward_cpu', 'nlf_up_forward'), ('nlf_down_forward_cpu', 'nlf_down_forward'), ('nlf_filter_left_backward_cpu', 'nlf_filter_left_backward'), ('runFilterCpu', 'runFilterCuda')}
-Source Cluster 217 Target Cluster 137
-Source Cluster Size 6 Target Cluster Size 10
-4 6
-{('realPart', 'realPart'), ('imagPart', 'imagPart')}
-Source Cluster 260 Target Cluster 468
-Source Cluster Size 2 Target Cluster Size 4
-2 2
-{('log', '('), ('pow', '(')}
-Source Cluster 263 Target Cluster 0
-Source Cluster Size 2 Target Cluster Size 1
-2 2
-{('log', '('), ('pow', '(')}
-Source Cluster 263 Target Cluster 160
-Source Cluster Size 2 Target Cluster Size 2
-2 2
-{('log', '('), ('pow', '(')}
-Source Cluster 263 Target Cluster 439
-Source Cluster Size 2 Target Cluster Size 1
-2 2
-{('log', '('), ('pow', '(')}
-Source Cluster 263 Target Cluster 485
-Source Cluster Size 2 Target Cluster Size 2
-2 2
-{('data', 'data'), ('array', 'array')}
-Source Cluster 279 Target Cluster 390
-Source Cluster Size 3 Target Cluster Size 3
-2 3
-{('rgb2yuv_kernel', 'rgb2yuv_kernel'), ('gather_points_kernel', 'gather_points_kernel'), ('yuv2rgb_kernel', 'yuv2rgb_kernel'), ('k_adam_kernel', 'k_adam_kernel'), ('cpu_rows_dc_offset_remove_layer_kernel', 'cuda_rows_dc_offset_remove_layer_kernel')}
-Source Cluster 295 Target Cluster 137
-Source Cluster Size 8 Target Cluster Size 10
-5 8
-{('data_i', 'data_i'), ('q_i', 'q_i'), ('r_i', 'r_i')}
-Source Cluster 316 Target Cluster 277
-Source Cluster Size 3 Target Cluster Size 6
-3 3
-{('Zsize', 'Zsize'), ('Ysize', 'Ysize'), ('Xsize', 'Xsize')}
-Source Cluster 335 Target Cluster 49
-Source Cluster Size 3 Target Cluster Size 4
-3 3
-{('realPart', 'realPart'), ('imagPart', 'imagPart')}
-Source Cluster 414 Target Cluster 468
-Source Cluster Size 2 Target Cluster Size 4
-2 2
-{('short', 'short'), ('char', 'char')}
-Source Cluster 429 Target Cluster 145
-Source Cluster Size 2 Target Cluster Size 2
-2 2
-{('sumI', 'sumI'), ('filtered_I', 'filtered_I'), ('I', 'I')}
-Source Cluster 440 Target Cluster 277
-Source Cluster Size 4 Target Cluster Size 6
-3 4
-{('Zsize', 'Zsize'), ('Ysize', 'Ysize'), ('Xsize', 'Xsize')}
-Source Cluster 478 Target Cluster 49
-Source Cluster Size 3 Target Cluster Size 4
-3 3
-Aligned Clusters: 500
+Aligned Clusters: 17
 Source Cluster 38 is aligned to Target Clusters: 420
 Source Cluster 43 is aligned to Target Clusters: 282
 Source Cluster 111 is aligned to Target Clusters: 451
@@ -97,4 +17,4 @@ Source Cluster 429 is aligned to Target Clusters: 145
 Source Cluster 440 is aligned to Target Clusters: 277
 Source Cluster 478 is aligned to Target Clusters: 49
 
-Alignment results saved to: LLM_labelling/t5/cpp_cuda/layer9/cluster_alignments.json
+Alignment results saved to: ../LLM_labelling/t5/cpp_cuda/layer9/cluster_alignments.json
