@@ -199,14 +199,25 @@ def display_aligned_clusters(model_base: str, selected_pair: str, selected_layer
         f"Alignments_with_LLM_labels_layer{selected_layer}.json"
     )
     
+    # Load cluster alignments metrics file
+    metrics_file = os.path.join(
+        model_base,
+        selected_pair,
+        f"layer{selected_layer}",
+        "cluster_alignments.json"
+    )
+    
     if not os.path.exists(alignments_file):
         st.error("No alignment data found for this layer")
         return
         
     with open(alignments_file, 'r') as f:
         alignments = json.load(f)
-    
-    # Create dropdown options for cluster pairs
+        
+    with open(metrics_file, 'r') as f:
+        alignment_metrics = json.load(f)
+
+    # Create dropdown options for cluster pairs first
     cluster_pairs = []
     for src_cluster_id, cluster_data in alignments["alignments"].items():
         encoder_id = cluster_data["encoder_cluster"]["id"]
@@ -224,6 +235,11 @@ def display_aligned_clusters(model_base: str, selected_pair: str, selected_layer
     
     # Get the selected encoder and decoder IDs
     selected_encoder_id, selected_decoder_id = cluster_pairs[selected_pair_idx]
+    
+
+    
+    # The issue might be that the encoder ID in metrics file doesn't include 'c' prefix
+    metrics_encoder_id = selected_encoder_id.lstrip('c') if selected_encoder_id.startswith('c') else selected_encoder_id
     
     # Find the corresponding data
     for src_cluster_id, cluster_data in alignments["alignments"].items():
@@ -248,30 +264,69 @@ def display_aligned_clusters(model_base: str, selected_pair: str, selected_layer
         "decoder"
     )
     
-    # Display clusters first
+    # Display clusters side by side with wordclouds
     st.write("### Cluster Details")
     col1, col2 = st.columns(2)
     
     with col1:
         st.write("#### Encoder Cluster")
+        # Create and display encoder wordcloud first
+        tokens = encoder_cluster.get('unique_tokens', [])
+        wc = create_wordcloud(tokens)
+        if wc:
+            fig = plt.figure(figsize=(10, 5))
+            plt.imshow(wc, interpolation='bilinear')
+            plt.axis('off')
+            st.pyplot(fig)
+            plt.close(fig)
+            
+        # Then display metadata
         st.write(f"**Syntactic Label:** {encoder_cluster.get('syntactic_label', 'N/A')}")
         st.write("**Semantic Tags:**")
         for tag in encoder_cluster.get('semantic_tags', []):
             st.write(f"- {tag}")
         st.write(f"**Description:** {encoder_cluster.get('description', 'N/A')}")
-        st.write("**Tokens:**")
-        st.write(", ".join(encoder_cluster.get('unique_tokens', [])))
     
     with col2:
         st.write("#### Decoder Cluster")
+        # Create and display decoder wordcloud first
+        tokens = decoder_cluster.get('unique_tokens', [])
+        wc = create_wordcloud(tokens)
+        if wc:
+            fig = plt.figure(figsize=(10, 5))
+            plt.imshow(wc, interpolation='bilinear')
+            plt.axis('off')
+            st.pyplot(fig)
+            plt.close(fig)
+            
+        # Then display metadata
         st.write(f"**Syntactic Label:** {decoder_cluster.get('syntactic_label', 'N/A')}")
         st.write("**Semantic Tags:**")
         for tag in decoder_cluster.get('semantic_tags', []):
             st.write(f"- {tag}")
         st.write(f"**Description:** {decoder_cluster.get('description', 'N/A')}")
-        st.write("**Tokens:**")
-        st.write(", ".join(decoder_cluster.get('unique_tokens', [])))
     
+    # Display alignment metrics - fixed to use correct key structure
+    st.write("### Alignment Metrics")
+    if metrics_encoder_id in alignment_metrics:
+        metrics = alignment_metrics[metrics_encoder_id]["metrics"]
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            st.metric("Match Percentage", f"{metrics['match_percentage']:.2%}")
+            st.metric("Source Cluster Size", metrics["source_cluster_size"])
+        
+        with col2:
+            st.metric("Aligned Word Count", metrics["aligned_word_count"])
+            st.metric("Total Words", metrics["total_words"])
+            
+        with col3:
+            st.metric("Size Threshold", metrics["size_threshold"])
+            st.metric("Translation Threshold", metrics["translation_threshold"])
+    else:
+        st.warning(f"No alignment metrics found for cluster {selected_encoder_id}")
+        print(f"No metrics found for ID {metrics_encoder_id}")
+
     # Display evaluation section after cluster details
     st.write("### Alignment Evaluation")
     alignment_accurate = st.radio(
