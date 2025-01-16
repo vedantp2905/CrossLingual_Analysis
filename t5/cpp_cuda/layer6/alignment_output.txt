@@ -1,72 +1,4 @@
-{('temp_diff', 'temp_diff'), ('filters_diff', 'filters_diff')}
-Source Cluster 52 Target Cluster 236
-Source Cluster Size 2 Target Cluster Size 2
-2 2
-{('filters', 'filters'), ('filter', 'filter')}
-Source Cluster 117 Target Cluster 77
-Source Cluster Size 3 Target Cluster Size 4
-2 3
-{('data', 'data'), ('canData', 'canData'), ('g_data', '[')}
-Source Cluster 141 Target Cluster 264
-Source Cluster Size 3 Target Cluster Size 7
-2 3
-{('Ysize', 'Ysize'), ('Xsize', 'Xsize'), ('Zsize', 'Zsize'), ('wsize', 'wsize')}
-Source Cluster 167 Target Cluster 457
-Source Cluster Size 4 Target Cluster Size 3
-3 4
-{('sumI', 'sumI'), ('I', 'I'), ('filtered_I', 'filtered_I')}
-Source Cluster 179 Target Cluster 342
-Source Cluster Size 4 Target Cluster Size 3
-3 4
-{('sumQ', 'sumQ'), ('filtered_Q', 'filtered_Q')}
-Source Cluster 196 Target Cluster 130
-Source Cluster Size 3 Target Cluster Size 5
-2 3
-{('top_data', 'top_data'), ('bottom_data', 'bottom_data')}
-Source Cluster 225 Target Cluster 447
-Source Cluster Size 2 Target Cluster Size 3
-2 2
-{('8', '8'), ('4', '4')}
-Source Cluster 244 Target Cluster 177
-Source Cluster Size 3 Target Cluster Size 2
-2 3
-{('realPart', 'realPart'), ('imagPart', 'imagPart')}
-Source Cluster 263 Target Cluster 408
-Source Cluster Size 2 Target Cluster Size 4
-2 2
-{('outputIndex', 'outputIndex'), ('sampleIndex', 'sampleIndex'), ('keyIndex', 'keyIndex')}
-Source Cluster 281 Target Cluster 272
-Source Cluster Size 3 Target Cluster Size 6
-3 3
-{('indexOutBatch', 'indexOutBatch'), ('indexInBatch', 'indexInBatch')}
-Source Cluster 282 Target Cluster 476
-Source Cluster Size 2 Target Cluster Size 4
-2 2
-{('boxes_for_nms', 'boxes_for_nms'), ('boxes_before_nms', 'boxes_before_nms')}
-Source Cluster 313 Target Cluster 93
-Source Cluster Size 2 Target Cluster Size 4
-2 2
-{('q_q', 'q_q'), ('r_q', 'r_q')}
-Source Cluster 328 Target Cluster 326
-Source Cluster Size 3 Target Cluster Size 3
-2 3
-{('q_q', 'q_q'), ('r_q', 'r_q')}
-Source Cluster 328 Target Cluster 339
-Source Cluster Size 3 Target Cluster Size 6
-2 3
-{('temp_diff', 'temp_diff'), ('filters_diff', 'filters_diff')}
-Source Cluster 356 Target Cluster 236
-Source Cluster Size 2 Target Cluster Size 2
-2 2
-{('neighbor', 'neighbor'), ('neighbors', 'neighbors')}
-Source Cluster 380 Target Cluster 61
-Source Cluster Size 2 Target Cluster Size 2
-2 2
-{('realPart', 'realPart'), ('imagPart', 'imagPart')}
-Source Cluster 486 Target Cluster 408
-Source Cluster Size 2 Target Cluster Size 4
-2 2
-Aligned Clusters: 500
+Aligned Clusters: 16
 Source Cluster 52 is aligned to Target Clusters: 236
 Source Cluster 117 is aligned to Target Clusters: 77
 Source Cluster 141 is aligned to Target Clusters: 264
@@ -84,4 +16,4 @@ Source Cluster 356 is aligned to Target Clusters: 236
 Source Cluster 380 is aligned to Target Clusters: 61
 Source Cluster 486 is aligned to Target Clusters: 408
 
-Alignment results saved to: LLM_labelling/t5/cpp_cuda/layer6/cluster_alignments.json
+Alignment results saved to: ../LLM_labelling/t5/cpp_cuda/layer6/cluster_alignments.json

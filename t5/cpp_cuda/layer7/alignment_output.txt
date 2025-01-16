@@ -1,76 +1,4 @@
-{('boxes_for_nms', 'boxes_for_nms'), ('boxes_before_nms', 'boxes_before_nms')}
-Source Cluster 42 Target Cluster 12
-Source Cluster Size 2 Target Cluster Size 3
-2 2
-{('boxes_for_nms', 'boxes_for_nms'), ('boxes_before_nms', 'boxes_before_nms')}
-Source Cluster 42 Target Cluster 451
-Source Cluster Size 2 Target Cluster Size 2
-2 2
-{('sumI', 'sumI'), ('I', 'I'), ('filtered_I', 'filtered_I')}
-Source Cluster 45 Target Cluster 80
-Source Cluster Size 4 Target Cluster Size 6
-3 4
-{('anchorH', 'anchorH'), ('preH', 'preH'), ('H', 'blockIdx')}
-Source Cluster 48 Target Cluster 89
-Source Cluster Size 3 Target Cluster Size 2
-2 3
-{('mul_Scalar_matrix', 'mul_Scalar_matrix'), ('dsubtract_matrix', 'dsubtract_matrix'), ('fill_matrix', 'fill_matrix'), ('matrix', 'matrix'), ('matmul', 'matmul'), ('dmul_Scalar_matrix', 'dmul_Scalar_matrix')}
-Source Cluster 122 Target Cluster 473
-Source Cluster Size 6 Target Cluster Size 9
-4 6
-{('availablePixels', 'availablePixels'), ('totalPixels', 'totalPixels')}
-Source Cluster 165 Target Cluster 296
-Source Cluster Size 2 Target Cluster Size 2
-2 2
-{('availablePixels', 'availablePixels'), ('totalPixels', 'totalPixels')}
-Source Cluster 165 Target Cluster 364
-Source Cluster Size 2 Target Cluster Size 3
-2 2
-{('Xsize', 'Xsize'), ('Zsize', 'Zsize'), ('Ysize', 'Ysize')}
-Source Cluster 171 Target Cluster 65
-Source Cluster Size 3 Target Cluster Size 3
-3 3
-{('128', ')'), ('256', ';')}
-Source Cluster 183 Target Cluster 298
-Source Cluster Size 3 Target Cluster Size 3
-2 3
-{('labels_out', 'labels_out'), ('boxes_out', 'boxes_out'), ('scores_out', 'scores_out')}
-Source Cluster 202 Target Cluster 311
-Source Cluster Size 4 Target Cluster Size 3
-3 4
-{('labels_out', 'labels_out'), ('vec_out', '['), ('boxes_out', 'boxes_out'), ('scores_out', 'scores_out')}
-Source Cluster 202 Target Cluster 481
-Source Cluster Size 4 Target Cluster Size 3
-3 4
-{('8', '8'), ('4', '4')}
-Source Cluster 203 Target Cluster 499
-Source Cluster Size 2 Target Cluster Size 3
-2 2
-{('filters_diff', 'filters_diff'), ('temp_diff', 'temp_diff')}
-Source Cluster 352 Target Cluster 66
-Source Cluster Size 2 Target Cluster Size 3
-2 2
-{('filters_diff', 'filters_diff'), ('temp_diff', 'temp_diff')}
-Source Cluster 352 Target Cluster 76
-Source Cluster Size 2 Target Cluster Size 3
-2 2
-{('filters_diff', 'filters_diff'), ('temp_diff', 'temp_diff')}
-Source Cluster 352 Target Cluster 227
-Source Cluster Size 2 Target Cluster Size 2
-2 2
-{('bottom_data', 'bottom_data'), ('top_data', 'top_data')}
-Source Cluster 398 Target Cluster 16
-Source Cluster Size 3 Target Cluster Size 7
-2 3
-{('bottom_data', 'bottom_data'), ('top_data', 'top_data')}
-Source Cluster 398 Target Cluster 28
-Source Cluster Size 3 Target Cluster Size 2
-2 3
-{('filters', 'filters'), ('filter', 'filter')}
-Source Cluster 440 Target Cluster 329
-Source Cluster Size 3 Target Cluster Size 5
-2 3
-Aligned Clusters: 500
+Aligned Clusters: 12
 Source Cluster 42 is aligned to Target Clusters: 451, 12
 Source Cluster 45 is aligned to Target Clusters: 80
 Source Cluster 48 is aligned to Target Clusters: 89
@@ -84,4 +12,4 @@ Source Cluster 352 is aligned to Target Clusters: 66, 227, 76
 Source Cluster 398 is aligned to Target Clusters: 16, 28
 Source Cluster 440 is aligned to Target Clusters: 329
 
-Alignment results saved to: LLM_labelling/t5/cpp_cuda/layer7/cluster_alignments.json
+Alignment results saved to: ../LLM_labelling/t5/cpp_cuda/layer7/cluster_alignments.json
