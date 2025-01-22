@@ -26,7 +26,7 @@ A Streamlit-based web application for exploring and evaluating code concept clus
 - Supabase account and credentials
 - Required Python packages:
   ```bash
-  pip install streamlit supabase-py python-dotenv matplotlib wordcloud plotly
+  pip install -r requirements.txt
   ```
 
 ## Setup

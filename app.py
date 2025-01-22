@@ -8,6 +8,7 @@ import plotly.graph_objects as go
 from collections import defaultdict
 from supabase import create_client
 from dotenv import load_dotenv
+from typing import List
 
 # Load environment variables
 load_dotenv()
@@ -523,6 +524,42 @@ def display_top_semantic_tags(model_base: str, selected_pair: str):
         )
         st.plotly_chart(fig)
 
+def get_available_layers(model_base: str, selected_pair: str) -> List[int]:
+    """Returns a list of layer numbers that have valid alignment files."""
+    layers = []
+    pair_dir = os.path.join(model_base, selected_pair)
+    
+    # Only include layers that have the alignment file
+    for item in os.listdir(pair_dir):
+        if item.startswith('layer'):
+            layer_num = int(item.replace('layer', ''))
+            alignment_file = os.path.join(
+                pair_dir, 
+                item, 
+                f"Alignments_with_LLM_labels_layer{layer_num}.json"
+            )
+            if os.path.isfile(alignment_file):
+                # Optionally validate JSON content
+                try:
+                    with open(alignment_file, 'r', encoding='utf-8') as f:
+                        json.load(f)
+                    layers.append(layer_num)
+                except (json.JSONDecodeError, UnicodeDecodeError):
+                    continue
+    
+    return sorted(layers)
+
+def validate_selected_layer(layer: int, available_layers: List[int]) -> int:
+    """Validates and returns a valid layer number."""
+    if not available_layers:
+        raise ValueError("No valid layers found")
+    
+    if layer not in available_layers:
+        # Return the first available layer if selected layer is invalid
+        return available_layers[0]
+    
+    return layer
+
 def main():
     st.set_page_config(layout="wide", page_title="Code Concept Explorer")
     
@@ -559,14 +596,20 @@ def main():
     if view == "Top Semantic Tags":
         display_top_semantic_tags(model_base, selected_pair)
     else:
-        # Layer selection
-        layer_dirs = [d for d in os.listdir(os.path.join(model_base, selected_pair)) 
-                     if d.startswith("layer")]
-        selected_layer = st.sidebar.selectbox(
-            "Layer",
-            range(len(layer_dirs)),
-            format_func=lambda x: f"Layer {x}"
-        )
+        # Get available layers
+        available_layers = get_available_layers(model_base, selected_pair)
+        
+        # Get and validate selected layer
+        try:
+            selected_layer = int(st.sidebar.selectbox(
+                "Layer",
+                range(len(available_layers)),
+                format_func=lambda x: f"Layer {available_layers[x]}"
+            ))
+        except ValueError:
+            selected_layer = 0
+        
+        selected_layer = validate_selected_layer(selected_layer, available_layers)
         
         # Component selection (only show for Individual Clusters view)
         if view == "Individual Clusters":
