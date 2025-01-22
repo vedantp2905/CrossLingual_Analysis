@@ -1,10 +1,4 @@
-Aligned Clusters: 7
-Source Cluster 86 is aligned to Target Clusters: 67
-Source Cluster 97 is aligned to Target Clusters: 208, 71
-Source Cluster 112 is aligned to Target Clusters: 288, 26, 404
-Source Cluster 122 is aligned to Target Clusters: 441, 307, 69
-Source Cluster 136 is aligned to Target Clusters: 286
-Source Cluster 406 is aligned to Target Clusters: 457, 427, 269, 111
-Source Cluster 448 is aligned to Target Clusters: 69, 425, 140, 336, 274, 19, 22, 287
+Aligned Clusters: 1
+Source Cluster 337 is aligned to Target Clusters: 88
 
 Alignment results saved to: ../LLM_labelling/coderosetta/cpp_cuda/layer4/cluster_alignments.json
