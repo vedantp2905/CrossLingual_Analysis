@@ -1,29 +1,14 @@
-Aligned Clusters: 26
-Source Cluster 29 is aligned to Target Clusters: 451
-Source Cluster 47 is aligned to Target Clusters: 219, 166, 158
-Source Cluster 54 is aligned to Target Clusters: 121
-Source Cluster 55 is aligned to Target Clusters: 100
-Source Cluster 63 is aligned to Target Clusters: 447
-Source Cluster 71 is aligned to Target Clusters: 178
-Source Cluster 83 is aligned to Target Clusters: 361
-Source Cluster 110 is aligned to Target Clusters: 498
-Source Cluster 131 is aligned to Target Clusters: 361
-Source Cluster 164 is aligned to Target Clusters: 232
-Source Cluster 169 is aligned to Target Clusters: 109
-Source Cluster 273 is aligned to Target Clusters: 86
-Source Cluster 328 is aligned to Target Clusters: 61
-Source Cluster 350 is aligned to Target Clusters: 121
-Source Cluster 367 is aligned to Target Clusters: 231
-Source Cluster 370 is aligned to Target Clusters: 230
-Source Cluster 375 is aligned to Target Clusters: 61
-Source Cluster 398 is aligned to Target Clusters: 86
-Source Cluster 414 is aligned to Target Clusters: 100
+Aligned Clusters: 11
+Source Cluster 55 is aligned to Target Clusters: 335, 79
+Source Cluster 127 is aligned to Target Clusters: 243, 469, 150, 239
+Source Cluster 399 is aligned to Target Clusters: 409, 74
+Source Cluster 414 is aligned to Target Clusters: 335, 79
+Source Cluster 435 is aligned to Target Clusters: 386, 387, 425, 73, 302, 433
 Source Cluster 436 is aligned to Target Clusters: 471
 Source Cluster 437 is aligned to Target Clusters: 471
+Source Cluster 442 is aligned to Target Clusters: 220
 Source Cluster 454 is aligned to Target Clusters: 188
 Source Cluster 462 is aligned to Target Clusters: 296
-Source Cluster 465 is aligned to Target Clusters: 474
-Source Cluster 467 is aligned to Target Clusters: 243
 Source Cluster 476 is aligned to Target Clusters: 382
 
 Alignment results saved to: ../LLM_labelling/t5/cpp_cuda/layer5/cluster_alignments.json
