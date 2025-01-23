@@ -1511,6 +1511,125 @@
         }
       ]
     },
+    "c92": {
+      "encoder_cluster": {
+        "id": "c92",
+        "unique_tokens": [
+          "return",
+          "{",
+          "revWalk",
+          "REPEAT_EXHAUST",
+          "finally",
+          "(",
+          "IsOptimizedChoose",
+          "termsOffsets",
+          "else",
+          "IOException",
+          "false",
+          "repetitions",
+          "catch",
+          ")",
+          "\"",
+          "new",
+          "throw",
+          "to",
+          "}",
+          "err",
+          ".",
+          "IsSkip",
+          "b",
+          "upto",
+          "IsSum",
+          "=",
+          "if"
+        ],
+        "syntactic_label": "Java Keywords, Operators, and Identifiers",
+        "semantic_tags": [
+          "Control Flow",
+          "Exception Handling",
+          "Object Creation",
+          "Conditional Logic",
+          "Method Return"
+        ],
+        "description": "The tokens represent a mix of Java keywords (return, if, else, catch, finally, throw), operators (=, ==, !=, |, &, ^), and identifiers (e.g., revWalk, REPEAT_EXHAUST, termsOffsets, IOException, IsOptimizedChoose, etc.).  These tokens are fundamental to Java's syntax and are used to construct various program structures, including conditional statements, loops, exception handling blocks, method definitions, and object manipulations. The sentences demonstrate their use in controlling program flow, handling exceptions, creating objects, and returning values from methods."
+      },
+      "aligned_decoder_clusters": [
+        {
+          "id": "c483",
+          "unique_tokens": [
+            "_buf",
+            "offset",
+            ")",
+            "WeightedPhraseInfo",
+            "this",
+            "else",
+            "throw",
+            "bytes",
+            "read",
+            "+=",
+            "map",
+            "try",
+            "upto",
+            "{",
+            "_psBlock",
+            "StringBuilder",
+            "ArrayUtil",
+            "Arrays",
+            "Ptg",
+            "sb",
+            "int",
+            "toString",
+            "end=",
+            "addBlock",
+            ".",
+            "catch",
+            "out",
+            "subs",
+            "\"",
+            "temp",
+            "_recs",
+            "(",
+            "[",
+            "fieldNames",
+            "add",
+            "buf",
+            "=",
+            "boolean",
+            "getClass",
+            "count",
+            "checkCoderResult",
+            "err",
+            "}",
+            "if",
+            "return",
+            "_jumpTable",
+            "checkStatus",
+            "affix",
+            "lastDocIDs",
+            "proto",
+            "<",
+            "fieldName",
+            "Throwable",
+            "String",
+            ";",
+            "buffer",
+            "new",
+            "checkExpiredSessions",
+            "synchronized",
+            "getPointer"
+          ],
+          "syntactic_label": "C# Tokens and their syntactic roles",
+          "semantic_tags": [
+            "Exception Handling",
+            "String Manipulation",
+            "Input/Output Operations",
+            "Data Structures",
+            "Control Flow"
+          ],
+          "description": "The tokens represent a wide range of C# language features.  Keywords like `if`, `else`, `try`, `catch`, `return`, and `throw` handle control flow and exception management.  The `StringBuilder` class is used for efficient string manipulation.  Operators like `+=`, `=`, `==`, `<`, `.` (dot operator), `[]`, and `()` are used for assignments, comparisons, method calls, array access, and function calls.  Data structures like arrays (`byte[]`, `int[]`), and collections (`List`, `ArrayList`) are used to store and manipulate data.  The code demonstrates various programming concepts in C#."
+        }
+      ]
+    },
     "c103": {
       "encoder_cluster": {
         "id": "c103",
@@ -1721,70 +1840,6 @@
             "Object Instantiation"
           ],
           "description": "The tokens ';', 'this', 'errCode', and '}' represent fundamental C# language constructs.  ';' acts as a statement separator. 'this' is a keyword referring to the current instance of a class. 'errCode' is likely an identifier representing an error code. '}' is a closing brace, typically used to end code blocks such as methods or classes. In the context provided, these tokens are part of numerous class declarations, constructors, and method calls, demonstrating basic C# syntax for object-oriented programming. The code defines a series of request classes, each likely used for interacting with a specific service or API."
-        }
-      ]
-    },
-    "c136": {
-      "encoder_cluster": {
-        "id": "c136",
-        "unique_tokens": [
-          "++",
-          "s",
-          "PColor",
-          ".dbcell_",
-          ")",
-          "sb",
-          "\"",
-          "{",
-          "Append",
-          "i",
-          "[",
-          ";",
-          "(",
-          "k"
-        ],
-        "syntactic_label": "Operators, Variables, and Identifiers",
-        "semantic_tags": [
-          "Loop Control",
-          "Array Manipulation",
-          "Data Processing",
-          "Conditional Logic",
-          "Iteration"
-        ],
-        "description": "The tokens represent a mix of operators (+ +, ++), variables (s, i, k), identifiers (PColor, .dbcell_, sb, Append), and other symbols used in common Java programming structures such as loops (for), array access ([]), method calls (.), and conditional statements (if).  The code snippets show iterative processing of arrays and other data structures, often involving conditional logic and increment/decrement operations."
-      },
-      "aligned_decoder_clusters": [
-        {
-          "id": "c117",
-          "unique_tokens": [
-            ")",
-            "r",
-            "\"",
-            "s",
-            "o",
-            "freeBlocks",
-            "ctf",
-            "append",
-            "i",
-            "int",
-            "]",
-            "++",
-            ";",
-            ".dbcell_",
-            "PColor",
-            "{",
-            "=",
-            "--"
-          ],
-          "syntactic_label": "C# Tokens and Symbols",
-          "semantic_tags": [
-            "Data Structures",
-            "Iteration",
-            "Comparison",
-            "File I/O",
-            "Exception Handling"
-          ],
-          "description": "The tokens represent a variety of C# language elements including variables, operators, method calls, and control flow structures.  The sentences show examples of common programming tasks such as comparing data structures (IntBuffer, DoubleBuffer, etc.), iterating using loops (while, for), performing comparisons (if, !=), and handling exceptions (throws Exception). The semantic tags highlight the broader functionality of the code snippets."
         }
       ]
     },
@@ -2164,268 +2219,6 @@
         }
       ]
     },
-    "c193": {
-      "encoder_cluster": {
-        "id": "c193",
-        "unique_tokens": [
-          "Count",
-          "PROTECTION]",
-          "return",
-          "{",
-          ":",
-          "+=",
-          "pAt",
-          "\\n",
-          "bytes",
-          "%",
-          ";",
-          "(",
-          "++",
-          "+",
-          "<",
-          "buffer",
-          "originalLength",
-          "0",
-          ")",
-          "Length",
-          "\"",
-          "throw",
-          ">",
-          "}",
-          "offset",
-          ".",
-          "]",
-          "-",
-          "==",
-          "!=",
-          "1",
-          "&&",
-          "max",
-          "="
-        ],
-        "syntactic_label": "Java Tokens and Operators",
-        "semantic_tags": [
-          "Control Flow",
-          "Exception Handling",
-          "Data Structures",
-          "Input/Output",
-          "Array Manipulation"
-        ],
-        "description": "The tokens represent a wide range of Java language constructs.  Keywords like `public`, `return`, `if`, `while`, `throw`, and `for` control program flow. Operators such as `+=`, `++`, `+`, `<`, `>`, `==`, `!=`, `&&`, `=`, `-` perform arithmetic and logical operations.  The tokens also demonstrate the use of data structures like `StringBuilder`, `HashSet`, `ArrayList`, and `Arrays`.  There is also evidence of input/output operations using `InputStream` and exception handling with `throw` statements.  Finally, significant array manipulation is present using `Array.Copy` and array length checks."
-      },
-      "aligned_decoder_clusters": [
-        {
-          "id": "c399",
-          "unique_tokens": [
-            "",
-            ")",
-            "firstCol",
-            "instanceof",
-            "lastRow",
-            "throw",
-            "++",
-            ">",
-            "e",
-            "try",
-            "{",
-            "&",
-            "lastCol",
-            "final",
-            "synsetSize",
-            "_frAggs",
-            "int",
-            "]",
-            "null",
-            "field_3_last_row_add1",
-            "&&",
-            "charCount",
-            "\\n",
-            ".",
-            "out",
-            "\"",
-            "b",
-            "currentBlock",
-            "field_4_zero",
-            "0",
-            "for",
-            "(",
-            ":",
-            "buf",
-            "=",
-            "boost",
-            "w",
-            "!=",
-            "-",
-            "}",
-            "if",
-            "append",
-            "return",
-            "readFormatOptions",
-            "==",
-            "+",
-            ">=",
-            "throws",
-            "getFirstRow",
-            ";",
-            "String",
-            "buffer",
-            "new",
-            ","
-          ],
-          "syntactic_label": "C# Tokens and their syntactic roles",
-          "semantic_tags": [
-            "File Input/Output",
-            "Exception Handling",
-            "Object Serialization",
-            "Data Structures",
-            "Control Flow"
-          ],
-          "description": "The tokens represent a wide range of C# language features.  They include keywords for control flow (if, for, try, catch), exception handling (throw, throws, catch), object creation and manipulation (new, ., ), data structures (StringBuilder, arrays, lists), and file I/O (RecordInputStream). The sentences show how these tokens are used in various programming contexts, such as reading data from streams, constructing strings, handling exceptions, and implementing custom data structures.  The semantic tags reflect the overall functionality and purpose of the code snippets."
-        },
-        {
-          "id": "c487",
-          "unique_tokens": [
-            "parents.length",
-            ")",
-            "line",
-            "this",
-            "throw",
-            "bytes",
-            ">",
-            "break",
-            "++",
-            "{",
-            "originalLength",
-            "startIndex",
-            "sb",
-            "toString",
-            "]",
-            "&&",
-            "minSize",
-            "avg",
-            "\\n",
-            "return",
-            "decompressor",
-            "length",
-            "\"",
-            ".",
-            "fields.length",
-            "b",
-            "j",
-            "currentBlock",
-            "::",
-            "0",
-            "(",
-            "[",
-            "rules",
-            "=",
-            "queries.length",
-            "cbuf.length",
-            "count",
-            "!=",
-            "}",
-            "-",
-            "if",
-            "+",
-            "replacement.length",
-            "append",
-            "==",
-            "<",
-            "i",
-            "%",
-            ";",
-            "OFFSET_WMFDATA",
-            "new",
-            ",",
-            "10"
-          ],
-          "syntactic_label": "C# Tokens and Operators",
-          "semantic_tags": [
-            "Array Manipulation",
-            "String Manipulation",
-            "Conditional Logic",
-            "Exception Handling",
-            "Object Creation"
-          ],
-          "description": "The tokens represent a wide range of C# language features.  They include array length accessors (e.g., `parents.length`), string manipulation methods (`append`, `toString`), arithmetic and comparison operators (`+`, `-`, `*`, `/`, `%`, `==`, `!=`, `<`, `>`), loop control (`break`, `++`), conditional statements (`if`), exception handling (`throw`), object creation (`new`), and array copying (`System.arraycopy`). These are fundamental elements in C# programming, used extensively in various tasks such as string processing, array manipulation, and algorithm implementation."
-        },
-        {
-          "id": "c55",
-          "unique_tokens": [
-            "",
-            ")",
-            "paddedLength",
-            "while",
-            "maxLevels",
-            "size",
-            "wmfImageLength",
-            "part1",
-            "throw",
-            "bytes",
-            "in",
-            "basis0",
-            "{",
-            "final",
-            "0xFFFFE0",
-            "numGoodPoints",
-            "compressedLength",
-            "bufferUpto",
-            "0.0",
-            "\\0",
-            "]",
-            "b0",
-            "endIndex",
-            "x0",
-            "&&",
-            "jj_la1_0",
-            "bufferLength",
-            "\\n",
-            ".",
-            "\"",
-            "length",
-            "pointer",
-            "and",
-            "field_4_string_len",
-            "0",
-            "synset",
-            "(",
-            ":",
-            "MIN_VALUE_EQUALS_0",
-            "buf",
-            "=",
-            "n",
-            "DIV0",
-            "arcArray(idx=",
-            "lab0",
-            "1.0",
-            "return",
-            "}",
-            "0xFEE0",
-            "+",
-            "i",
-            "<",
-            "==",
-            ";",
-            "result",
-            "getLink1",
-            "new",
-            ",",
-            "numToCopy",
-            "idx",
-            "getDenominator"
-          ],
-          "syntactic_label": "C# Tokens and Symbols",
-          "semantic_tags": [
-            "Control Flow",
-            "Data Structures",
-            "Exception Handling",
-            "Method Definition",
-            "Arithmetic Operations"
-          ],
-          "description": "The tokens represent a wide range of C# language features.  Keywords like \"while\", \"throw\", \"return\", and \"new\" control program flow and object creation. Symbols like \"(\", \")\", \",\", \".\", \"+\", \"=\", \"<\", \">\", \"==\", and \"&&\" are operators for various operations. Identifiers like \"paddedLength\", \"maxLevels\", \"size\", etc., represent variables and method names, indicating data structures and program logic. The \"throw\" keyword suggests exception handling mechanisms. The overall code snippets appear to involve various algorithms and data manipulations."
-        }
-      ]
-    },
     "c198": {
       "encoder_cluster": {
         "id": "c198",
@@ -2698,426 +2491,6 @@
           "NIO API"
         ],
         "description": "The tokens 'nio', '.', and 'charset' are part of the Java NIO (New I/O) API.  'nio' refers to the package containing classes for non-blocking I/O operations.  '.' is the dot operator used to access members of classes. 'charset' refers to the class related to character encodings.  These tokens are used extensively in the context sentences to manage buffers, handle character encoding, and perform I/O operations. The code snippets demonstrate various buffer operations (allocation, manipulation, comparison) and character encoding handling using the Java NIO API."
-      },
-      "aligned_decoder_clusters": [
-        {
-          "id": "c3",
-          "unique_tokens": [
-            "quicksort",
-            "(",
-            "reverse",
-            "sort"
-          ],
-          "syntactic_label": "Sorting Methods",
-          "semantic_tags": [
-            "Data Sorting",
-            "Algorithm",
-            "Collection Sorting",
-            "In-place Sorting",
-            "Merge Sort"
-          ],
-          "description": "The tokens represent different sorting algorithms used in C#.  `quicksort` is a recursive divide-and-conquer algorithm, while `sort` is a general term referring to the act of sorting, often implemented using various algorithms like merge sort (as seen in some examples) or other algorithms provided by the Collections class.  `reverse` is used to reverse the order of elements within a collection. The parentheses `()` are used for method calls and parameter passing. These methods are crucial for organizing and manipulating data efficiently in C# applications."
-        },
-        {
-          "id": "c263",
-          "unique_tokens": [
-            "(",
-            "}"
-          ],
-          "syntactic_label": "Parentheses and Closing Brace",
-          "semantic_tags": [
-            "Method Declaration",
-            "Code Blocks",
-            "Control Flow",
-            "Object Instantiation",
-            "Conditional Statements"
-          ],
-          "description": "The tokens '(' and ')' represent opening and closing parentheses, crucial for method parameters and code blocks.  '}' signifies the end of a code block, defining the scope of methods and conditional statements. These are fundamental C# syntax elements essential for structuring and controlling program flow.  The examples show their use in method declarations, object creation, and conditional logic."
-        },
-        {
-          "id": "c15",
-          "unique_tokens": [
-            "(",
-            "."
-          ],
-          "syntactic_label": "Constructor Parameter, Dot Operator",
-          "semantic_tags": [
-            "Object Instantiation",
-            "Constructor Injection",
-            "Member Assignment",
-            "Object Initialization",
-            "Method Chaining"
-          ],
-          "description": "The '(' token represents the opening parenthesis of constructor parameters in C#. The '.' token is the dot operator used to access members (fields or methods) of an object.  In the context provided, these tokens are used extensively in the constructors of various classes. The constructors initialize the object's state by assigning values to its member variables, often using constructor injection to pass in dependencies. The dot operator is used to assign values to the member variables within the constructor body."
-        },
-        {
-          "id": "c273",
-          "unique_tokens": [
-            ")",
-            ".",
-            "MultiDocsAndPositionsEnum(",
-            "ShardIter(shard=",
-            "(",
-            "Cell(readerIndex="
-          ],
-          "syntactic_label": "Method Parameters, Dot Operator, Opening Parenthesis, Closing Parenthesis, Object",
-          "semantic_tags": [
-            "Method Invocation",
-            "Object Creation",
-            "Data Structures",
-            "API Interaction",
-            "Code Readability"
-          ],
-          "description": "The tokens represent different syntactic elements in C#.  '), .' and '(' are special characters acting as Closing Parenthesis, Dot Operator and Opening Parenthesis respectively.  'MultiDocsAndPositionsEnum', 'ShardIter', and 'Cell' appear to be objects or classes, potentially custom data structures. The dot operator is used for method calls on these objects. The overall code snippet suggests method parameters being passed to functions, which is a common practice in C# for API interaction and object manipulation. The semantic tags reflect the core functionalities observed in the provided code samples."
-        },
-        {
-          "id": "c281",
-          "unique_tokens": [
-            "("
-          ],
-          "syntactic_label": "Opening Parenthesis",
-          "semantic_tags": [
-            "Method Parameters",
-            "Request Handling",
-            "AWS SDK",
-            "API Interaction",
-            "Input Processing"
-          ],
-          "description": "The opening parenthesis '(' in C# is used to enclose the parameters of a method. In this context, it's part of method signatures within what appears to be an AWS SDK, where each method takes a request object as input.  The code shows numerous methods, each designed to interact with an AWS service API, processing requests and returning results. The semantic tags reflect this pattern of request handling and API interaction within the AWS ecosystem."
-        },
-        {
-          "id": "c417",
-          "unique_tokens": [
-            "thumbnail",
-            "arraycopy",
-            "(",
-            "buffer",
-            ","
-          ],
-          "syntactic_label": "Array Copying Method",
-          "semantic_tags": [
-            "Array Manipulation",
-            "Data Copying",
-            "Buffer Management",
-            "Memory Management",
-            "Data Restructuring"
-          ],
-          "description": "The `System.arraycopy` method in C# is used extensively for efficient copying of array elements.  The tokens and sentences demonstrate its use in various scenarios, including resizing buffers, creating new arrays from portions of existing ones, and manipulating data within buffers. This is crucial for performance optimization in C# applications, especially when dealing with large datasets or frequent array manipulations."
-        },
-        {
-          "id": "c45",
-          "unique_tokens": [
-            "(",
-            "delegate",
-            "return"
-          ],
-          "syntactic_label": "Return Statement",
-          "semantic_tags": [
-            "Getter Methods",
-            "Data Access",
-            "Object State",
-            "Value Retrieval",
-            "Method Implementation"
-          ],
-          "description": "The tokens (, delegate, return are part of C# method signatures and return statements.  The opening parenthesis '(' initiates the parameter list (though many examples show no parameters), 'delegate' might be used in lambda expressions within the methods (though not explicitly shown in the provided examples), and 'return' is the keyword to return a value from a method.  These are fundamental parts of C# method definitions, crucial for encapsulating data and providing controlled access to object state. The numerous examples demonstrate getter methods, which are common in object-oriented programming for retrieving the internal state of an object."
-        },
-        {
-          "id": "c303",
-          "unique_tokens": [
-            "("
-          ],
-          "syntactic_label": "Opening Parenthesis",
-          "semantic_tags": [
-            "Method Declaration",
-            "Parameter List",
-            "AWS SDK",
-            "Request Object",
-            "Client-side API"
-          ],
-          "description": "The opening parenthesis '(' in C# is used to denote the start of a parameter list in method declarations.  In this context, it's part of the AWS SDK for .NET, where methods take a request object as a parameter. The request object contains the data needed for the AWS service call. This pattern is common in client-side APIs interacting with cloud services."
-        },
-        {
-          "id": "c50",
-          "unique_tokens": [
-            "("
-          ],
-          "syntactic_label": "Opening Parenthesis",
-          "semantic_tags": [
-            "Method Declaration",
-            "Parameter List",
-            "AWS SDK",
-            "API Calls",
-            "Request Object"
-          ],
-          "description": "The opening parenthesis '(' in C# is used to declare the parameter list in method signatures. In this context, it's part of AWS SDK API calls where methods take 'Request' objects as input parameters to perform various operations.  The methods are likely part of a client library for interacting with an AWS service."
-        },
-        {
-          "id": "c59",
-          "unique_tokens": [
-            "(",
-            "super",
-            "."
-          ],
-          "syntactic_label": "Constructor Invocation, Super Keyword, Dot Operator",
-          "semantic_tags": [
-            "Inheritance",
-            "Object Creation",
-            "Method Chaining",
-            "Constructor Delegation",
-            "Base Class Initialization"
-          ],
-          "description": "The tokens (, super, and . are used in C# to invoke constructors, specifically the base class constructor using the super keyword, and to access members of objects using the dot operator.  This pattern is crucial for inheritance, where child classes inherit properties and methods from parent classes, and often need to initialize the parent class's state before adding their own. The dot operator is used for method calls and property access on objects, often chaining multiple calls together."
-        },
-        {
-          "id": "c319",
-          "unique_tokens": [
-            ")",
-            ".",
-            "(",
-            "NB",
-            "&&"
-          ],
-          "syntactic_label": "C# Operators and Parentheses",
-          "semantic_tags": [
-            "Data Comparison",
-            "Conditional Logic",
-            "Byte Manipulation",
-            "Integer Encoding/Decoding",
-            "Object ID Comparison"
-          ],
-          "description": "The tokens represent fundamental C# operators and parentheses used extensively in the provided code snippets.  The '.' operator is used for method calls, particularly on the 'NB' object, which appears to handle byte array manipulation and integer encoding/decoding.  The parentheses '(' and ')' are used for function calls and grouping expressions. The '&&' operator is a logical AND operator used in conditional statements. The overall functionality centers around comparing and manipulating byte arrays, likely representing object IDs or similar data structures.  The 'NB' object seems to be a custom class or helper for these operations."
-        },
-        {
-          "id": "c191",
-          "unique_tokens": [
-            "\"",
-            "LA",
-            "LT",
-            "(",
-            "GT"
-          ],
-          "syntactic_label": "Parser Tokens and Lookahead Methods",
-          "semantic_tags": [
-            "ANTLR Parser",
-            "Lookahead",
-            "Error Handling",
-            "Tree Construction",
-            "Context Management"
-          ],
-          "description": "The tokens (LA, LT, (, ), GT) are part of ANTLR parser functionality.  LA and LT are methods used for lookahead in the token stream, crucial for predictive parsing.  The parentheses are used for method calls and expression grouping. GT represents a greater-than comparison operator, used in the evaluation of parse tree conditions. The code manages parse tree construction, error handling (e.g., BailErrorStrategy), and context management during recursive descent parsing."
-        },
-        {
-          "id": "c454",
-          "unique_tokens": [
-            ")",
-            "clear",
-            "flush",
-            "yyreset",
-            "(",
-            "clearAll",
-            "reset"
-          ],
-          "syntactic_label": "Methods",
-          "semantic_tags": [
-            "Data Clearing",
-            "State Resetting",
-            "Resource Management",
-            "Exception Handling",
-            "Stream Processing"
-          ],
-          "description": "The tokens represent methods in C# that perform actions such as clearing data structures, resetting states, managing resources (like streams and buffers), handling exceptions (throwing IOExceptions), and manipulating byte arrays.  These are common operations in C# programming, often used for initialization, cleanup, and error handling."
-        },
-        {
-          "id": "c202",
-          "unique_tokens": [
-            "("
-          ],
-          "syntactic_label": "Opening Parenthesis",
-          "semantic_tags": [
-            "Method Parameters",
-            "Request Handling",
-            "AWS SDK",
-            "Client-Server Interaction",
-            "API Calls"
-          ],
-          "description": "The opening parenthesis '(' in C# is used to enclose parameters in method definitions and calls. In this context, it's part of the method signatures of numerous AWS SDK methods, each taking a request object as a parameter.  These methods likely handle client-server interactions by sending requests to an AWS service and receiving a result. The semantic tags reflect the common pattern of using request objects for API calls within the AWS SDK."
-        },
-        {
-          "id": "c86",
-          "unique_tokens": [
-            "final",
-            ".",
-            "Object",
-            "E",
-            "extends",
-            "("
-          ],
-          "syntactic_label": "Modifier, Dot Operator, Object, Type, Keyword, Opening Parenthesis",
-          "semantic_tags": [
-            "Object Instantiation",
-            "Method Invocation",
-            "Inheritance",
-            "Polymorphism",
-            "Data Structures"
-          ],
-          "description": "The tokens represent fundamental C# language constructs.  'final' acts as a modifier (though C# uses 'readonly' for a similar effect). '.' is the dot operator for member access. 'Object' is a base class. 'E' likely represents a generic type parameter. 'extends' signifies inheritance. '(' is an opening parenthesis used in method calls and declarations."
-        },
-        {
-          "id": "c87",
-          "unique_tokens": [
-            "(",
-            "setProtocol"
-          ],
-          "syntactic_label": "Method Call",
-          "semantic_tags": [
-            "Protocol Setting",
-            "Request Initialization",
-            "HTTPS Communication",
-            "API Interaction",
-            "Network Configuration"
-          ],
-          "description": "The tokens '(' and 'setProtocol' are part of a method call.  The code snippet shows the initialization of various request objects, each setting the communication protocol to HTTPS using the 'setProtocol' method. This is crucial for establishing secure communication with a server or service. The parenthesis '(' is used to invoke the method."
-        },
-        {
-          "id": "c94",
-          "unique_tokens": [
-            ")",
-            "("
-          ],
-          "syntactic_label": "Parentheses",
-          "semantic_tags": [
-            "Constructor Invocation",
-            "Method Arguments",
-            "Method Definition",
-            "Object Instantiation",
-            "Control Flow"
-          ],
-          "description": "The tokens '(' and ')' in C# are used for parentheses.  In the provided examples, they are used in constructor invocations, method arguments, method definitions, object instantiation, and control flow statements.  These are fundamental to C# syntax for defining methods, passing parameters, and controlling program execution."
-        },
-        {
-          "id": "c494",
-          "unique_tokens": [
-            "("
-          ],
-          "syntactic_label": "Opening Parenthesis",
-          "semantic_tags": [
-            "Method Parameters",
-            "Request Handling",
-            "Asynchronous Operations",
-            "API Interaction",
-            "Client-Server Communication"
-          ],
-          "description": "The opening parenthesis '(' is used in C# to define the parameter list of methods. In this context, it signifies the start of a parameter list for various methods that appear to handle requests and execute operations, likely related to a client-server interaction or API calls.  The parameters are requests, suggesting an API or service interaction where the methods execute operations based on the provided request objects. The use of 'request' as a parameter in all methods suggests a common pattern of request handling before execution."
-        },
-        {
-          "id": "c368",
-          "unique_tokens": [
-            "("
-          ],
-          "syntactic_label": "Opening Parenthesis",
-          "semantic_tags": [
-            "Method Parameters",
-            "AWS SDK",
-            "Request Handling",
-            "Client-Server Interaction",
-            "Cloud Computing"
-          ],
-          "description": "The opening parenthesis '(' is used in C# to define the parameters of methods. In this context, it's part of method signatures within an AWS SDK, where each method takes a request object as input.  These methods handle client-server interactions for various AWS services, facilitating cloud computing operations."
-        },
-        {
-          "id": "c244",
-          "unique_tokens": [
-            "final",
-            ".",
-            "java",
-            "Object",
-            "E",
-            "("
-          ],
-          "syntactic_label": "Modifiers, Dot Operator, Object, Opening Parenthesis",
-          "semantic_tags": [
-            "Object Instantiation",
-            "Method Invocation",
-            "Data Structures",
-            "Control Flow",
-            "Exception Handling"
-          ],
-          "description": "The tokens represent common C# programming constructs.  'final' (though not directly present in C#, the intent is likely represented by 'const' or 'readonly') and '.' are modifiers and operators respectively. 'Object' refers to C# objects, and '(' is an opening parenthesis used in method calls and object instantiation."
-        },
-        {
-          "id": "c119",
-          "unique_tokens": [
-            ")",
-            "\"",
-            "append",
-            "getProperty",
-            "(",
-            "buffer"
-          ],
-          "syntactic_label": "StringBuilder Object and its methods,getProperty method,Parenthesis,Comma",
-          "semantic_tags": [
-            "String Manipulation",
-            "Object Representation",
-            "Property Access",
-            "String Formatting",
-            "System Properties"
-          ],
-          "description": "The tokens are part of C# code snippets that use StringBuilder objects to create string representations of objects.  The append method adds data to the StringBuilder.  getProperty retrieves system properties (like newline character). Parenthesis and commas are used for method calls and argument separation."
-        },
-        {
-          "id": "c377",
-          "unique_tokens": [
-            "blocks",
-            "(",
-            "fill"
-          ],
-          "syntactic_label": "Array fill method",
-          "semantic_tags": [
-            "Array Manipulation",
-            "Data Initialization",
-            "Memory Management",
-            "Utility Function",
-            "Array Processing"
-          ],
-          "description": "The `Arrays.fill()` method in C# is used to set all elements of an array to a specific value.  It's a common utility function for initializing arrays, often used for setting default values or clearing array contents. The tokens `blocks`, `(`, and `fill` are part of this process, where `fill` is the method name, `(` indicates the start of the method's parameter list, and `blocks` is likely an array being filled."
-        },
-        {
-          "id": "c124",
-          "unique_tokens": [
-            "final",
-            ")",
-            "(",
-            "Object"
-          ],
-          "syntactic_label": "Modifier, Closing Parenthesis, Opening Parenthesis, Type",
-          "semantic_tags": [
-            "Access Modifier",
-            "Method Definition",
-            "Object Type",
-            "Control Flow",
-            "Data Structures"
-          ],
-          "description": "These tokens represent fundamental C# language constructs.  'final' acts as an access modifier (similar to Java's 'final'), controlling the mutability of a variable or method.  Parentheses '(' and ')' define method parameters and scope. 'Object' is a base type in C#, representing the root of the class hierarchy."
-        }
-      ]
-    },
-    "c206": {
-      "encoder_cluster": {
-        "id": "c206",
-        "unique_tokens": [
-          "termsFileName",
-          "grid",
-          "var"
-        ],
-        "syntactic_label": "Variable Declaration",
-        "semantic_tags": [
-          "Variable Initialization",
-          "AWS SDK",
-          "Request Handling",
-          "Response Unmarshalling",
-          "AWS Service Calls"
-        ],
-        "description": "The tokens represent a variable declaration ('var') used to create and initialize new objects ('options') within the context of AWS SDK method calls.  The code snippet shows a pattern of making AWS service calls, marshalling requests, and unmarshalling responses. 'termsFileName' seems to be an unrelated token from a different code context."
       },
       "aligned_decoder_clusters": [
         {
@@ -3592,81 +2965,6 @@
         }
       ]
     },
-    "c255": {
-      "encoder_cluster": {
-        "id": "c255",
-        "unique_tokens": [
-          "|=",
-          ".",
-          "CJKScript",
-          "<<",
-          "Convert",
-          "/=",
-          "NAME_MASK",
-          "^=",
-          "EPSILON",
-          "*=",
-          "-=",
-          "&=",
-          "path",
-          "bytes",
-          ";",
-          "(",
-          "subs"
-        ],
-        "syntactic_label": "Operators and Identifiers",
-        "semantic_tags": [
-          "Bitwise Operations",
-          "Data Structures",
-          "Hashing",
-          "Data Processing",
-          "Code Optimization"
-        ],
-        "description": "The tokens represent a mix of bitwise operators (|=, &, ^=, /=, *=, -=, <<), the dot operator (.), identifiers (CJKScript, Convert, NAME_MASK, EPSILON, path, bytes, subs), and other symbols such as parentheses and semicolons.  These are fundamental to Java programming, used in various contexts such as data manipulation, algorithm implementation, and data structure management.  The bitwise operators are frequently used for efficient manipulation of flags or bitfields. Identifiers represent variables, constants, or class names, while the dot operator is used for method calls and field access. The overall code snippets suggest various data processing tasks, potentially involving bit manipulation, hashing, and custom data structures."
-      },
-      "aligned_decoder_clusters": [
-        {
-          "id": "c10",
-          "unique_tokens": [
-            "else",
-            "+=",
-            "CJKBigramFilter",
-            "3",
-            "&=",
-            "1",
-            "NAME_MASK",
-            "/=",
-            ".",
-            "2",
-            "step",
-            "available",
-            "(",
-            "^=",
-            "-=",
-            "n",
-            "OBJECT_ID_LENGTH",
-            "|=",
-            "count",
-            "return",
-            "-",
-            "4",
-            "if",
-            "*=",
-            "end",
-            ";"
-          ],
-          "syntactic_label": "C# Tokens and Operators",
-          "semantic_tags": [
-            "Control Flow",
-            "Arithmetic Operations",
-            "Assignment Operations",
-            "Conditional Logic",
-            "Method Definition"
-          ],
-          "description": "The tokens represent a mix of C# keywords (if, else, return), operators (+=, &=, /=, ., -=, *=, ^=, |=), identifiers (CJKBigramFilter, step, available, count, n, OBJECT_ID_LENGTH), and punctuation (;).  These are fundamental elements in C# code, used to structure program flow (if-else statements), perform calculations and assignments, and define methods.  The context shows these tokens are used within method definitions, demonstrating various programming constructs like conditional logic, iterative processes, and data manipulation."
-        }
-      ]
-    },
     "c274": {
       "encoder_cluster": {
         "id": "c274",
@@ -3700,57 +2998,6 @@
         "description": "The tokens represent a mix of Java keywords (e.g., \"return\", \"new\", \"public\", \"static\"), operators (e.g., \".\", \",\", \";\", \"+\", \"[\", \"]\", \"{\", \"}\", \"?\", \":\"), and identifiers (e.g., \"mutex\", \"blocks\", \"values\", \"iterations\", \"other\").  These tokens are fundamental to Java syntax and are used in various code constructs, including method declarations, loops, conditional statements, object creation, array manipulation, and concurrency control (using \"mutex\"). The semantic tags reflect the diverse functionalities present in the code snippets."
       },
       "aligned_decoder_clusters": [
-        {
-          "id": "c329",
-          "unique_tokens": [
-            ")",
-            "p",
-            "copy",
-            "'",
-            "copyOf",
-            "{",
-            "[]",
-            "tmpTermState",
-            "&",
-            "PathFilter",
-            "range!",
-            "data",
-            "]",
-            "toString",
-            "null",
-            "\\n",
-            "State",
-            ".",
-            "\"",
-            "b",
-            "newArray",
-            "for",
-            "(",
-            "[",
-            "lc",
-            ":",
-            "pos",
-            "buf",
-            "=",
-            "}",
-            "return",
-            "+",
-            "ss",
-            ";",
-            "result",
-            "new",
-            ","
-          ],
-          "syntactic_label": "C# Tokens and Symbols",
-          "semantic_tags": [
-            "Array Manipulation",
-            "Method Implementation",
-            "String Manipulation",
-            "Data Structures",
-            "Control Flow"
-          ],
-          "description": "The tokens represent a wide range of C# language elements, including keywords (for, return, new), operators (+, =, ., [], &), symbols (, ), {, }, [, ], ;, \n, :, ' , \"), identifiers (e.g., copy, copyOf, tmpTermState, PathFilter, range!, data, toString, null, State, lc, pos, buf, result, ss, fields, decisions, atnSimulator, etc.), and literals.  These tokens are used in various methods to perform array manipulation, string manipulation, data structure operations (e.g., array creation, array copying, string building), and control flow (e.g., loops, conditional statements). The semantic tags reflect the common operations and functionalities implemented using these tokens."
-        },
         {
           "id": "c341",
           "unique_tokens": [
@@ -3797,55 +3044,6 @@
             "Data Structures"
           ],
           "description": "The tokens represent a wide range of C# language features.  Keywords like `if`, `return`, `new` control program flow and structure.  Symbols like `(`, `)`, `{`, `}`, `.` denote method calls, object instantiation, and member access.  Tokens like `append`, `toString`, `add` show string manipulation and object methods.  `ArrayList` and other identifiers suggest the use of data structures."
-        },
-        {
-          "id": "c343",
-          "unique_tokens": [
-            "",
-            ")",
-            "while",
-            "else",
-            "instead",
-            "throw",
-            "{",
-            "16",
-            "sb",
-            "int",
-            "]",
-            "compressed",
-            "1",
-            "body",
-            ".",
-            "\"",
-            "but",
-            "j",
-            "synset",
-            "(",
-            ":",
-            "add",
-            "Shape",
-            "o1",
-            "=",
-            "5",
-            "return",
-            "if",
-            "}",
-            "+",
-            "==",
-            ";",
-            "new",
-            ",",
-            "0x7ffffffe"
-          ],
-          "syntactic_label": "C# Tokens and Symbols",
-          "semantic_tags": [
-            "Control Flow",
-            "Exception Handling",
-            "Object Manipulation",
-            "Data Structures",
-            "Comparison"
-          ],
-          "description": "The tokens represent a wide range of C# language features.  'while', 'if', 'else' are control flow statements. 'throw' handles exceptions.  The '.' operator accesses object members.  'int', 'String', 'StringBuffer', and arrays are data structures.  '==' and '<' are comparison operators.  Parentheses, brackets, and braces denote grouping and scope.  The tokens and sentences demonstrate fundamental C# programming constructs used in various methods, including comparison, object manipulation, and control flow."
         }
       ]
     },
@@ -3988,320 +3186,6 @@
             "Method Chaining"
           ],
           "description": "The tokens represent methods used for string manipulation and object representation in C#.  Many examples show the use of StringBuilder to efficiently construct strings.  The methods like toString(), utf8ToString(), coerceValueToString(), etc., are used to convert various data types into string representations.  The parentheses, commas, and semicolons are syntactic elements that structure the method calls and code blocks."
-        }
-      ]
-    },
-    "c285": {
-      "encoder_cluster": {
-        "id": "c285",
-        "unique_tokens": [
-          "prev",
-          "j",
-          "{",
-          "compIDX",
-          ";",
-          "ctf",
-          "(",
-          "++",
-          "interval",
-          "<=",
-          "pos",
-          "i",
-          "<",
-          "e",
-          "buffer",
-          "skipped",
-          ")",
-          "field_2_colors",
-          "k",
-          ".",
-          "b",
-          "_tabids",
-          "Append"
-        ],
-        "syntactic_label": "Loop Index, Variable, Opening Brace, Array Index, Semicolon, Object, Opening Parenthesis, Increment Operator, Variable, Less than or equal to Operator, Variable, Variable, Less than Operator, Variable, Object, Variable, Closing Parenthesis, Object, Variable, Dot Operator, Object, Append Method",
-        "semantic_tags": [
-          "Looping and Iteration",
-          "Array Manipulation",
-          "Data Processing",
-          "Conditional Logic",
-          "Method Invocation"
-        ],
-        "description": "The tokens represent common Java programming constructs.  'for' loops iterate over arrays or collections ('i', 'j', 'k').  The '.' operator is used for method calls (e.g., 'append').  '[]' accesses array elements.  '++' increments loop counters.  Conditional statements ('<', '<=') control program flow.  The overall code snippets appear to involve processing data within arrays and buffers, potentially involving encoding/decoding or other data transformations."
-      },
-      "aligned_decoder_clusters": [
-        {
-          "id": "c169",
-          "unique_tokens": [
-            ",.fontidx=",
-            ")",
-            "[/CHARTTITLEFORMAT]",
-            "rows",
-            "k",
-            "else",
-            "++",
-            "break",
-            "codePointCount",
-            "{",
-            "&#x27;",
-            "final",
-            "retval",
-            "Arrays",
-            "sb",
-            "remap",
-            "valEnd",
-            ".",
-            "\"",
-            "merged",
-            "j",
-            "_tabids",
-            "_colors",
-            "(",
-            "pos",
-            "desc",
-            "=",
-            "!=",
-            "}",
-            "if",
-            "return",
-            "+",
-            "append",
-            "[/TABID]",
-            "i",
-            "_formats",
-            "d",
-            "<",
-            "subDocs",
-            ";",
-            "buffer",
-            "&gt;"
-          ],
-          "syntactic_label": "C# Tokens and Operators",
-          "semantic_tags": [
-            "String Manipulation",
-            "Array Processing",
-            "Control Flow",
-            "Data Structures",
-            "Byte Manipulation"
-          ],
-          "description": "The tokens represent a wide range of C# language features.  They include keywords for control flow (if, else, break, return), operators for arithmetic (+, ++), comparison (!=), bitwise (&), and assignment (=), along with identifiers for objects (StringBuilder, Arrays), variables (i, j, k, buffer, sb, etc.), and method calls (append, get, set, fill, etc.).  The semantic tags highlight the common operations performed: building strings, manipulating arrays, implementing conditional logic, using data structures like StringBuilder and ArrayList, and performing bitwise operations on byte arrays."
-        }
-      ]
-    },
-    "c295": {
-      "encoder_cluster": {
-        "id": "c295",
-        "unique_tokens": [
-          "MessageFormat",
-          "mutex",
-          "noteOn",
-          "functionName",
-          "shapeField",
-          "maxDoc",
-          "ConvertToInputStream",
-          "bufferSize",
-          "null",
-          "name",
-          "header",
-          "AWS_PROVIDER",
-          "DEFAULT_MIN_MERGE_MB",
-          "ref1",
-          "atn",
-          "target",
-          "true",
-          "id",
-          "evaluator",
-          "spgrContainer",
-          "scorer",
-          "ps",
-          "grid",
-          "inCoreLimit",
-          "clauses",
-          "1",
-          "onlySheetIndex",
-          "c",
-          "errorCode",
-          "blockSize",
-          "path",
-          "resourceDesc",
-          "queryConfig",
-          "file",
-          "false",
-          "or",
-          "in1",
-          "reason",
-          "weight",
-          ")",
-          "dedup",
-          "\"",
-          "new",
-          "tenum",
-          "workbook",
-          "arearef",
-          "quoted",
-          "repo",
-          "primary",
-          "runData",
-          "message",
-          "externalWorkbookNumber",
-          "exc",
-          "recognizer",
-          "spContainer",
-          "ctx",
-          "lexer",
-          "product",
-          "Format",
-          "size",
-          "detailMessage",
-          "CalculateHashCode",
-          "ris",
-          "tokenName",
-          "cr",
-          "0",
-          "input",
-          "errCode",
-          "JGitText",
-          "suffix",
-          "label",
-          "state",
-          "-",
-          "set",
-          "svm",
-          "ae",
-          "term",
-          "analyzer",
-          "pattern",
-          "credentials",
-          "match",
-          "dcb",
-          "(",
-          "FormatMessage",
-          "stream",
-          "optr",
-          "pipeSize",
-          "firstRow",
-          "propertyNumber",
-          "destination",
-          "field",
-          "Initialize",
-          "PER_FIELD_REUSE_STRATEGY",
-          "parent",
-          "doc",
-          "headerBlock",
-          "parser",
-          "operator1",
-          "analyer",
-          "@",
-          "list",
-          "type",
-          "usedToolPacks",
-          "args",
-          "row",
-          "this",
-          "width",
-          "ruleStart",
-          "ruleName"
-        ],
-        "syntactic_label": "Identifiers, Keywords, and Operators",
-        "semantic_tags": [
-          "Object Instantiation",
-          "Method Invocation",
-          "Exception Handling",
-          "Concurrency Control",
-          "Class Definition"
-        ],
-        "description": "The tokens represent a mix of Java identifiers (e.g., MessageFormat, mutex, noteOn), keywords (e.g., public, class, if, else, return, new, this), and operators (e.g., ., =, ==, +, -, (, )).  The sentences show these tokens being used in various Java programming constructs, including class definitions, object instantiation, method invocations, conditional statements, and exception handling.  The presence of 'lock(this)' in multiple sentences indicates the use of concurrency control mechanisms to protect shared resources. The semantic tags reflect these key aspects of the code snippets."
-      },
-      "aligned_decoder_clusters": [
-        {
-          "id": "c103",
-          "unique_tokens": [
-            ")",
-            "evaluator",
-            "resourceDesc",
-            "onlySheetIndex",
-            "size",
-            "bookEvaluator",
-            "ref",
-            "lexer",
-            "parent",
-            "grid",
-            "target",
-            "in",
-            "format",
-            "inCoreLimit",
-            "errorCode",
-            "product",
-            "tokenName",
-            "maxDoc",
-            "functionName",
-            "Math",
-            "noteOn",
-            "joinQuery",
-            "JGitText",
-            "1",
-            "message",
-            "delegate",
-            "usedToolPacks",
-            "parser",
-            "name",
-            ".",
-            "out",
-            "\"",
-            "ruleStart",
-            "dcb",
-            "exc",
-            "autocompleteResponse",
-            "tenum",
-            "atn",
-            "analyer",
-            "recognizer",
-            "MessageFormat",
-            "(",
-            "firstRow",
-            "input",
-            "state",
-            "arearef",
-            "id",
-            "spContainer",
-            "width",
-            "ae",
-            "true",
-            "regions",
-            "false",
-            "shapeField",
-            "match",
-            "term",
-            "detailMessage",
-            "runData",
-            "c",
-            "PER_FIELD_REUSE_STRATEGY",
-            "type",
-            "operator",
-            "or",
-            "args",
-            "reason",
-            "blockSize",
-            "propertyNumber",
-            "repo",
-            "new",
-            "field",
-            "calculateHashCode",
-            "errCode",
-            "clauses",
-            "convertToInputStream",
-            "row",
-            "initialise"
-          ],
-          "syntactic_label": "Constructor parameters, identifiers, method calls, operators, keywords",
-          "semantic_tags": [
-            "Object instantiation",
-            "Exception Handling",
-            "Factory Pattern",
-            "Input/Output operations",
-            "Data Structures"
-          ],
-          "description": "The tokens represent various C# language constructs.  Many are parameters in constructors, instantiating objects of different classes. Identifiers name variables, methods, and classes.  The dot operator (.) is used for method calls and property access. Keywords like 'public', 'new', 'if', 'throw', 'boolean', etc., define the structure and control flow of the code.  The code heavily uses the factory pattern for creating instances of various filter and request objects.  Exception handling is implemented using try-catch blocks and IllegalArgumentException.  There are also instances of input/output operations (e.g., InputStream, OutputStream). Data structures like Maps and Lists are used to manage parameters and data."
         }
       ]
     },
@@ -5133,142 +4017,6 @@
         }
       ]
     },
-    "c350": {
-      "encoder_cluster": {
-        "id": "c350",
-        "unique_tokens": [
-          "",
-          ">=",
-          "ToString",
-          "avg",
-          "return",
-          "utf8",
-          "j",
-          "{",
-          ":",
-          "\\n",
-          "bytes",
-          "MAX_PAD_ALIGNMENT",
-          ";",
-          "be",
-          "(",
-          "++",
-          "currentBlock",
-          "for",
-          "d",
-          "line",
-          "start",
-          "::",
-          "+",
-          "<",
-          "i",
-          "buffer",
-          "0",
-          "Constants",
-          ")",
-          "input",
-          "Length",
-          "\"",
-          "new",
-          "throw",
-          ">",
-          "OFFSet_WMFDATA",
-          "}",
-          "*",
-          ",",
-          "10",
-          ".",
-          "]",
-          "-",
-          "[",
-          "==",
-          "Append",
-          "!=",
-          "1",
-          "may",
-          "=",
-          "if"
-        ],
-        "syntactic_label": "Java Tokens and Operators",
-        "semantic_tags": [
-          "Control Flow",
-          "Data Structures",
-          "String Manipulation",
-          "Exception Handling",
-          "Input/Output"
-        ],
-        "description": "The tokens represent a wide range of Java language features.  These include keywords for control flow (if, for, while, return, throw), operators for comparison and arithmetic (+, -, *, /, ==, !=, >=, <, >), array access ([]), string manipulation (Append, ToString, Length, Substring), exception handling (throw), and input/output operations (InputStream, read).  The tokens' semantic significance lies in their combined use to implement various functionalities, such as file processing, string manipulation, data structure management, and error handling within the Java code."
-      },
-      "aligned_decoder_clusters": [
-        {
-          "id": "c487",
-          "unique_tokens": [
-            "parents.length",
-            ")",
-            "line",
-            "this",
-            "throw",
-            "bytes",
-            ">",
-            "break",
-            "++",
-            "{",
-            "originalLength",
-            "startIndex",
-            "sb",
-            "toString",
-            "]",
-            "&&",
-            "minSize",
-            "avg",
-            "\\n",
-            "return",
-            "decompressor",
-            "length",
-            "\"",
-            ".",
-            "fields.length",
-            "b",
-            "j",
-            "currentBlock",
-            "::",
-            "0",
-            "(",
-            "[",
-            "rules",
-            "=",
-            "queries.length",
-            "cbuf.length",
-            "count",
-            "!=",
-            "}",
-            "-",
-            "if",
-            "+",
-            "replacement.length",
-            "append",
-            "==",
-            "<",
-            "i",
-            "%",
-            ";",
-            "OFFSET_WMFDATA",
-            "new",
-            ",",
-            "10"
-          ],
-          "syntactic_label": "C# Tokens and Operators",
-          "semantic_tags": [
-            "Array Manipulation",
-            "String Manipulation",
-            "Conditional Logic",
-            "Exception Handling",
-            "Object Creation"
-          ],
-          "description": "The tokens represent a wide range of C# language features.  They include array length accessors (e.g., `parents.length`), string manipulation methods (`append`, `toString`), arithmetic and comparison operators (`+`, `-`, `*`, `/`, `%`, `==`, `!=`, `<`, `>`), loop control (`break`, `++`), conditional statements (`if`), exception handling (`throw`), object creation (`new`), and array copying (`System.arraycopy`). These are fundamental elements in C# programming, used extensively in various tasks such as string processing, array manipulation, and algorithm implementation."
-        }
-      ]
-    },
     "c352": {
       "encoder_cluster": {
         "id": "c352",
@@ -5561,125 +4309,6 @@
         }
       ]
     },
-    "c386": {
-      "encoder_cluster": {
-        "id": "c386",
-        "unique_tokens": [
-          "&",
-          "Set",
-          "return",
-          "{",
-          "deleteTagUnexpectedResult",
-          "foreach",
-          "bytes",
-          ";",
-          "null",
-          "(",
-          "else",
-          "GetDeltaBase",
-          "+",
-          "cannotReadCommit",
-          "w",
-          "catch",
-          "bool",
-          ")",
-          "\"",
-          "buf",
-          "/",
-          "}",
-          ",",
-          "RefUpdate",
-          ".",
-          "!",
-          "]",
-          "Append",
-          "!=",
-          "&&",
-          "refUpdateReturnCodeWas",
-          "=",
-          "if"
-        ],
-        "syntactic_label": "Java Tokens and Symbols",
-        "semantic_tags": [
-          "Control Flow",
-          "Data Structures",
-          "Object Manipulation",
-          "Exception Handling",
-          "File I/O"
-        ],
-        "description": "The tokens represent a wide range of Java language features. Keywords like \"if\", \"else\", \"return\", and \"for each\" control program flow.  \"Set\" and other identifiers denote object manipulation and data structures. The symbols such as \"+\", \".\", \"(\", \")\", \"[\", \"]\", \"=\", \";\", \",\", \"&\" and \"|\" are operators used for various operations. \"catch\" handles exceptions, and \"null\" represents the absence of a value.  The tokens are used in various contexts, including method definitions, string manipulation, object comparisons, and file input/output operations."
-      },
-      "aligned_decoder_clusters": [
-        {
-          "id": "c399",
-          "unique_tokens": [
-            "",
-            ")",
-            "firstCol",
-            "instanceof",
-            "lastRow",
-            "throw",
-            "++",
-            ">",
-            "e",
-            "try",
-            "{",
-            "&",
-            "lastCol",
-            "final",
-            "synsetSize",
-            "_frAggs",
-            "int",
-            "]",
-            "null",
-            "field_3_last_row_add1",
-            "&&",
-            "charCount",
-            "\\n",
-            ".",
-            "out",
-            "\"",
-            "b",
-            "currentBlock",
-            "field_4_zero",
-            "0",
-            "for",
-            "(",
-            ":",
-            "buf",
-            "=",
-            "boost",
-            "w",
-            "!=",
-            "-",
-            "}",
-            "if",
-            "append",
-            "return",
-            "readFormatOptions",
-            "==",
-            "+",
-            ">=",
-            "throws",
-            "getFirstRow",
-            ";",
-            "String",
-            "buffer",
-            "new",
-            ","
-          ],
-          "syntactic_label": "C# Tokens and their syntactic roles",
-          "semantic_tags": [
-            "File Input/Output",
-            "Exception Handling",
-            "Object Serialization",
-            "Data Structures",
-            "Control Flow"
-          ],
-          "description": "The tokens represent a wide range of C# language features.  They include keywords for control flow (if, for, try, catch), exception handling (throw, throws, catch), object creation and manipulation (new, ., ), data structures (StringBuilder, arrays, lists), and file I/O (RecordInputStream). The sentences show how these tokens are used in various programming contexts, such as reading data from streams, constructing strings, handling exceptions, and implementing custom data structures.  The semantic tags reflect the overall functionality and purpose of the code snippets."
-        }
-      ]
-    },
     "c389": {
       "encoder_cluster": {
         "id": "c389",
@@ -5793,61 +4422,6 @@
             "Exception Handling"
           ],
           "description": "The tokens represent a variety of C# language constructs commonly used in array and string manipulation.  They include array length accessors (length, .length), array index operators ([]), string length calculation (length(), .length()), arithmetic operators (+, -), comparison operators (==, >), assignment operators (=), method calls (e.g., append(), getLength(), toString(), addAll(), etc.), loop control (for), conditional statements (if), and exception handling (throw).  These tokens are essential for various programming tasks, including data structure management, string processing, and error handling."
-        },
-        {
-          "id": "c259",
-          "unique_tokens": [
-            ")",
-            ".",
-            "\"",
-            "!=",
-            "}",
-            "return",
-            "-",
-            "+",
-            "append",
-            "==",
-            "StopWalkException",
-            "constant",
-            "(",
-            "]",
-            ";",
-            "oneChar",
-            "{"
-          ],
-          "syntactic_label": "Unknown",
-          "semantic_tags": [
-            "Unknown"
-          ],
-          "description": "Failed to classify due to processing error."
-        },
-        {
-          "id": "c412",
-          "unique_tokens": [
-            ")",
-            "arg1",
-            "5381",
-            "BYTE1",
-            "log(1",
-            "return",
-            "append",
-            "and",
-            "+",
-            "_input",
-            "]",
-            "(",
-            ";",
-            "1",
-            ",",
-            "?",
-            "=",
-            "<<"
-          ],
-          "syntactic_label": "Unknown",
-          "semantic_tags": [
-            "Unknown"
-          ],
-          "description": "Failed to classify due to processing error."
         }
       ]
     },
@@ -5923,62 +4497,6 @@
         }
       ]
     },
-    "c409": {
-      "encoder_cluster": {
-        "id": "c409",
-        "unique_tokens": [
-          "Dispose",
-          ")",
-          "Decompose",
-          ":",
-          "}",
-          ";",
-          "("
-        ],
-        "syntactic_label": "Method,Resource Management,Control Flow,Special Characters",
-        "semantic_tags": [
-          "Resource Management",
-          "Exception Handling",
-          "Control Flow",
-          "Method Decomposition",
-          "Object-Oriented Programming"
-        ],
-        "description": "The tokens represent a mix of method names (Dispose, Decompose), control flow elements (parentheses, curly braces, semicolon), and special characters.  Semantically, the code snippets demonstrate resource management through the use of Dispose() methods, exception handling with try-finally blocks to ensure resource cleanup (IOUtils.Dispose), and control flow using if-else statements and loops. The code is object-oriented, utilizing methods and objects.  The special characters are essential for defining the structure and syntax of the Java code."
-      },
-      "aligned_decoder_clusters": [
-        {
-          "id": "c1",
-          "unique_tokens": [
-            ",",
-            ")",
-            "}",
-            "1000.0",
-            "0",
-            "data",
-            "]",
-            "append0",
-            "(",
-            ";",
-            ":",
-            "false",
-            "FALSE",
-            "true",
-            "fillFields=true",
-            "?",
-            "TRUE"
-          ],
-          "syntactic_label": "C# Tokens and Symbols",
-          "semantic_tags": [
-            "Boolean Logic",
-            "Method Parameters",
-            "Array Manipulation",
-            "Control Flow",
-            "Data Structures"
-          ],
-          "description": "The tokens represent a variety of C# language elements.  These include: commas (,), parentheses ((), braces ({}), numeric literals (1000.0, 0), identifiers (data, append0), square brackets ([]), assignment operator (=), semicolons (;), colons (:), boolean literals (false, FALSE, true, TRUE), and the question mark (?).  These tokens are fundamental to C# syntax and are used in various contexts such as method definitions, conditional statements, loops, array creation, and data manipulation. The semantic tags reflect the common operations performed in the provided code snippets."
-        }
-      ]
-    },
     "c416": {
       "encoder_cluster": {
         "id": "c416",
@@ -6048,110 +4566,6 @@
             "Object Instantiation"
           ],
           "description": "The tokens ';', 'this', 'errCode', and '}' represent fundamental C# language constructs.  ';' acts as a statement separator. 'this' is a keyword referring to the current instance of a class. 'errCode' is likely an identifier representing an error code. '}' is a closing brace, typically used to end code blocks such as methods or classes. In the context provided, these tokens are part of numerous class declarations, constructors, and method calls, demonstrating basic C# syntax for object-oriented programming. The code defines a series of request classes, each likely used for interacting with a specific service or API."
-        }
-      ]
-    },
-    "c418": {
-      "encoder_cluster": {
-        "id": "c418",
-        "unique_tokens": [
-          "",
-          "<<",
-          "return",
-          "scratch",
-          "but",
-          "j",
-          "{",
-          "5",
-          ":",
-          "instead",
-          ";",
-          "min",
-          "(",
-          "returnType",
-          "else",
-          "and",
-          "index",
-          "FilterForChannel",
-          "+",
-          "while",
-          "0",
-          ")",
-          "Length",
-          "new",
-          "\"",
-          "to",
-          "maxCount",
-          "}",
-          ",",
-          ".",
-          "a",
-          "]",
-          "Add",
-          "==",
-          "1",
-          "=",
-          "if"
-        ],
-        "syntactic_label": "Java Tokens and Operators",
-        "semantic_tags": [
-          "Control Flow",
-          "Data Structures",
-          "Input/Output",
-          "Exception Handling",
-          "Data Manipulation"
-        ],
-        "description": "The tokens represent a diverse set of Java language elements, including keywords (return, if, else, while), operators (==, +, -, ++, <<, &), delimiters ({, }, (, ), [, ], ., ;, ,), and identifiers (e.g., raw, Length, delta, ptr, etc.). These tokens are fundamental to Java syntax and are used to construct various program structures, control program flow, manipulate data, handle exceptions, and perform input/output operations.  The sentences show examples of loops, conditional statements, array manipulation, string handling, and exception handling, all core aspects of Java programming."
-      },
-      "aligned_decoder_clusters": [
-        {
-          "id": "c343",
-          "unique_tokens": [
-            "",
-            ")",
-            "while",
-            "else",
-            "instead",
-            "throw",
-            "{",
-            "16",
-            "sb",
-            "int",
-            "]",
-            "compressed",
-            "1",
-            "body",
-            ".",
-            "\"",
-            "but",
-            "j",
-            "synset",
-            "(",
-            ":",
-            "add",
-            "Shape",
-            "o1",
-            "=",
-            "5",
-            "return",
-            "if",
-            "}",
-            "+",
-            "==",
-            ";",
-            "new",
-            ",",
-            "0x7ffffffe"
-          ],
-          "syntactic_label": "C# Tokens and Symbols",
-          "semantic_tags": [
-            "Control Flow",
-            "Exception Handling",
-            "Object Manipulation",
-            "Data Structures",
-            "Comparison"
-          ],
-          "description": "The tokens represent a wide range of C# language features.  'while', 'if', 'else' are control flow statements. 'throw' handles exceptions.  The '.' operator accesses object members.  'int', 'String', 'StringBuffer', and arrays are data structures.  '==' and '<' are comparison operators.  Parentheses, brackets, and braces denote grouping and scope.  The tokens and sentences demonstrate fundamental C# programming constructs used in various methods, including comparison, object manipulation, and control flow."
         }
       ]
     },
@@ -6567,143 +4981,6 @@
       },
       "aligned_decoder_clusters": [
         {
-          "id": "c72",
-          "unique_tokens": [
-            ")",
-            "refUpdateReturnCodeWas",
-            "getConfig",
-            "++",
-            "set",
-            "{",
-            "numfonts",
-            "/",
-            "]",
-            "1",
-            "v",
-            "*",
-            "\\n",
-            ".",
-            "\"",
-            "_evaluator",
-            "(",
-            "[",
-            "absRowIx",
-            "}",
-            "-",
-            "append",
-            "+",
-            "==",
-            "<=",
-            ";",
-            ","
-          ],
-          "syntactic_label": "C# Tokens and Symbols",
-          "semantic_tags": [
-            "Method Declaration",
-            "Object Instantiation",
-            "Control Flow",
-            "String Manipulation",
-            "Exception Handling"
-          ],
-          "description": "The tokens represent a wide range of C# language features.  They include method declarations (public static ValueVector createVector(TwoDEval ae)), object instantiation (new StringBuilder()), control flow statements (if, else), string manipulation (append, toString), and exception handling (throw new IOException). These are fundamental aspects of C# programming, crucial for building applications."
-        },
-        {
-          "id": "c329",
-          "unique_tokens": [
-            ")",
-            "p",
-            "copy",
-            "'",
-            "copyOf",
-            "{",
-            "[]",
-            "tmpTermState",
-            "&",
-            "PathFilter",
-            "range!",
-            "data",
-            "]",
-            "toString",
-            "null",
-            "\\n",
-            "State",
-            ".",
-            "\"",
-            "b",
-            "newArray",
-            "for",
-            "(",
-            "[",
-            "lc",
-            ":",
-            "pos",
-            "buf",
-            "=",
-            "}",
-            "return",
-            "+",
-            "ss",
-            ";",
-            "result",
-            "new",
-            ","
-          ],
-          "syntactic_label": "C# Tokens and Symbols",
-          "semantic_tags": [
-            "Array Manipulation",
-            "Method Implementation",
-            "String Manipulation",
-            "Data Structures",
-            "Control Flow"
-          ],
-          "description": "The tokens represent a wide range of C# language elements, including keywords (for, return, new), operators (+, =, ., [], &), symbols (, ), {, }, [, ], ;, \n, :, ' , \"), identifiers (e.g., copy, copyOf, tmpTermState, PathFilter, range!, data, toString, null, State, lc, pos, buf, result, ss, fields, decisions, atnSimulator, etc.), and literals.  These tokens are used in various methods to perform array manipulation, string manipulation, data structure operations (e.g., array creation, array copying, string building), and control flow (e.g., loops, conditional statements). The semantic tags reflect the common operations and functionalities implemented using these tokens."
-        },
-        {
-          "id": "c346",
-          "unique_tokens": [
-            ")",
-            "else",
-            "throw",
-            "Constants",
-            ">",
-            "&",
-            "IndexOptions",
-            "scratch",
-            "sb",
-            "]",
-            "null",
-            ",",
-            ".",
-            "\"",
-            "r",
-            "R",
-            "(",
-            ":",
-            "typeHint",
-            "!=",
-            "-",
-            "if",
-            "}",
-            "append",
-            "+",
-            "marshall(...)",
-            "==",
-            ">=",
-            ";",
-            "JGitText",
-            "unknownObjectType2"
-          ],
-          "syntactic_label": "C# Tokens and Symbols",
-          "semantic_tags": [
-            "Control Flow",
-            "Exception Handling",
-            "String Manipulation",
-            "Object Manipulation",
-            "Data Structures"
-          ],
-          "description": "The tokens represent a wide range of C# language features.  These include keywords for control flow (if, else), exception handling (throw), and operators for comparison (>, ==, !=, >=, +, -, &), array access ([]), and string manipulation (+, append).  The tokens also show object manipulation (.), method calls (append, marshall, toString, etc.), and the use of data structures (StringBuilder, arrays, lists).  The semantic tags reflect the overall functionality of the code snippets, which involve various operations on strings, objects, and data structures, with control flow and exception handling mechanisms."
-        },
-        {
           "id": "c488",
           "unique_tokens": [
             ")",
@@ -6759,123 +5036,57 @@
             "Data Processing"
           ],
           "description": "The tokens represent a wide range of C# language elements, including keywords (public, boolean, for, if, return, etc.), operators (+, -, ++, --, ==, !=, &&, etc.), symbols ({, }, (, ), [, ], ., ;, ',', etc.), identifiers (uri, items, buffer, username, password, etc.), and literals (0, 3, null, etc.).  These tokens are used in various code snippets to implement control flow (loops, conditional statements), manipulate data structures (arrays, lists, strings), perform string operations (append, substring, etc.), and process data (iteration, data comparisons, etc.). The semantic tags reflect the common functionalities observed across the different code examples."
-        }
-      ]
-    },
-    "c457": {
-      "encoder_cluster": {
-        "id": "c457",
-        "unique_tokens": [
-          "avg",
-          "return",
-          "{",
-          ":",
-          ";",
-          "(",
-          "termsOffsets",
-          "maxGoodPoints",
-          "for",
-          "else",
-          "Evaluate",
-          "catch",
-          "n",
-          "String",
-          "throw",
-          "}",
-          "default",
-          "Array",
-          "GetPointer",
-          "Append",
-          "_isPaddedToQuadByteMultiple",
-          "[",
-          "arrays",
-          "=",
-          "if"
-        ],
-        "syntactic_label": "Java language constructs and identifiers",
-        "semantic_tags": [
-          "Control Flow",
-          "Exception Handling",
-          "Data Structures",
-          "Object Manipulation",
-          "String Manipulation"
-        ],
-        "description": "The tokens represent a mix of Java keywords (if, else, for, return, throw, catch, default), operators (=, +, -, ==, !=, <, >, &&, ||), and identifiers (avg, termsOffsets, maxGoodPoints, n, String, Evaluate, etc.).  These are fundamental elements of Java syntax used to control program flow (if-else, for loops), handle exceptions (try-catch), manipulate objects (dot operator), and process data (arrays, strings). The semantic tags reflect the core functionalities implemented in the code snippets, encompassing control flow, exception handling, and data structure usage."
-      },
-      "aligned_decoder_clusters": [
+        },
         {
-          "id": "c427",
+          "id": "c329",
           "unique_tokens": [
-            "Inflater",
             ")",
-            "fillerToken",
-            "normalizer",
-            "while",
-            "points",
-            "wmfImageLength",
-            "this",
-            "else",
-            "docData",
-            "break",
-            "map",
+            "p",
+            "copy",
+            "'",
+            "copyOf",
             "{",
-            "currentRevision",
-            "precedenceState",
-            "AddNoteCommand",
-            "sb",
-            "int",
-            "field_8_zero3",
-            "ret",
-            "case",
-            "fieldsData",
+            "[]",
+            "tmpTermState",
+            "&",
+            "PathFilter",
+            "range!",
+            "data",
+            "]",
+            "toString",
+            "null",
+            "\\n",
+            "State",
             ".",
             "\"",
-            "catch",
-            "field_8_vresolution",
-            "numericFields",
-            "index",
-            "temp",
-            "j",
+            "b",
+            "newArray",
             "for",
-            "cnt",
-            ".verifier",
-            "_sheetEvaluators",
             "(",
-            ":",
             "[",
-            "FormulaRecordAggregate",
+            "lc",
+            ":",
+            "pos",
+            "buf",
             "=",
-            "n",
-            "boolean",
-            "maxTermWeight",
-            "removeCell",
             "}",
-            "if",
             "return",
-            "default",
-            "append",
-            "LittleEndian",
-            "i",
-            "flag",
-            "lastSheetName",
-            "subDocs",
+            "+",
+            "ss",
             ";",
-            "String",
-            "buffer",
+            "result",
             "new",
-            "_fieldInfos",
-            "idx",
-            "getTagger"
+            ","
           ],
-          "syntactic_label": "C# Tokens and their syntactic roles",
+          "syntactic_label": "C# Tokens and Symbols",
           "semantic_tags": [
-            "Control Flow",
+            "Array Manipulation",
+            "Method Implementation",
+            "String Manipulation",
             "Data Structures",
-            "Object Manipulation",
-            "File I/O",
-            "Algorithm Implementation"
+            "Control Flow"
           ],
-          "description": "The tokens represent a wide range of C# language features. Keywords like \"if\", \"else\", \"for\", \"while\", and \"switch\" control program flow.  Data structures such as arrays (\"byte[]\", \"int[]\"), Strings (\"String\"), and collections (e.g., \"List\", \"Map\") are used to store and manipulate data. The dot operator (\".\") is extensively used for object member access and method invocation.  The code snippets show file operations (\"LittleEndianOutput\", \"InputStream\", \"IOException\"), and various algorithms are implemented (e.g., GCD calculation, date conversion, formula evaluation)."
+          "description": "The tokens represent a wide range of C# language elements, including keywords (for, return, new), operators (+, =, ., [], &), symbols (, ), {, }, [, ], ;, \n, :, ' , \"), identifiers (e.g., copy, copyOf, tmpTermState, PathFilter, range!, data, toString, null, State, lc, pos, buf, result, ss, fields, decisions, atnSimulator, etc.), and literals.  These tokens are used in various methods to perform array manipulation, string manipulation, data structure operations (e.g., array creation, array copying, string building), and control flow (e.g., loops, conditional statements). The semantic tags reflect the common operations and functionalities implemented using these tokens."
         }
       ]
     },
