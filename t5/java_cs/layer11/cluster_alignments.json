@@ -1,12 +1,14 @@
 {
   "3": {
     "aligned_clusters": [
-      318
+      318,
+      134
     ],
     "metrics": {
       "match_percentage": 0.6666666666666666,
       "source_cluster_size": 9,
       "target_cluster_sizes": [
+        15,
         17
       ],
       "aligned_word_count": 6,
@@ -33,22 +35,6 @@
       ],
       "aligned_word_count": 2,
       "total_words": 2,
-      "size_threshold": 0.4,
-      "translation_threshold": 0.5
-    }
-  },
-  "14": {
-    "aligned_clusters": [
-      439
-    ],
-    "metrics": {
-      "match_percentage": 0.8,
-      "source_cluster_size": 5,
-      "target_cluster_sizes": [
-        11
-      ],
-      "aligned_word_count": 4,
-      "total_words": 5,
       "size_threshold": 0.4,
       "translation_threshold": 0.5
     }
@@ -153,19 +139,71 @@
       "translation_threshold": 0.5
     }
   },
+  "132": {
+    "aligned_clusters": [
+      252
+    ],
+    "metrics": {
+      "match_percentage": 0.7789783889980354,
+      "source_cluster_size": 1018,
+      "target_cluster_sizes": [
+        1002
+      ],
+      "aligned_word_count": 793,
+      "total_words": 1018,
+      "size_threshold": 0.4,
+      "translation_threshold": 0.5
+    }
+  },
+  "149": {
+    "aligned_clusters": [
+      0,
+      395,
+      300
+    ],
+    "metrics": {
+      "match_percentage": 0.6285714285714286,
+      "source_cluster_size": 35,
+      "target_cluster_sizes": [
+        85,
+        68,
+        60
+      ],
+      "aligned_word_count": 22,
+      "total_words": 35,
+      "size_threshold": 0.4,
+      "translation_threshold": 0.5
+    }
+  },
+  "163": {
+    "aligned_clusters": [
+      152
+    ],
+    "metrics": {
+      "match_percentage": 0.8914285714285715,
+      "source_cluster_size": 700,
+      "target_cluster_sizes": [
+        654
+      ],
+      "aligned_word_count": 624,
+      "total_words": 700,
+      "size_threshold": 0.4,
+      "translation_threshold": 0.5
+    }
+  },
   "169": {
     "aligned_clusters": [
       154,
       298
     ],
     "metrics": {
-      "match_percentage": 0.625,
+      "match_percentage": 0.6875,
       "source_cluster_size": 16,
       "target_cluster_sizes": [
         34,
         37
       ],
-      "aligned_word_count": 10,
+      "aligned_word_count": 11,
       "total_words": 16,
       "size_threshold": 0.4,
       "translation_threshold": 0.5
@@ -242,18 +280,16 @@
   "255": {
     "aligned_clusters": [
       318,
-      134,
-      439
+      134
     ],
     "metrics": {
-      "match_percentage": 0.625,
+      "match_percentage": 0.75,
       "source_cluster_size": 8,
       "target_cluster_sizes": [
         15,
-        17,
-        11
+        17
       ],
-      "aligned_word_count": 5,
+      "aligned_word_count": 6,
       "total_words": 8,
       "size_threshold": 0.4,
       "translation_threshold": 0.5
@@ -277,15 +313,15 @@
   },
   "279": {
     "aligned_clusters": [
-      442
+      314
     ],
     "metrics": {
-      "match_percentage": 0.6688741721854304,
+      "match_percentage": 0.8322295805739515,
       "source_cluster_size": 906,
       "target_cluster_sizes": [
-        1539
+        1037
       ],
-      "aligned_word_count": 606,
+      "aligned_word_count": 754,
       "total_words": 906,
       "size_threshold": 0.4,
       "translation_threshold": 0.5
@@ -312,12 +348,12 @@
       187
     ],
     "metrics": {
-      "match_percentage": 0.9532710280373832,
+      "match_percentage": 0.9595015576323987,
       "source_cluster_size": 321,
       "target_cluster_sizes": [
         512
       ],
-      "aligned_word_count": 306,
+      "aligned_word_count": 308,
       "total_words": 321,
       "size_threshold": 0.4,
       "translation_threshold": 0.5
@@ -328,12 +364,12 @@
       263
     ],
     "metrics": {
-      "match_percentage": 0.6621004566210046,
+      "match_percentage": 0.6894977168949772,
       "source_cluster_size": 219,
       "target_cluster_sizes": [
         197
       ],
-      "aligned_word_count": 145,
+      "aligned_word_count": 151,
       "total_words": 219,
       "size_threshold": 0.4,
       "translation_threshold": 0.5
@@ -351,6 +387,22 @@
       ],
       "aligned_word_count": 2,
       "total_words": 2,
+      "size_threshold": 0.4,
+      "translation_threshold": 0.5
+    }
+  },
+  "304": {
+    "aligned_clusters": [
+      300
+    ],
+    "metrics": {
+      "match_percentage": 0.6206896551724138,
+      "source_cluster_size": 29,
+      "target_cluster_sizes": [
+        68
+      ],
+      "aligned_word_count": 18,
+      "total_words": 29,
       "size_threshold": 0.4,
       "translation_threshold": 0.5
     }
@@ -393,13 +445,13 @@
       134
     ],
     "metrics": {
-      "match_percentage": 0.625,
+      "match_percentage": 0.75,
       "source_cluster_size": 8,
       "target_cluster_sizes": [
         15,
         17
       ],
-      "aligned_word_count": 5,
+      "aligned_word_count": 6,
       "total_words": 8,
       "size_threshold": 0.4,
       "translation_threshold": 0.5
@@ -443,13 +495,13 @@
       134
     ],
     "metrics": {
-      "match_percentage": 0.8571428571428571,
+      "match_percentage": 1.0,
       "source_cluster_size": 7,
       "target_cluster_sizes": [
         15,
         17
       ],
-      "aligned_word_count": 6,
+      "aligned_word_count": 7,
       "total_words": 7,
       "size_threshold": 0.4,
       "translation_threshold": 0.5
@@ -487,34 +539,34 @@
       "translation_threshold": 0.5
     }
   },
+  "418": {
+    "aligned_clusters": [
+      284
+    ],
+    "metrics": {
+      "match_percentage": 0.6190476190476191,
+      "source_cluster_size": 21,
+      "target_cluster_sizes": [
+        46
+      ],
+      "aligned_word_count": 13,
+      "total_words": 21,
+      "size_threshold": 0.4,
+      "translation_threshold": 0.5
+    }
+  },
   "419": {
     "aligned_clusters": [
       183
     ],
     "metrics": {
-      "match_percentage": 0.8585858585858586,
+      "match_percentage": 0.8888888888888888,
       "source_cluster_size": 99,
       "target_cluster_sizes": [
         111
       ],
-      "aligned_word_count": 85,
+      "aligned_word_count": 88,
       "total_words": 99,
-      "size_threshold": 0.4,
-      "translation_threshold": 0.5
-    }
-  },
-  "423": {
-    "aligned_clusters": [
-      77
-    ],
-    "metrics": {
-      "match_percentage": 0.6666666666666666,
-      "source_cluster_size": 3,
-      "target_cluster_sizes": [
-        5
-      ],
-      "aligned_word_count": 2,
-      "total_words": 3,
       "size_threshold": 0.4,
       "translation_threshold": 0.5
     }
@@ -558,12 +610,12 @@
       160
     ],
     "metrics": {
-      "match_percentage": 0.6519823788546255,
+      "match_percentage": 0.6696035242290749,
       "source_cluster_size": 227,
       "target_cluster_sizes": [
         263
       ],
-      "aligned_word_count": 148,
+      "aligned_word_count": 152,
       "total_words": 227,
       "size_threshold": 0.4,
       "translation_threshold": 0.5
@@ -571,16 +623,32 @@
   },
   "476": {
     "aligned_clusters": [
-      226
+      313
     ],
     "metrics": {
-      "match_percentage": 0.7569444444444444,
+      "match_percentage": 0.8379629629629629,
       "source_cluster_size": 432,
       "target_cluster_sizes": [
-        712
+        1060
       ],
-      "aligned_word_count": 327,
+      "aligned_word_count": 362,
       "total_words": 432,
+      "size_threshold": 0.4,
+      "translation_threshold": 0.5
+    }
+  },
+  "489": {
+    "aligned_clusters": [
+      240
+    ],
+    "metrics": {
+      "match_percentage": 0.6039603960396039,
+      "source_cluster_size": 101,
+      "target_cluster_sizes": [
+        218
+      ],
+      "aligned_word_count": 61,
+      "total_words": 101,
       "size_threshold": 0.4,
       "translation_threshold": 0.5
     }
