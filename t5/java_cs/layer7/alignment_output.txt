@@ -5,6 +5,7 @@ Source Cluster 57 is aligned to Target Clusters: 96, 197, 9, 426, 76, 47, 211, 1
 Source Cluster 73 is aligned to Target Clusters: 37, 168, 43, 493, 406, 378
 Source Cluster 99 is aligned to Target Clusters: 220
 Source Cluster 109 is aligned to Target Clusters: 178, 123, 483
+Source Cluster 167 is aligned to Target Clusters: 8
 Source Cluster 177 is aligned to Target Clusters: 378, 268, 327
 Source Cluster 185 is aligned to Target Clusters: 78
 Source Cluster 192 is aligned to Target Clusters: 378
@@ -12,9 +13,10 @@ Source Cluster 205 is aligned to Target Clusters: 96, 66, 37, 197, 168, 9, 426, 
 Source Cluster 209 is aligned to Target Clusters: 250
 Source Cluster 221 is aligned to Target Clusters: 2, 408, 391, 296, 265, 330, 12, 492, 79, 124, 210, 152, 249, 122, 92
 Source Cluster 238 is aligned to Target Clusters: 178, 123, 483
+Source Cluster 264 is aligned to Target Clusters: 446
+Source Cluster 265 is aligned to Target Clusters: 464
 Source Cluster 267 is aligned to Target Clusters: 250
-Source Cluster 334 is aligned to Target Clusters: 3, 220
-Source Cluster 336 is aligned to Target Clusters: 31
+Source Cluster 349 is aligned to Target Clusters: 401
 Source Cluster 354 is aligned to Target Clusters: 178, 123, 483
 Source Cluster 356 is aligned to Target Clusters: 37, 168, 43, 493, 406, 378
 Source Cluster 375 is aligned to Target Clusters: 2, 408, 391, 296, 265, 330, 12, 492, 79, 124, 210, 152, 249, 122, 92
@@ -22,14 +24,12 @@ Source Cluster 379 is aligned to Target Clusters: 178, 123, 483
 Source Cluster 381 is aligned to Target Clusters: 133, 375
 Source Cluster 385 is aligned to Target Clusters: 178, 123, 483
 Source Cluster 388 is aligned to Target Clusters: 178, 123, 483
-Source Cluster 394 is aligned to Target Clusters: 8
 Source Cluster 402 is aligned to Target Clusters: 483, 9, 47, 178, 148, 375, 123
 Source Cluster 412 is aligned to Target Clusters: 138
 Source Cluster 417 is aligned to Target Clusters: 96, 66, 37, 197, 168, 9, 426, 43, 76, 493, 211, 406, 375, 24, 378, 251, 220
+Source Cluster 437 is aligned to Target Clusters: 98, 77
 Source Cluster 444 is aligned to Target Clusters: 178, 123, 483
 Source Cluster 449 is aligned to Target Clusters: 178, 123, 483
-Source Cluster 463 is aligned to Target Clusters: 128, 297, 195, 451
-Source Cluster 468 is aligned to Target Clusters: 8
-Source Cluster 491 is aligned to Target Clusters: 8
+Source Cluster 463 is aligned to Target Clusters: 297, 451
 
 Alignment results saved to: ../CrossLingual_Analysis/t5/java_cs/layer7/cluster_alignments.json
