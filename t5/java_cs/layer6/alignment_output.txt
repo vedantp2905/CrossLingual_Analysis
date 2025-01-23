@@ -1,13 +1,11 @@
-Aligned Clusters: 55
+Aligned Clusters: 47
 Source Cluster 4 is aligned to Target Clusters: 450, 440, 495, 152, 339, 434, 341, 374, 215, 88, 377, 405, 283, 317
 Source Cluster 9 is aligned to Target Clusters: 151, 156, 493, 103
-Source Cluster 12 is aligned to Target Clusters: 217, 323
-Source Cluster 13 is aligned to Target Clusters: 257, 4, 132, 133, 261, 396, 14, 17, 403, 34, 163, 167, 181, 332, 212, 214, 344, 349, 95, 229, 357, 368, 372, 375
-Source Cluster 56 is aligned to Target Clusters: 344, 332
+Source Cluster 13 is aligned to Target Clusters: 344, 332
+Source Cluster 23 is aligned to Target Clusters: 363, 301
+Source Cluster 56 is aligned to Target Clusters: 257, 4, 132, 133, 261, 396, 14, 17, 403, 34, 163, 167, 181, 332, 212, 214, 344, 349, 95, 229, 357, 368, 372, 375
 Source Cluster 62 is aligned to Target Clusters: 256, 101, 296, 458, 114
 Source Cluster 87 is aligned to Target Clusters: 103, 493, 246, 151, 156
-Source Cluster 103 is aligned to Target Clusters: 106
-Source Cluster 109 is aligned to Target Clusters: 313
 Source Cluster 124 is aligned to Target Clusters: 90
 Source Cluster 140 is aligned to Target Clusters: 169, 23
 Source Cluster 155 is aligned to Target Clusters: 64
@@ -18,7 +16,6 @@ Source Cluster 183 is aligned to Target Clusters: 290, 171, 139, 109, 113, 401, 
 Source Cluster 193 is aligned to Target Clusters: 462
 Source Cluster 209 is aligned to Target Clusters: 288, 132, 261, 293, 359, 168, 458, 396, 375, 123, 381, 254
 Source Cluster 212 is aligned to Target Clusters: 288, 132, 261, 293, 359, 168, 458, 396, 375, 123, 381, 254
-Source Cluster 216 is aligned to Target Clusters: 40, 386, 173
 Source Cluster 230 is aligned to Target Clusters: 173
 Source Cluster 234 is aligned to Target Clusters: 403
 Source Cluster 242 is aligned to Target Clusters: 491
@@ -28,8 +25,7 @@ Source Cluster 272 is aligned to Target Clusters: 396, 261, 375
 Source Cluster 281 is aligned to Target Clusters: 256, 101, 296, 458, 114
 Source Cluster 283 is aligned to Target Clusters: 450, 440, 495, 152, 339, 434, 341, 374, 215, 88, 377, 405, 283, 317
 Source Cluster 289 is aligned to Target Clusters: 151, 156, 493, 103
-Source Cluster 300 is aligned to Target Clusters: 161, 173
-Source Cluster 308 is aligned to Target Clusters: 363
+Source Cluster 300 is aligned to Target Clusters: 173
 Source Cluster 311 is aligned to Target Clusters: 226, 139, 262
 Source Cluster 315 is aligned to Target Clusters: 363, 226, 139, 301
 Source Cluster 321 is aligned to Target Clusters: 151, 156, 493, 103
@@ -38,21 +34,17 @@ Source Cluster 331 is aligned to Target Clusters: 201
 Source Cluster 333 is aligned to Target Clusters: 401, 290, 171, 108
 Source Cluster 334 is aligned to Target Clusters: 79
 Source Cluster 348 is aligned to Target Clusters: 151, 156, 493, 103
-Source Cluster 350 is aligned to Target Clusters: 40, 386, 173
+Source Cluster 350 is aligned to Target Clusters: 386
 Source Cluster 351 is aligned to Target Clusters: 293, 359, 168, 458, 123, 381, 254
-Source Cluster 386 is aligned to Target Clusters: 380
 Source Cluster 390 is aligned to Target Clusters: 151, 156, 493, 103
 Source Cluster 401 is aligned to Target Clusters: 151, 156, 493, 103
 Source Cluster 408 is aligned to Target Clusters: 290, 131, 354, 262, 171, 109, 365, 113, 401, 55, 281
 Source Cluster 412 is aligned to Target Clusters: 23
-Source Cluster 417 is aligned to Target Clusters: 58
-Source Cluster 424 is aligned to Target Clusters: 318
 Source Cluster 431 is aligned to Target Clusters: 27
 Source Cluster 437 is aligned to Target Clusters: 430
-Source Cluster 441 is aligned to Target Clusters: 82
 Source Cluster 443 is aligned to Target Clusters: 256
 Source Cluster 451 is aligned to Target Clusters: 105
 Source Cluster 461 is aligned to Target Clusters: 256, 132, 261, 101, 296, 458, 396, 114, 375
 Source Cluster 494 is aligned to Target Clusters: 184, 27, 447
 
-Alignment results saved to: ../LLM_labelling/t5/java_cs/layer6/cluster_alignments.json
+Alignment results saved to: ../CrossLingual_Analysis/t5/java_cs/layer6/cluster_alignments.json

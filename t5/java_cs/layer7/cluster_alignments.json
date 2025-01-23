@@ -1,20 +1,4 @@
 {
-  "1": {
-    "aligned_clusters": [
-      373
-    ],
-    "metrics": {
-      "match_percentage": 0.6153846153846154,
-      "source_cluster_size": 39,
-      "target_cluster_sizes": [
-        93
-      ],
-      "aligned_word_count": 24,
-      "total_words": 39,
-      "size_threshold": 0.4,
-      "translation_threshold": 0.5
-    }
-  },
   "14": {
     "aligned_clusters": [
       178,
@@ -139,22 +123,6 @@
       "translation_threshold": 0.5
     }
   },
-  "75": {
-    "aligned_clusters": [
-      142
-    ],
-    "metrics": {
-      "match_percentage": 0.6306306306306306,
-      "source_cluster_size": 111,
-      "target_cluster_sizes": [
-        204
-      ],
-      "aligned_word_count": 70,
-      "total_words": 111,
-      "size_threshold": 0.4,
-      "translation_threshold": 0.5
-    }
-  },
   "99": {
     "aligned_clusters": [
       220
@@ -167,28 +135,6 @@
       ],
       "aligned_word_count": 2,
       "total_words": 3,
-      "size_threshold": 0.4,
-      "translation_threshold": 0.5
-    }
-  },
-  "104": {
-    "aligned_clusters": [
-      144,
-      411,
-      446,
-      231
-    ],
-    "metrics": {
-      "match_percentage": 0.65,
-      "source_cluster_size": 20,
-      "target_cluster_sizes": [
-        41,
-        36,
-        37,
-        44
-      ],
-      "aligned_word_count": 13,
-      "total_words": 20,
       "size_threshold": 0.4,
       "translation_threshold": 0.5
     }
@@ -265,22 +211,6 @@
       "translation_threshold": 0.5
     }
   },
-  "197": {
-    "aligned_clusters": [
-      133
-    ],
-    "metrics": {
-      "match_percentage": 0.75,
-      "source_cluster_size": 4,
-      "target_cluster_sizes": [
-        8
-      ],
-      "aligned_word_count": 3,
-      "total_words": 4,
-      "size_threshold": 0.4,
-      "translation_threshold": 0.5
-    }
-  },
   "205": {
     "aligned_clusters": [
       96,
@@ -334,12 +264,12 @@
       250
     ],
     "metrics": {
-      "match_percentage": 0.6846361185983828,
+      "match_percentage": 0.633423180592992,
       "source_cluster_size": 371,
       "target_cluster_sizes": [
         432
       ],
-      "aligned_word_count": 254,
+      "aligned_word_count": 235,
       "total_words": 371,
       "size_threshold": 0.4,
       "translation_threshold": 0.5
@@ -414,45 +344,31 @@
       250
     ],
     "metrics": {
-      "match_percentage": 0.8495934959349594,
+      "match_percentage": 0.7642276422764228,
       "source_cluster_size": 246,
       "target_cluster_sizes": [
         432
       ],
-      "aligned_word_count": 209,
+      "aligned_word_count": 188,
       "total_words": 246,
       "size_threshold": 0.4,
       "translation_threshold": 0.5
     }
   },
-  "287": {
+  "334": {
     "aligned_clusters": [
-      371
+      3,
+      220
     ],
     "metrics": {
-      "match_percentage": 0.625,
-      "source_cluster_size": 8,
+      "match_percentage": 0.6666666666666666,
+      "source_cluster_size": 6,
       "target_cluster_sizes": [
-        15
+        13,
+        7
       ],
-      "aligned_word_count": 5,
-      "total_words": 8,
-      "size_threshold": 0.4,
-      "translation_threshold": 0.5
-    }
-  },
-  "292": {
-    "aligned_clusters": [
-      18
-    ],
-    "metrics": {
-      "match_percentage": 0.6153846153846154,
-      "source_cluster_size": 13,
-      "target_cluster_sizes": [
-        20
-      ],
-      "aligned_word_count": 8,
-      "total_words": 13,
+      "aligned_word_count": 4,
+      "total_words": 6,
       "size_threshold": 0.4,
       "translation_threshold": 0.5
     }
@@ -469,22 +385,6 @@
       ],
       "aligned_word_count": 2,
       "total_words": 3,
-      "size_threshold": 0.4,
-      "translation_threshold": 0.5
-    }
-  },
-  "339": {
-    "aligned_clusters": [
-      102
-    ],
-    "metrics": {
-      "match_percentage": 0.7297297297297297,
-      "source_cluster_size": 37,
-      "target_cluster_sizes": [
-        59
-      ],
-      "aligned_word_count": 27,
-      "total_words": 37,
       "size_threshold": 0.4,
       "translation_threshold": 0.5
     }
@@ -531,22 +431,6 @@
       ],
       "aligned_word_count": 2,
       "total_words": 2,
-      "size_threshold": 0.4,
-      "translation_threshold": 0.5
-    }
-  },
-  "357": {
-    "aligned_clusters": [
-      491
-    ],
-    "metrics": {
-      "match_percentage": 0.631578947368421,
-      "source_cluster_size": 19,
-      "target_cluster_sizes": [
-        44
-      ],
-      "aligned_word_count": 12,
-      "total_words": 19,
       "size_threshold": 0.4,
       "translation_threshold": 0.5
     }
@@ -781,56 +665,6 @@
       "translation_threshold": 0.5
     }
   },
-  "427": {
-    "aligned_clusters": [
-      326
-    ],
-    "metrics": {
-      "match_percentage": 0.7,
-      "source_cluster_size": 10,
-      "target_cluster_sizes": [
-        24
-      ],
-      "aligned_word_count": 7,
-      "total_words": 10,
-      "size_threshold": 0.4,
-      "translation_threshold": 0.5
-    }
-  },
-  "430": {
-    "aligned_clusters": [
-      235
-    ],
-    "metrics": {
-      "match_percentage": 0.6028880866425993,
-      "source_cluster_size": 277,
-      "target_cluster_sizes": [
-        206
-      ],
-      "aligned_word_count": 167,
-      "total_words": 277,
-      "size_threshold": 0.4,
-      "translation_threshold": 0.5
-    }
-  },
-  "437": {
-    "aligned_clusters": [
-      98,
-      77
-    ],
-    "metrics": {
-      "match_percentage": 0.6666666666666666,
-      "source_cluster_size": 9,
-      "target_cluster_sizes": [
-        21,
-        16
-      ],
-      "aligned_word_count": 6,
-      "total_words": 9,
-      "size_threshold": 0.4,
-      "translation_threshold": 0.5
-    }
-  },
   "444": {
     "aligned_clusters": [
       178,
@@ -873,13 +707,19 @@
   },
   "463": {
     "aligned_clusters": [
-      297
+      128,
+      297,
+      195,
+      451
     ],
     "metrics": {
       "match_percentage": 0.6086956521739131,
       "source_cluster_size": 23,
       "target_cluster_sizes": [
-        47
+        55,
+        43,
+        47,
+        41
       ],
       "aligned_word_count": 14,
       "total_words": 23,
