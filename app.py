@@ -571,10 +571,11 @@ def main():
     # Model selection dropdown instead of text input
     model_name = st.sidebar.selectbox(
         "Select Model",
-        ["t5", "coderosetta"]
+        ["t5", "coderosetta","coderosetta_aer","coderosetta_mlm"]
     )
     model_base = os.path.join( model_name)
     
+
     # Get available language pairs
     lang_pairs = [d for d in os.listdir(model_base) if os.path.isdir(os.path.join(model_base, d))]
     if not lang_pairs:
