@@ -525,29 +525,63 @@ def display_top_semantic_tags(model_base: str, selected_pair: str):
         st.plotly_chart(fig)
 
 def get_available_layers(model_base: str, selected_pair: str) -> List[int]:
-    """Returns a list of layer numbers that have valid alignment files."""
-    layers = []
+    """Returns a list of layer numbers that have alignment files or any cluster files."""
+    layers = set()  # Using set to avoid duplicates
     pair_dir = os.path.join(model_base, selected_pair)
     
-    # Only include layers that have the alignment file
+    print(f"Looking for layers in: {pair_dir}")  # Debug print
+    
+    if not os.path.exists(pair_dir):
+        print(f"Directory not found: {pair_dir}")
+        return []
+        
+    # Check each layer directory
     for item in os.listdir(pair_dir):
         if item.startswith('layer'):
             layer_num = int(item.replace('layer', ''))
+            layer_dir = os.path.join(pair_dir, item)
+            
+            # Check for alignment file
             alignment_file = os.path.join(
-                pair_dir, 
-                item, 
+                layer_dir, 
                 f"Alignments_with_LLM_labels_layer{layer_num}.json"
             )
+            
+            # Check for cluster files
+            encoder_cluster_file = os.path.join(layer_dir, "encoder-clusters-kmeans-500.txt")
+            decoder_cluster_file = os.path.join(layer_dir, "decoder-clusters-kmeans-500.txt")
+            
+            # Add layer if it has alignment file
             if os.path.isfile(alignment_file):
-                # Optionally validate JSON content
                 try:
                     with open(alignment_file, 'r', encoding='utf-8') as f:
                         json.load(f)
-                    layers.append(layer_num)
-                except (json.JSONDecodeError, UnicodeDecodeError):
-                    continue
+                    layers.add(layer_num)
+                    print(f"Found valid alignment file for layer: {layer_num}")
+                except (json.JSONDecodeError, UnicodeDecodeError) as e:
+                    print(f"Error reading alignment file for layer {layer_num}: {str(e)}")
+            
+            # Check encoder cluster file
+            if os.path.isfile(encoder_cluster_file):
+                try:
+                    with open(encoder_cluster_file, 'r', encoding='utf-8') as f:
+                        next(f)  # Try reading first line
+                    layers.add(layer_num)
+                    print(f"Found valid encoder cluster file for layer: {layer_num}")
+                except (StopIteration, UnicodeDecodeError) as e:
+                    print(f"Error reading encoder cluster file for layer {layer_num}: {str(e)}")
+            
+            # Check decoder cluster file
+            if os.path.isfile(decoder_cluster_file):
+                try:
+                    with open(decoder_cluster_file, 'r', encoding='utf-8') as f:
+                        next(f)  # Try reading first line
+                    layers.add(layer_num)
+                    print(f"Found valid decoder cluster file for layer: {layer_num}")
+                except (StopIteration, UnicodeDecodeError) as e:
+                    print(f"Error reading decoder cluster file for layer {layer_num}: {str(e)}")
     
-    return sorted(layers)
+    return sorted(list(layers))
 
 def validate_selected_layer(layer: int, available_layers: List[int]) -> int:
     """Validates and returns a valid layer number."""
@@ -643,12 +677,13 @@ def main():
             
             cluster_ids = [cluster_id for item in labels for cluster_id in item.keys()]
             
-            # Use session state for cluster selection
-            if st.session_state.current_cluster_index >= len(cluster_ids):
-                st.session_state.current_cluster_index = 0
-            
-            selected_cluster = cluster_ids[st.session_state.current_cluster_index]
-            st.selectbox("Select Cluster", cluster_ids, index=st.session_state.current_cluster_index)
+            # Use selectbox for cluster selection and store the actual selected value
+            selected_cluster = st.selectbox(
+                "Select Cluster", 
+                cluster_ids, 
+                index=st.session_state.current_cluster_index,
+                key="cluster_selector"  # Add a unique key
+            )
             
             # Display selected cluster
             for item in labels:
@@ -659,9 +694,10 @@ def main():
                         cluster_data, 
                         f"{model_name}/{selected_pair}",
                         selected_layer,
-                        selected_cluster,  # Pass cluster ID directly
+                        selected_cluster,
                         sentences=context_sentences
                     )
+                    break  # Add break to stop after finding the correct cluster
         else:
             display_aligned_clusters(model_base, selected_pair, selected_layer)
 
