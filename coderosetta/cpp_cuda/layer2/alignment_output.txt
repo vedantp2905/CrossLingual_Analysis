@@ -28,4 +28,4 @@ Source Cluster 431 is aligned to Target Clusters: 38, 199, 178, 371, 378
 Source Cluster 455 is aligned to Target Clusters: 258
 Source Cluster 457 is aligned to Target Clusters: 258, 16, 38, 39, 432, 183, 312, 67, 195, 199, 328, 455, 330, 218, 232, 360, 108, 495, 241
 
-Alignment results saved to: ../CrossLingual_Analysis/coderosetta/cpp_cuda/layer2/cluster_alignments.json
+Alignment results saved to: ../CrossLingual_Analysis/coderosetta/cpp_cuda//layer2/cluster_alignments.json

@@ -12,7 +12,9 @@
       "aligned_word_count": 2,
       "total_words": 2,
       "size_threshold": 0.4,
-      "translation_threshold": 0.5
+      "translation_threshold": 0.5,
+      "calign_score": 1.0,
+      "colap_score": 1.0
     }
   },
   "117": {
@@ -28,7 +30,9 @@
       "aligned_word_count": 2,
       "total_words": 3,
       "size_threshold": 0.4,
-      "translation_threshold": 0.5
+      "translation_threshold": 0.5,
+      "calign_score": 0.6666666666666666,
+      "colap_score": 1.0
     }
   },
   "141": {
@@ -44,7 +48,9 @@
       "aligned_word_count": 2,
       "total_words": 3,
       "size_threshold": 0.4,
-      "translation_threshold": 0.5
+      "translation_threshold": 0.5,
+      "calign_score": 0.6666666666666666,
+      "colap_score": 1.0
     }
   },
   "167": {
@@ -60,7 +66,9 @@
       "aligned_word_count": 3,
       "total_words": 4,
       "size_threshold": 0.4,
-      "translation_threshold": 0.5
+      "translation_threshold": 0.5,
+      "calign_score": 0.75,
+      "colap_score": 1.0
     }
   },
   "179": {
@@ -76,7 +84,9 @@
       "aligned_word_count": 3,
       "total_words": 4,
       "size_threshold": 0.4,
-      "translation_threshold": 0.5
+      "translation_threshold": 0.5,
+      "calign_score": 0.75,
+      "colap_score": 1.0
     }
   },
   "196": {
@@ -92,7 +102,9 @@
       "aligned_word_count": 2,
       "total_words": 3,
       "size_threshold": 0.4,
-      "translation_threshold": 0.5
+      "translation_threshold": 0.5,
+      "calign_score": 0.6666666666666666,
+      "colap_score": 1.0
     }
   },
   "225": {
@@ -108,7 +120,9 @@
       "aligned_word_count": 2,
       "total_words": 2,
       "size_threshold": 0.4,
-      "translation_threshold": 0.5
+      "translation_threshold": 0.5,
+      "calign_score": 1.0,
+      "colap_score": 1.0
     }
   },
   "244": {
@@ -124,7 +138,9 @@
       "aligned_word_count": 2,
       "total_words": 3,
       "size_threshold": 0.4,
-      "translation_threshold": 0.5
+      "translation_threshold": 0.5,
+      "calign_score": 0.6666666666666666,
+      "colap_score": 1.0
     }
   },
   "263": {
@@ -140,7 +156,9 @@
       "aligned_word_count": 2,
       "total_words": 2,
       "size_threshold": 0.4,
-      "translation_threshold": 0.5
+      "translation_threshold": 0.5,
+      "calign_score": 1.0,
+      "colap_score": 1.0
     }
   },
   "281": {
@@ -156,7 +174,9 @@
       "aligned_word_count": 3,
       "total_words": 3,
       "size_threshold": 0.4,
-      "translation_threshold": 0.5
+      "translation_threshold": 0.5,
+      "calign_score": 1.0,
+      "colap_score": 1.0
     }
   },
   "282": {
@@ -172,7 +192,9 @@
       "aligned_word_count": 2,
       "total_words": 2,
       "size_threshold": 0.4,
-      "translation_threshold": 0.5
+      "translation_threshold": 0.5,
+      "calign_score": 1.0,
+      "colap_score": 1.0
     }
   },
   "313": {
@@ -188,7 +210,9 @@
       "aligned_word_count": 2,
       "total_words": 2,
       "size_threshold": 0.4,
-      "translation_threshold": 0.5
+      "translation_threshold": 0.5,
+      "calign_score": 1.0,
+      "colap_score": 1.0
     }
   },
   "328": {
@@ -206,7 +230,9 @@
       "aligned_word_count": 2,
       "total_words": 3,
       "size_threshold": 0.4,
-      "translation_threshold": 0.5
+      "translation_threshold": 0.5,
+      "calign_score": 0.6666666666666666,
+      "colap_score": 1.0
     }
   },
   "356": {
@@ -222,7 +248,9 @@
       "aligned_word_count": 2,
       "total_words": 2,
       "size_threshold": 0.4,
-      "translation_threshold": 0.5
+      "translation_threshold": 0.5,
+      "calign_score": 1.0,
+      "colap_score": 1.0
     }
   },
   "380": {
@@ -238,7 +266,9 @@
       "aligned_word_count": 2,
       "total_words": 2,
       "size_threshold": 0.4,
-      "translation_threshold": 0.5
+      "translation_threshold": 0.5,
+      "calign_score": 1.0,
+      "colap_score": 1.0
     }
   },
   "486": {
@@ -254,7 +284,9 @@
       "aligned_word_count": 2,
       "total_words": 2,
       "size_threshold": 0.4,
-      "translation_threshold": 0.5
+      "translation_threshold": 0.5,
+      "calign_score": 1.0,
+      "colap_score": 1.0
     }
   }
 }
