@@ -307,23 +307,36 @@ def display_aligned_clusters(model_base: str, selected_pair: str, selected_layer
             st.write(f"- {tag}")
         st.write(f"**Description:** {decoder_cluster.get('description', 'N/A')}")
     
-    # Display alignment metrics - fixed to use correct key structure
+    # Display alignment metrics
     st.write("### Alignment Metrics")
+    metrics_encoder_id = selected_encoder_id.lstrip('c')  # Remove 'c' prefix if present
+    
+    # Load cluster alignments metrics file
+    metrics_file = os.path.join(
+        model_base,
+        selected_pair,
+        f"layer{selected_layer}",
+        "cluster_alignments.json"
+    )
+    
+    if not os.path.exists(metrics_file):
+        st.error(f"No metrics file found at {metrics_file}")
+        return
+        
+    with open(metrics_file, 'r') as f:
+        alignment_metrics = json.load(f)
+    
     if metrics_encoder_id in alignment_metrics:
         metrics = alignment_metrics[metrics_encoder_id]["metrics"]
-        col1, col2, col3 = st.columns(3)
-        
-        with col1:
-            st.metric("Match Percentage", f"{metrics['match_percentage']:.2%}")
-            st.metric("Source Cluster Size", metrics["source_cluster_size"])
-        
-        with col2:
-            st.metric("Aligned Word Count", metrics["aligned_word_count"])
-            st.metric("Total Words", metrics["total_words"])
+        column = st.columns(2)  # Create two columns for horizontal layout
             
-        with col3:
-            st.metric("Size Threshold", metrics["size_threshold"])
-            st.metric("Translation Threshold", metrics["translation_threshold"])
+        with column[0]:
+            if "calign_score" in metrics:
+                st.metric("Cluster Alignment Score", f"{metrics['calign_score']:.2%}")
+        
+        with column[1]:  # Add a second column for the next metric
+            if "colap_score" in metrics:
+                st.metric("Cluster Overlap Score", f"{metrics['colap_score']:.2%}")
     else:
         st.warning(f"No alignment metrics found for cluster {selected_encoder_id}")
         print(f"No metrics found for ID {metrics_encoder_id}")

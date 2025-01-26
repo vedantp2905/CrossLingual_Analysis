@@ -1,0 +1,30 @@
+{
+  "100": {
+    "aligned_clusters": [
+      140,
+      401,
+      120,
+      284,
+      29,
+      479
+    ],
+    "metrics": {
+      "match_percentage": 1.0,
+      "source_cluster_size": 2,
+      "target_cluster_sizes": [
+        3,
+        2,
+        4,
+        2,
+        4,
+        4
+      ],
+      "aligned_word_count": 2,
+      "total_words": 2,
+      "size_threshold": 0.4,
+      "translation_threshold": 0.5,
+      "calign_score": 1.0,
+      "colap_score": 0.9354566403241911
+    }
+  }
+}
