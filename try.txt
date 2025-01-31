@@ -1,0 +1,347 @@
+Source token: devMat, Source cluster: 107,458,333 Sentence: 89
+Target token: devMat , Target cluster: 397,177 Sentence: 89
+
+Observation: Same sentences number, same token.
+
+But awesome align doesnt align any pair of clusters
+
+"c107": {
+    
+      ],
+      "Syntactic Label": "Variables and Function Parameters",
+      "Semantic Tags": [
+        "Image Processing",
+        "Array Manipulation",
+        "Numerical Computation",
+        "Signal Processing",
+        "Algorithm Implementation"
+      ],
+      "Description": "The tokens represent variables and function parameters used in various C++ functions.  These functions perform operations such as image manipulation (e.g., `grayImage`, `meanImage`, `colorConvert`), numerical computations (e.g., `gradient`, `score`, `alpha`), array manipulation (e.g., `old_arr`, `new_arr`, `data`), and signal processing (e.g., `FFT`). The context shows they are integral parts of algorithms implemented in C++ for various tasks."
+    }
+
+"c458": {
+      "Syntactic Label": "Variables, Functions, Loops, Operators, Data Types",
+      "Semantic Tags": [
+        "Image Processing",
+        "Linear Algebra",
+        "Signal Processing",
+        "Numerical Computation",
+        "Computer Vision"
+      ],
+      "Description": "The tokens represent a mix of variables (e.g., output, d_temp, length), function names (e.g., SparseMatmul_forward, convLayer_forward, cpuSimpleCorrelator), loop keywords (while), operators (+,-,*,/, etc.), and data types (float, int, unsigned char).  The code snippets show various operations, including matrix manipulations, image transformations (YUV to RGB, RGB to YUV), signal processing (correlation), and numerical computations.  The semantic tags reflect the common themes in these operations, which are typical in image processing, computer vision, and related fields."
+    }    
+
+"c333": {
+      "Unique tokens": [
+        "devMat",
+        "colorImage",
+        "\"",
+        "<=",
+        "diag",
+        "out",
+        "reference",
+        "grayImage",
+        "weight",
+        "distMat",
+        "meanImage",
+        "ib",
+        "wfp",
+        "model"
+      ],
+      "Syntactic Label": "Variables and parameters",
+      "Semantic Tags": [
+        "Image Processing",
+        "Matrix Operations",
+        "Numerical Computation",
+        "Signal Processing",
+        "Algorithm Implementation"
+      ],
+      "Description": "The tokens represent variables and parameters used in various image processing and numerical computation algorithms.  `devMat`, `colorImage`, `grayImage`, `distMat`, `meanImage` suggest image data structures.  `weight`, `diag` hint at matrix operations or weighted calculations. `out` is a common output parameter. `reference`, `ib`, `wfp`, `model` are likely algorithm-specific variables.  The operators `<=` and `,` are used for comparison and separation of parameters/variables in function declarations and loops."
+    }
+  },
+  
+
+  "c397": {
+      
+      "Syntactic Label": "Variables and Function Parameters",
+      "Semantic Tags": [
+        "Parallel Computing",
+        "Array Processing",
+        "Image Processing",
+        "Signal Processing",
+        "Numerical Computation"
+      ],
+      "Description": "The tokens represent variables and function parameters used in various CUDA kernels.  These kernels perform operations such as distance matrix calculation, forward/backward substitution, mesh processing, image conversion (YUV to RGB), Non-Max Suppression, and Fast Fourier Transforms.  The variables often represent input/output arrays, indices, sizes, thresholds, and other parameters necessary for parallel computation.  The semantic tags reflect the broad range of numerical and signal processing tasks these kernels are designed to perform in parallel on a GPU."
+    }
+
+    {
+    "c177": {
+      "Unique tokens": [
+        "ny",
+        "devMat",
+        "ret",
+        "idx"
+      ],
+      "Syntactic Label": "Array Index Variable",
+      "Semantic Tags": [
+        "Parallel Computing",
+        "GPU Programming",
+        "Index Calculation",
+        "Thread Indexing",
+        "Memory Access"
+      ],
+      "Description": "These tokens represent variables used to calculate and access indices within arrays and matrices on the GPU.  'idx' is the most common, representing the linear index of a thread within a block or grid. 'ny' appears to represent the number of rows in a matrix, and 'devMat' is a device matrix. 'ret' is used to accumulate results in matrix multiplication."
+    }
+  },
+
+============================================
+
+  EXAMPLE 2:
+
+  Source token: d_KinectDisparity, Source cluster: 276 Sentence: 150
+  Target token: d_KinectDisparity, Target cluster: 382 Sentence: 150
+
+  Observation: Same sentences number, same token.
+
+
+"c276": {
+      "Unique tokens": [
+        "1",
+        "d_regularDisparityPitch",
+        "H",
+        "d_regularDisparity",
+        "d_disparity",
+        ":",
+        "bt",
+        "d_KinectDisparity",
+        "d_KinectDisparityPitch",
+        "yMid",
+        "rt"
+      ],
+      "Syntactic Label": "Variable Identifiers and Integer Type",
+      "Semantic Tags": [
+        "Image Processing",
+        "Computer Vision",
+        "Disparity Map Conversion",
+        "Pitch Parameter",
+        "CUDA Kernel"
+      ],
+      "Description": "These tokens represent variables used in image processing and computer vision algorithms, specifically in disparity map conversion.  'd_regularDisparity', 'd_KinectDisparity' likely represent disparity maps from different sources.  'd_regularDisparityPitch', 'd_KinectDisparityPitch' represent the pitch or row stride of these maps in memory. 'H' might represent height, 'width' and 'height' are dimensions, 'yMid' could be a vertical midpoint, 'rt', 'bt' seem to be intermediate variables in calculations, and '1' is an integer literal. The context shows these variables are used within CUDA kernel functions ('_cpu' suffix suggests CPU implementation) to process image data efficiently.  The functions perform operations like converting disparity maps between formats and applying transformations."
+    }
+
+  {
+    "c382": {
+      "Unique tokens": [
+        "spatial",
+        "d_disparity",
+        "R",
+        "d_regularDisparityPitch",
+        "d_KinectDisparityPitch",
+        "d_KinectDisparity",
+        "d_regularDisparity"
+      ],
+      "Syntactic Label": "Variable",
+      "Semantic Tags": [
+        "Image Processing",
+        "Parallel Computing",
+        "CUDA Memory",
+        "Disparity Map",
+        "Kernel Function"
+      ],
+      "Description": "These tokens represent variables used in CUDA kernel functions for image processing, specifically dealing with disparity maps.  'spatial' likely represents spatial dimensions of the image.  'd_disparity' and its variants are device memory pointers storing disparity data.  The code demonstrates parallel processing of image data on a GPU."
+    }
+  },
+
+============================================
+  Example 3:
+
+  Source token: forward, Source cluster: 453 Sentence: 159
+  Target token: forward, Target cluster: 454,370 Sentence: 159
+
+  Observation: Same sentences number, same token.
+
+{
+    "c453": {
+      "Unique tokens": [
+        "max_coordinate",
+        "Lq",
+        "r_q",
+        "filtered_Q",
+        "h_P",
+        "score_factors",
+        "jsx",
+        "xq",
+        "sxz",
+        "nnz",
+        "xi",
+        "forward",
+        "cpuBYUSimplified",
+        "num_nodes"
+      ],
+      "Syntactic Label": "Variable",
+      "Semantic Tags": [
+        "Array Processing",
+        "Signal Processing",
+        "Image Processing",
+        "Matrix Operations",
+        "Numerical Computation"
+      ],
+      "Description": "The tokens represent variables used in various C++ functions performing array processing, signal or image processing, matrix operations, and numerical computations.  They are primarily used as input and output parameters for functions, and as intermediate variables within loops to store and manipulate numerical data.  The context shows these variables are used in computationally intensive tasks, often involving matrix multiplications, convolutions, and other signal processing algorithms."
+    }
+  },
+
+{
+    "c454": {
+      "Unique tokens": [
+        "srcDiff",
+        "value",
+        "db",
+        "psi",
+        "dstDiff",
+        "labels",
+        "forward",
+        "variance",
+        "vec"
+      ],
+      "Syntactic Label": "CUDA Kernel Parameters and Variables",
+      "Semantic Tags": [
+        "Parallel Computing",
+        "GPU Acceleration",
+        "Array Processing",
+        "Numerical Computation",
+        "Deep Learning"
+      ],
+      "Description": "These tokens represent parameters and variables used within CUDA kernels.  They are crucial for performing parallel computations on the GPU.  `srcDiff`, `dstDiff`, `value`, `db`, `psi`, `labels`, `forward`, `variance`, and `vec` are likely arrays or matrices holding data processed in parallel by multiple threads.  The kernels perform operations like non-maximum suppression (`get_before_nms_data`), calculating derivatives (`LreluBackward`), matrix-vector operations (`matVecRowSubInplaceKernel`, `matVecColAddInplaceKernel`), and other numerical computations. The context shows that these kernels are designed for efficient parallel processing of data, common in deep learning and other computationally intensive applications."
+    }
+  },
+
+  {
+    "c370": {
+      "Unique tokens": [
+        "x_outer_prod",
+        "x_average",
+        "source_amplitude",
+        "right_columns",
+        "numNodes",
+        ";",
+        "beta2_tpower",
+        "filtered_Q",
+        "input_str_cuda",
+        "bit_stream",
+        "d_output",
+        "pixels_per_image",
+        "possible_plaintext_str_cuda",
+        "inner_reps",
+        "w_col_start",
+        "compute_array_square",
+        "my_pixel",
+        "ptr_src_0",
+        "max_coordinate",
+        "h_col_start",
+        "d_P",
+        "compute_b_minus_Rx",
+        "shared_dimensions",
+        ">=",
+        "0.418",
+        "reduction",
+        "gpu_img_out_v",
+        "&&",
+        "num_threads",
+        "ELEMENT_INDEX",
+        "forward",
+        "MASK_RADIUS"
+      ],
+      "Syntactic Label": "CUDA Kernel Variables and Parameters",
+      "Semantic Tags": [
+        "Parallel Computing",
+        "GPU Programming",
+        "Matrix Multiplication",
+        "Image Processing",
+        "Numerical Computation"
+      ],
+      "Description": "The tokens represent variables and parameters used within CUDA kernels.  These kernels perform various operations, including matrix multiplication, image processing (e.g., rgb2yuv, col2im), and numerical computations (e.g., Adam optimization, array squaring).  The tokens are crucial for defining the input data, intermediate results, and output of these parallel computations on the GPU.  The context shows that these tokens are used in the definition and execution of CUDA kernels, which are functions executed in parallel on the GPU.  The use of these tokens is essential for achieving high performance in computationally intensive tasks by leveraging the parallel processing capabilities of the GPU."
+    }
+  },
+
+============================================
+    Example 4:
+
+    Source token: bit0,bit1,bit2,bit3,bit4,bit5,bit6,bit7,bit7, Source cluster: 452 Sentence: 169
+    Target token: bit0,bit1,bit2,bit3,bit4,bit5,bit6,bit7,bit7, Target cluster: 296 Sentence: 169
+
+    Observation: Same sentences number, same token.
+
+     {
+    "c452": {
+      "Unique tokens": [
+        "bit1",
+        "bit0",
+        "bit7",
+        "bit2",
+        "bit4",
+        "bit5",
+        "bit6",
+        "bit3"
+      ],
+      "Syntactic Label": "Variables",
+      "Semantic Tags": [
+        "Bit Manipulation",
+        "Data Packing",
+        "Byte Processing",
+        "Signal Processing",
+        "Low-level Optimization"
+      ],
+      "Description": "These variables represent individual bits extracted from a byte.  The code performs bitwise operations to pack 8 bits into a single byte, suggesting a low-level optimization technique for data processing or signal processing.  The bitwise operations (`<<` and `|`) are used to shift and combine bits, which is a common pattern in bit manipulation and data packing algorithms."
+    }
+  },
+  
+    {
+    "c296": {
+      "Unique tokens": [
+        "-0.055846456f",
+        "y2",
+        "cuda_cross_correlate",
+        "bit2",
+        "minw",
+        "bit7",
+        "c2",
+        "bit5",
+        "w1",
+        "i2",
+        "0.00304f",
+        "0.975f",
+        "nnz",
+        "bit3",
+        "x2",
+        "h1",
+        "c1",
+        "nxprj2",
+        "2.0f",
+        "w2",
+        "filters",
+        "bit6",
+        "-1",
+        "h2",
+        "s1",
+        "s2",
+        "imageW",
+        "0.0f",
+        "-0.668311119f",
+        "bit4",
+        "sqrtf",
+        "minh",
+        "bit1",
+        "powf",
+        "minc",
+        "=="
+      ],
+      "Syntactic Label": "Variables, Functions, Operators, Literals",
+      "Semantic Tags": [
+        "Image Processing",
+        "Parallel Computing",
+        "Numerical Computation",
+        "Array Manipulation",
+        "Filtering"
+      ],
+      "Description": "The tokens represent a mix of variables (e.g., y2, minw, filters), function names (e.g., cuda_cross_correlate, sqrtf, powf), operators (e.g., ==, *=), and literals (e.g., -0.055846456f, 2.0f).  These are fundamental elements in CUDA code, used for defining data structures, performing computations, and controlling the flow of execution within the parallel kernels. The context shows these tokens are used in various image processing and numerical computation tasks, including cross-correlation, normalization, and fractal generation.  The functions are all CUDA kernels designed for parallel execution on a GPU, leveraging the parallel processing capabilities of CUDA for efficient computation."
+    }
