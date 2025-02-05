@@ -45,8 +45,166 @@ def create_wordcloud(tokens):
     
     return wc
 
+def get_language_statistics(sentences: List[dict], model_dir: str) -> dict:
+    """
+    Analyze sentences to determine if they come from C++ or CUDA sources
+    Returns statistics about language distribution
+    """
+    # Load original source files
+    cpp_sentences = set()
+    cuda_sentences = set()
+    
+    try:
+        with open(os.path.join(model_dir, "input.in"), 'r', encoding='utf-8') as f:
+            cpp_sentences = set(line.strip() for line in f)
+        with open(os.path.join(model_dir, "label.out"), 'r', encoding='utf-8') as f:
+            cuda_sentences = set(line.strip() for line in f)
+    except FileNotFoundError:
+        return None
+        
+    # Initialize counters
+    stats = {
+        "cpp_count": 0,
+        "cuda_count": 0,
+        "mixed_count": 0,
+        "unknown_count": 0,
+        "total_tokens": len(sentences),
+        "cpp_sentences": [],
+        "cuda_sentences": [],
+        "mixed_sentences": [],
+        "unknown_sentences": []
+    }
+    
+    # Analyze each sentence
+    for sent_info in sentences:
+        sentence = sent_info["sentence"].strip()
+        token = sent_info["token"]
+        
+        in_cpp = sentence in cpp_sentences
+        in_cuda = sentence in cuda_sentences
+        
+        if in_cpp and in_cuda:
+            stats["mixed_count"] += 1
+            stats["mixed_sentences"].append((token, sentence))
+        elif in_cpp:
+            stats["cpp_count"] += 1
+            stats["cpp_sentences"].append((token, sentence))
+        elif in_cuda:
+            stats["cuda_count"] += 1
+            stats["cuda_sentences"].append((token, sentence))
+        else:
+            stats["unknown_count"] += 1
+            stats["unknown_sentences"].append((token, sentence))
+            
+    return stats
+
+def display_language_statistics(stats: dict):
+    """Display language statistics in Streamlit"""
+    if not stats:
+        st.warning("Could not load source files for language statistics")
+        return
+        
+    st.write("### Language Distribution Statistics")
+    
+    total = stats["total_tokens"]
+    
+    # Create metrics
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.metric("C++ Tokens", f"{stats['cpp_count']} ({(stats['cpp_count']/total)*100:.1f}%)")
+    with col2:
+        st.metric("CUDA Tokens", f"{stats['cuda_count']} ({(stats['cuda_count']/total)*100:.1f}%)")
+    with col3:
+        st.metric("Mixed Tokens", f"{stats['mixed_count']} ({(stats['mixed_count']/total)*100:.1f}%)")
+    with col4:
+        st.metric("Unknown", f"{stats['unknown_count']} ({(stats['unknown_count']/total)*100:.1f}%)")
+    
+    # Create detailed view with tabs
+    st.write("### Detailed Token Distribution")
+    tab1, tab2, tab3, tab4 = st.tabs(["C++", "CUDA", "Mixed", "Unknown"])
+    
+    def highlight_exact_token(sentence: str, token: str) -> str:
+        """Highlight exact token matches only"""
+        words = sentence.split()
+        highlighted_words = [f"<span style='color: red; font-weight: bold;'>{word}</span>" if word == token else word for word in words]
+        return ' '.join(highlighted_words)
+    
+    with tab1:
+        if stats["cpp_sentences"]:
+            for token, sentence in stats["cpp_sentences"]:
+                html = f"""
+                <div style='font-family: monospace; padding: 10px; margin: 5px 0; background-color: #f5f5f5; border-radius: 5px;'>
+                    <div style='margin-bottom: 5px;'>
+                        {highlight_exact_token(sentence, token)}
+                    </div>
+                    <div style='color: #666; font-size: 0.9em;'>Token: <code>{token}</code></div>
+                </div>
+                """
+                st.markdown(html, unsafe_allow_html=True)
+        else:
+            st.write("No C++ tokens found")
+            
+    with tab2:
+        if stats["cuda_sentences"]:
+            for token, sentence in stats["cuda_sentences"]:
+                html = f"""
+                <div style='font-family: monospace; padding: 10px; margin: 5px 0; background-color: #f5f5f5; border-radius: 5px;'>
+                    <div style='margin-bottom: 5px;'>
+                        {highlight_exact_token(sentence, token)}
+                    </div>
+                    <div style='color: #666; font-size: 0.9em;'>Token: <code>{token}</code></div>
+                </div>
+                """
+                st.markdown(html, unsafe_allow_html=True)
+        else:
+            st.write("No CUDA tokens found")
+            
+    with tab3:
+        if stats["mixed_sentences"]:
+            for token, sentence in stats["mixed_sentences"]:
+                html = f"""
+                <div style='font-family: monospace; padding: 10px; margin: 5px 0; background-color: #f5f5f5; border-radius: 5px;'>
+                    <div style='margin-bottom: 5px;'>
+                        {highlight_exact_token(sentence, token)}
+                    </div>
+                    <div style='color: #666; font-size: 0.9em;'>Token: <code>{token}</code></div>
+                </div>
+                """
+                st.markdown(html, unsafe_allow_html=True)
+        else:
+            st.write("No mixed tokens found")
+            
+    with tab4:
+        if stats["unknown_sentences"]:
+            for token, sentence in stats["unknown_sentences"]:
+                html = f"""
+                <div style='font-family: monospace; padding: 10px; margin: 5px 0; background-color: #f5f5f5; border-radius: 5px;'>
+                    <div style='margin-bottom: 5px;'>
+                        {highlight_exact_token(sentence, token)}
+                    </div>
+                    <div style='color: #666; font-size: 0.9em;'>Token: <code>{token}</code></div>
+                </div>
+                """
+                st.markdown(html, unsafe_allow_html=True)
+        else:
+            st.write("No unknown tokens found")
+
 def display_cluster_info(cluster_data, model_pair: str, layer_number: int, cluster_id: str, sentences=None):
     """Display cluster information including word cloud, metadata and sentences"""
+    # Get model name from model_pair
+    model = model_pair.split('/')[0]
+    
+    if model == "coderosetta_mlm_mixed":
+        # For MLM mixed model, show statistics and sentences
+        if sentences:
+            # Get and display language statistics
+            stats = get_language_statistics(sentences, os.path.join(model, model_pair.split('/')[1]))
+            display_language_statistics(stats)
+            
+            # Remove this section that was showing additional context sentences
+            # Only show sentences within the language statistics tabs
+            return
+
     # Store model_pair in session state to persist across reruns
     if 'model_pair' not in st.session_state:
         st.session_state.model_pair = model_pair
@@ -156,12 +314,14 @@ def display_cluster_info(cluster_data, model_pair: str, layer_number: int, clust
 
 def load_cluster_sentences(model_dir: str, layer: int, component: str):
     """Load sentences and their indices from cluster file"""
-    # Determine file paths - using correct filename pattern with kmeans and cluster count
-    cluster_file = os.path.join(model_dir, f"layer{layer}", f"{component}-clusters-kmeans-500.txt")
-    sentence_file = os.path.join(model_dir, "input.in" if component == "encoder" else "label.out")
-    
-    # print(f"Loading cluster file: {cluster_file}")  # Debug print
-    # print(f"Loading sentence file: {sentence_file}")  # Debug print
+    # Special handling for mixed clusters
+    if component == "mixed":
+        cluster_file = os.path.join(model_dir, f"layer{layer}", f"clusters-kmeans-500.txt")
+        sentence_file = os.path.join(model_dir, "shuffled_dataset.txt")
+    else:
+        # Original logic for encoder/decoder
+        cluster_file = os.path.join(model_dir, f"layer{layer}", f"{component}-clusters-kmeans-500.txt")
+        sentence_file = os.path.join(model_dir, "input.in" if component == "encoder" else "label.out")
     
     # Load all sentences first
     with open(sentence_file, 'r', encoding='utf-8') as f:
@@ -429,7 +589,7 @@ def create_sentence_html(tokens, sent_info):
     
     for idx, token in enumerate(tokens):
         if idx == sent_info["token_idx"]:
-            html += f"<span style='color: #2196F3; font-weight: bold;'>{token}</span> "
+            html += f"<span style='color: red; font-weight: bold;'>{token}</span> "
         else:
             html += f"{token} "
     
@@ -554,13 +714,24 @@ def get_available_layers(model_base: str, selected_pair: str) -> List[int]:
             layer_num = int(item.replace('layer', ''))
             layer_dir = os.path.join(pair_dir, item)
             
-            # Check for alignment file
+            # For MLM mixed model, look for clusters-kmeans-500.txt
+            if model_base.startswith('coderosetta_mlm_mixed'):
+                cluster_file = os.path.join(layer_dir, "clusters-kmeans-500.txt")
+                if os.path.isfile(cluster_file):
+                    try:
+                        with open(cluster_file, 'r', encoding='utf-8') as f:
+                            next(f)  # Try reading first line
+                        layers.add(layer_num)
+                        print(f"Found valid mixed cluster file for layer: {layer_num}")
+                    except (StopIteration, UnicodeDecodeError) as e:
+                        print(f"Error reading mixed cluster file for layer {layer_num}: {str(e)}")
+                continue
+            
+            # Original logic for other models
             alignment_file = os.path.join(
                 layer_dir, 
                 f"Alignments_with_LLM_labels_layer{layer_num}.json"
             )
-            
-            # Check for cluster files
             encoder_cluster_file = os.path.join(layer_dir, "encoder-clusters-kmeans-500.txt")
             decoder_cluster_file = os.path.join(layer_dir, "decoder-clusters-kmeans-500.txt")
             
@@ -607,6 +778,51 @@ def validate_selected_layer(layer: int, available_layers: List[int]) -> int:
     
     return layer
 
+def find_clusters_for_token(model_base: str, selected_pair: str, selected_layer: int, search_token: str):
+    """Find all clusters containing the specified token"""
+    cluster_file = os.path.join(
+        model_base, 
+        selected_pair,
+        f"layer{selected_layer}",
+        "clusters-kmeans-500.txt"
+    )
+    
+    # Dictionary to store clusters containing the token
+    token_clusters = {}
+    
+    with open(cluster_file, 'r', encoding='utf-8') as f:
+        for line in f:
+            parts = line.strip().split('|||')
+            if len(parts) == 5:  # token|||other|||sent_id|||token_idx|||cluster_id
+                token = parts[0].strip()
+                cluster_id = parts[4].strip()
+                
+                if search_token.lower() in token.lower():
+                    if f"c{cluster_id}" not in token_clusters:
+                        token_clusters[f"c{cluster_id}"] = []
+                    token_clusters[f"c{cluster_id}"].append(token)
+    
+    return token_clusters
+
+def count_mixed_clusters(model_base: str, selected_pair: str, selected_layer: int) -> int:
+    """Count clusters that have mixed language tokens"""
+    mixed_count = 0
+    
+    # Load cluster sentences
+    cluster_sentences = load_cluster_sentences(
+        os.path.join(model_base, selected_pair),
+        selected_layer,
+        "mixed"
+    )
+    
+    # For each cluster, check if it has mixed tokens
+    for cluster_id, sentences in cluster_sentences.items():
+        stats = get_language_statistics(sentences, os.path.join(model_base, selected_pair))
+        if stats and stats["mixed_count"] > 0:
+            mixed_count += 1
+            
+    return mixed_count
+
 def main():
     st.set_page_config(layout="wide", page_title="Code Concept Explorer")
     
@@ -618,11 +834,10 @@ def main():
     # Model selection dropdown instead of text input
     model_name = st.sidebar.selectbox(
         "Select Model",
-        ["t5", "coderosetta","coderosetta_aer","coderosetta_mlm"]
+        ["t5", "coderosetta","coderosetta_aer","coderosetta_mlm","coderosetta_mlm_mixed"]
     )
-    model_base = os.path.join( model_name)
+    model_base = os.path.join(model_name)
     
-
     # Get available language pairs
     lang_pairs = [d for d in os.listdir(model_base) if os.path.isdir(os.path.join(model_base, d))]
     if not lang_pairs:
@@ -631,38 +846,113 @@ def main():
         
     selected_pair = st.sidebar.selectbox("Language Pair", lang_pairs)
     
-    # Add view selection
-    view = st.sidebar.radio(
-        "View", 
-        ["Individual Clusters", "Aligned Clusters", "Top Semantic Tags"]
-    )
+    # Add view selection - only show Individual Clusters for mlm_mixed
+    if model_name == "coderosetta_mlm_mixed":
+        view = "Individual Clusters"
+    else:
+        view = st.sidebar.radio(
+            "View", 
+            ["Individual Clusters", "Aligned Clusters", "Top Semantic Tags"]
+        )
     
     # Initialize session state for cluster index if not exists
     if 'current_cluster_index' not in st.session_state:
         st.session_state.current_cluster_index = 0
     
-    if view == "Top Semantic Tags":
+    # Get available layers
+    available_layers = get_available_layers(model_base, selected_pair)
+    
+    if not available_layers:
+        st.error("No layers found with valid data")
+        return
+    
+    # Get and validate selected layer
+    selected_layer = st.sidebar.selectbox(
+        "Layer",
+        available_layers,
+        format_func=lambda x: f"Layer {x}"
+    )
+    
+    if selected_layer is None and available_layers:
+        selected_layer = available_layers[0]
+    
+    if view == "Top Semantic Tags" and model_name != "coderosetta_mlm_mixed":
         display_top_semantic_tags(model_base, selected_pair)
-    else:
-        # Get available layers
-        available_layers = get_available_layers(model_base, selected_pair)
-        
-        # Get and validate selected layer
-        try:
-            selected_layer = int(st.sidebar.selectbox(
-                "Layer",
-                range(len(available_layers)),
-                format_func=lambda x: f"Layer {available_layers[x]}"
-            ))
-        except ValueError:
-            selected_layer = 0
-        
-        selected_layer = validate_selected_layer(selected_layer, available_layers)
-        
-        # Component selection (only show for Individual Clusters view)
-        if view == "Individual Clusters":
-            component = st.sidebar.radio("Component", ["encoder", "decoder"])
+    elif view == "Individual Clusters":
+        if model_name == "coderosetta_mlm_mixed":
+            # Display mixed clusters count at the top
+            mixed_clusters_count = count_mixed_clusters(model_base, selected_pair, selected_layer)
+            st.write(f"### Layer {selected_layer} Statistics")
+            st.metric("Clusters with Mixed Language Tokens", mixed_clusters_count)
+            st.markdown("---")  # Add a separator
             
+            # First load mixed cluster sentences
+            cluster_sentences = load_cluster_sentences(
+                os.path.join(model_base, selected_pair),
+                selected_layer,
+                "mixed"
+            )
+            
+            # Get cluster IDs right after loading sentences
+            cluster_ids = sorted(list(cluster_sentences.keys()))
+            
+            if not cluster_ids:
+                st.error("No clusters found")
+                return
+                
+            # Now add search functionality
+            st.sidebar.write("### Token Search")
+            search_token = st.sidebar.text_input("Search for token:", key="token_search")
+            
+            if search_token:
+                token_clusters = find_clusters_for_token(model_base, selected_pair, selected_layer, search_token)
+                
+                if token_clusters:
+                    st.sidebar.write(f"Found in {len(token_clusters)} clusters:")
+                    cluster_options = []
+                    for cluster_id, tokens in token_clusters.items():
+                        if cluster_id in cluster_ids:  # Verify cluster exists in current view
+                            token_list = ", ".join(tokens[:3])  # Show first 3 tokens
+                            if len(tokens) > 3:
+                                token_list += "..."
+                            cluster_options.append(f"{cluster_id}: {token_list}")
+                    
+                    if cluster_options:
+                        selected_search_result = st.sidebar.selectbox(
+                            "Select cluster to view:",
+                            cluster_options,
+                            key="search_cluster_select"
+                        )
+                        
+                        # Add a button to navigate to the selected cluster
+                        if st.sidebar.button("Go to Cluster"):
+                            cluster_id = selected_search_result.split(":")[0].strip()
+                            st.session_state.current_cluster_index = cluster_ids.index(cluster_id)
+                else:
+                    st.sidebar.write("No clusters found containing this token.")
+            
+            st.header(f"Mixed Clusters - Layer {selected_layer}")
+            
+            selected_cluster = st.selectbox(
+                "Select Cluster",
+                cluster_ids,
+                index=st.session_state.current_cluster_index,
+                key="cluster_selector"
+            )
+            
+            # Create minimal cluster data structure
+            cluster_data = {"Unique tokens": []}  # Empty as we don't have token info
+            context_sentences = cluster_sentences.get(selected_cluster, [])
+            
+            display_cluster_info(
+                cluster_data,
+                f"{model_name}/{selected_pair}",
+                selected_layer,
+                selected_cluster,
+                sentences=context_sentences
+            )
+        else:
+            component = st.sidebar.radio("Component", ["encoder", "decoder"])
             # Load labels
             labels_file = os.path.join(
                 model_base, 
@@ -711,8 +1001,8 @@ def main():
                         sentences=context_sentences
                     )
                     break  # Add break to stop after finding the correct cluster
-        else:
-            display_aligned_clusters(model_base, selected_pair, selected_layer)
+    elif view == "Aligned Clusters" and model_name != "coderosetta_mlm_mixed":
+        display_aligned_clusters(model_base, selected_pair, selected_layer)
 
 if __name__ == "__main__":
     main()
