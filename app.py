@@ -194,8 +194,8 @@ def display_cluster_info(cluster_data, model_pair: str, layer_number: int, clust
     # Get model name from model_pair
     model = model_pair.split('/')[0]
     
-    if model == "coderosetta_mlm_mixed":
-        # For MLM mixed model, show statistics and sentences
+    if model in ["coderosetta_mlm_mixed", "coderosetta_aer_mixed"]:
+        # For MLM mixed model and AER mixed model, show statistics and sentences
         if sentences:
             # Get and display language statistics
             stats = get_language_statistics(sentences, os.path.join(model, model_pair.split('/')[1]))
@@ -714,8 +714,8 @@ def get_available_layers(model_base: str, selected_pair: str) -> List[int]:
             layer_num = int(item.replace('layer', ''))
             layer_dir = os.path.join(pair_dir, item)
             
-            # For MLM mixed model, look for clusters-kmeans-500.txt
-            if model_base.startswith('coderosetta_mlm_mixed'):
+            # For MLM mixed model or AER mixed model, look for clusters-kmeans-500.txt
+            if model_base.startswith(('coderosetta_mlm_mixed', 'coderosetta_aer_mixed')):
                 cluster_file = os.path.join(layer_dir, "clusters-kmeans-500.txt")
                 if os.path.isfile(cluster_file):
                     try:
@@ -725,6 +725,8 @@ def get_available_layers(model_base: str, selected_pair: str) -> List[int]:
                         print(f"Found valid mixed cluster file for layer: {layer_num}")
                     except (StopIteration, UnicodeDecodeError) as e:
                         print(f"Error reading mixed cluster file for layer {layer_num}: {str(e)}")
+                else:
+                    print(f"Cluster file not found at: {cluster_file}")
                 continue
             
             # Original logic for other models
@@ -823,6 +825,101 @@ def count_mixed_clusters(model_base: str, selected_pair: str, selected_layer: in
             
     return mixed_count
 
+def count_language_dominated_clusters(model_base: str, selected_pair: str, selected_layer: int) -> dict:
+    """Count clusters dominated by each language"""
+    stats = {
+        "cpp_dominated": 0,
+        "cuda_dominated": 0,
+        "mixed": 0,  # For cases with equal tokens
+        "total": 0
+    }
+    
+    # Load cluster sentences
+    cluster_sentences = load_cluster_sentences(
+        os.path.join(model_base, selected_pair),
+        selected_layer,
+        "mixed"
+    )
+    
+    # For each cluster, analyze language distribution
+    for cluster_id, sentences in cluster_sentences.items():
+        lang_stats = get_language_statistics(sentences, os.path.join(model_base, selected_pair))
+        if lang_stats:
+            cpp_count = lang_stats["cpp_count"]
+            cuda_count = lang_stats["cuda_count"]
+            
+            # A cluster is dominated by whichever language has more tokens
+            if cpp_count > cuda_count:
+                stats["cpp_dominated"] += 1
+            elif cuda_count > cpp_count:
+                stats["cuda_dominated"] += 1
+            else:  # Equal counts
+                stats["mixed"] += 1
+                
+            stats["total"] += 1
+            
+    return stats
+
+def display_layer_statistics(model_base: str, selected_pair: str, available_layers: List[int]):
+    """Display language statistics for all layers"""
+    st.write("### Layer-wise Language Distribution")
+    
+    # Create columns for metrics
+    cols = st.columns(len(available_layers))
+    
+    # Get stats for each layer
+    for idx, layer in enumerate(available_layers):
+        stats = count_language_dominated_clusters(model_base, selected_pair, layer)
+        
+        with cols[idx]:
+            st.write(f"**Layer {layer}**")
+            total = stats["total"]
+            if total > 0:
+                st.metric("C++ Dominated", 
+                    f"{stats['cpp_dominated']} ({(stats['cpp_dominated']/total)*100:.1f}%)")
+                st.metric("CUDA Dominated", 
+                    f"{stats['cuda_dominated']} ({(stats['cuda_dominated']/total)*100:.1f}%)")
+                if stats["mixed"] > 0:  # Only show mixed if there are any
+                    st.metric("Mixed (Equal)", 
+                        f"{stats['mixed']} ({(stats['mixed']/total)*100:.1f}%)")
+            else:
+                st.write("No clusters found")
+
+def verify_dataset_balance(model_dir: str) -> dict:
+    """Verify the balance of C++ and CUDA sentences in the shuffled dataset"""
+    shuffled_file = os.path.join(model_dir, "shuffled_dataset.txt")
+    cpp_file = os.path.join(model_dir, "input.in")
+    cuda_file = os.path.join(model_dir, "label.out")
+    
+    if not all(os.path.exists(f) for f in [shuffled_file, cpp_file, cuda_file]):
+        return None
+        
+    # Load all sentences
+    with open(cpp_file, 'r', encoding='utf-8') as f:
+        cpp_sentences = set(line.strip() for line in f)
+    with open(cuda_file, 'r', encoding='utf-8') as f:
+        cuda_sentences = set(line.strip() for line in f)
+    with open(shuffled_file, 'r', encoding='utf-8') as f:
+        shuffled_sentences = [line.strip() for line in f]
+    
+    # Count sentences by type
+    stats = {
+        "cpp_count": 0,
+        "cuda_count": 0,
+        "unknown_count": 0,
+        "total_count": len(shuffled_sentences)
+    }
+    
+    for sentence in shuffled_sentences:
+        if sentence in cpp_sentences:
+            stats["cpp_count"] += 1
+        elif sentence in cuda_sentences:
+            stats["cuda_count"] += 1
+        else:
+            stats["unknown_count"] += 1
+    
+    return stats
+
 def main():
     st.set_page_config(layout="wide", page_title="Code Concept Explorer")
     
@@ -831,10 +928,10 @@ def main():
     # Sidebar controls
     st.sidebar.header("Settings")
     
-    # Model selection dropdown instead of text input
+    # Update model selection dropdown to include coderosetta_aer_mixed
     model_name = st.sidebar.selectbox(
         "Select Model",
-        ["t5", "coderosetta","coderosetta_aer","coderosetta_mlm","coderosetta_mlm_mixed"]
+        ["t5", "coderosetta", "coderosetta_aer", "coderosetta_mlm", "coderosetta_mlm_mixed", "coderosetta_aer_mixed"]
     )
     model_base = os.path.join(model_name)
     
@@ -846,8 +943,8 @@ def main():
         
     selected_pair = st.sidebar.selectbox("Language Pair", lang_pairs)
     
-    # Add view selection - only show Individual Clusters for mlm_mixed
-    if model_name == "coderosetta_mlm_mixed":
+    # Update view selection to include both mixed models
+    if model_name in ["coderosetta_mlm_mixed", "coderosetta_aer_mixed"]:
         view = "Individual Clusters"
     else:
         view = st.sidebar.radio(
@@ -876,11 +973,30 @@ def main():
     if selected_layer is None and available_layers:
         selected_layer = available_layers[0]
     
-    if view == "Top Semantic Tags" and model_name != "coderosetta_mlm_mixed":
+    if view == "Top Semantic Tags" and model_name not in ["coderosetta_mlm_mixed", "coderosetta_aer_mixed"]:
         display_top_semantic_tags(model_base, selected_pair)
     elif view == "Individual Clusters":
-        if model_name == "coderosetta_mlm_mixed":
-            # Display mixed clusters count at the top
+        if model_name in ["coderosetta_mlm_mixed", "coderosetta_aer_mixed"]:
+            # Display dataset balance at the top
+            balance_stats = verify_dataset_balance(os.path.join(model_base, selected_pair))
+            if balance_stats:
+                st.write("### Dataset Balance")
+                cols = st.columns(4)
+                with cols[0]:
+                    st.metric("C++ Sentences", balance_stats["cpp_count"])
+                with cols[1]:
+                    st.metric("CUDA Sentences", balance_stats["cuda_count"])
+                with cols[2]:
+                    st.metric("Unknown", balance_stats["unknown_count"])
+                with cols[3]:
+                    st.metric("Total", balance_stats["total_count"])
+                st.markdown("---")  # Add a separator
+            
+            # Display layer-wise statistics
+            display_layer_statistics(model_base, selected_pair, available_layers)
+            st.markdown("---")  # Add a separator
+            
+            # Rest of the existing code for mixed clusters...
             mixed_clusters_count = count_mixed_clusters(model_base, selected_pair, selected_layer)
             st.write(f"### Layer {selected_layer} Statistics")
             st.metric("Clusters with Mixed Language Tokens", mixed_clusters_count)
@@ -1001,7 +1117,7 @@ def main():
                         sentences=context_sentences
                     )
                     break  # Add break to stop after finding the correct cluster
-    elif view == "Aligned Clusters" and model_name != "coderosetta_mlm_mixed":
+    elif view == "Aligned Clusters" and model_name not in ["coderosetta_mlm_mixed", "coderosetta_aer_mixed"]:
         display_aligned_clusters(model_base, selected_pair, selected_layer)
 
 if __name__ == "__main__":
