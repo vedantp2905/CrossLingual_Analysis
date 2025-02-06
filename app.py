@@ -75,6 +75,14 @@ def get_language_statistics(sentences: List[dict], model_dir: str) -> dict:
         "unknown_sentences": []
     }
     
+    # Track unique tokens per category
+    unique_tokens = {
+        "cpp": set(),
+        "cuda": set(), 
+        "mixed": set(),
+        "unknown": set()
+    }
+    
     # Analyze each sentence
     for sent_info in sentences:
         sentence = sent_info["sentence"].strip()
@@ -86,15 +94,27 @@ def get_language_statistics(sentences: List[dict], model_dir: str) -> dict:
         if in_cpp and in_cuda:
             stats["mixed_count"] += 1
             stats["mixed_sentences"].append((token, sentence))
+            unique_tokens["mixed"].add(token)
         elif in_cpp:
             stats["cpp_count"] += 1
             stats["cpp_sentences"].append((token, sentence))
+            unique_tokens["cpp"].add(token)
         elif in_cuda:
             stats["cuda_count"] += 1
             stats["cuda_sentences"].append((token, sentence))
+            unique_tokens["cuda"].add(token)
         else:
             stats["unknown_count"] += 1
             stats["unknown_sentences"].append((token, sentence))
+            unique_tokens["unknown"].add(token)
+    
+    # Add unique token counts to stats
+    stats.update({
+        "unique_cpp_tokens": len(unique_tokens["cpp"]),
+        "unique_cuda_tokens": len(unique_tokens["cuda"]),
+        "unique_mixed_tokens": len(unique_tokens["mixed"]),
+        "unique_unknown_tokens": len(unique_tokens["unknown"])
+    })
             
     return stats
 
@@ -108,16 +128,20 @@ def display_language_statistics(stats: dict):
     
     total = stats["total_tokens"]
     
-    # Create metrics
+    # Create metrics for token counts
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.metric("C++ Tokens", f"{stats['cpp_count']} ({(stats['cpp_count']/total)*100:.1f}%)")
+        st.metric("Unique C++ Tokens", stats['unique_cpp_tokens'])
     with col2:
         st.metric("CUDA Tokens", f"{stats['cuda_count']} ({(stats['cuda_count']/total)*100:.1f}%)")
+        st.metric("Unique CUDA Tokens", stats['unique_cuda_tokens'])
     with col3:
         st.metric("Mixed Tokens", f"{stats['mixed_count']} ({(stats['mixed_count']/total)*100:.1f}%)")
+        st.metric("Unique Mixed Tokens", stats['unique_mixed_tokens'])
     with col4:
         st.metric("Unknown", f"{stats['unknown_count']} ({(stats['unknown_count']/total)*100:.1f}%)")
+        st.metric("Unique Unknown Tokens", stats['unique_unknown_tokens'])
     
     # Create detailed view with tabs
     st.write("### Detailed Token Distribution")
