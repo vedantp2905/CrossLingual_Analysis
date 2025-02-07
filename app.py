@@ -1162,7 +1162,7 @@ def handle_token_search(model_name, model_base, selected_pair, available_layers)
         st.session_state.search_key += 1
         if 'layer_results' in st.session_state:
             st.session_state.layer_results = {}
-        st.experimental_rerun()
+        st.rerun()
     
     # Check if search text has changed
     if search_token != st.session_state.search_text:
