@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 from typing import List
 import io
 import pandas as pd
+import time
 
 # Load environment variables
 load_dotenv()
@@ -663,8 +664,13 @@ def create_sentence_html(tokens, sent_info):
     <div style='font-family: monospace; padding: 10px; margin: 5px 0; background-color: #f5f5f5; border-radius: 5px;'>
         <div style='margin-bottom: 5px;'>"""
     
+    # If token_idx is provided, highlight that specific token
+    # Otherwise, highlight all occurrences of the token
+    target_token = sent_info['token'].lower()
+    
     for idx, token in enumerate(tokens):
-        if idx == sent_info["token_idx"]:
+        if ('token_idx' in sent_info and idx == sent_info['token_idx']) or \
+           ('token_idx' not in sent_info and token.lower() == target_token):
             html += f"<span style='color: red; font-weight: bold;'>{token}</span> "
         else:
             html += f"{token} "
@@ -1417,6 +1423,8 @@ def handle_token_search(model_name, model_base, selected_pair, available_layers)
         st.session_state.search_text = ""
     if 'search_key' not in st.session_state:
         st.session_state.search_key = 0
+    if 'selected_token' not in st.session_state:
+        st.session_state.selected_token = None
         
     st.sidebar.write("### Token Search")
     search_token = st.sidebar.text_input(
@@ -1428,6 +1436,7 @@ def handle_token_search(model_name, model_base, selected_pair, available_layers)
     if st.sidebar.button("Clear", key="clear_search"):
         st.session_state.search_text = ""
         st.session_state.search_key += 1
+        st.session_state.selected_token = None
         if 'layer_results' in st.session_state:
             st.session_state.layer_results = {}
         st.rerun()
@@ -1435,6 +1444,7 @@ def handle_token_search(model_name, model_base, selected_pair, available_layers)
     # Check if search text has changed
     if search_token != st.session_state.search_text:
         st.session_state.search_text = search_token
+        st.session_state.selected_token = None
         if 'layer_results' in st.session_state:
             st.session_state.layer_results = {}
 
@@ -1443,188 +1453,159 @@ def handle_token_search(model_name, model_base, selected_pair, available_layers)
         return True
     return False
 
-def display_mixed_clusters(model_name, model_base, selected_pair, selected_layer):
-    """Display individual clusters for mixed models"""
-    st.header(f"Mixed Clusters - Layer {selected_layer}")
-    
-    cluster_sentences = load_cluster_sentences(
-        os.path.join(model_base, selected_pair),
-        selected_layer,
-        "mixed"
-    )
-    
-    cluster_ids = list(cluster_sentences.keys()) if cluster_sentences else []
-    
-    if cluster_ids:
-        selected_cluster = st.selectbox(
-            "Select Cluster",
-            cluster_ids,
-            index=st.session_state.current_cluster_index,
-            key="cluster_selector"
-        )
-
-        cluster_data = {"Unique tokens": []}
-        context_sentences = cluster_sentences.get(selected_cluster, {})
-        
-        display_cluster_info(
-            cluster_data,
-            f"{model_name}/{selected_pair}",
-            selected_layer,
-            selected_cluster,
-            sentences=context_sentences
-        )
-    else:
-        st.warning("No clusters found for this layer")
-
-def display_standard_clusters(model_name, model_base, selected_pair, selected_layer, component):
-    """Display individual clusters for standard models"""
-    labels_file = os.path.join(
-        model_base, 
-        selected_pair,
-        f"layer{selected_layer}", 
-        f"{component}_gemini_labels.json"
-    )
-    
-    if not os.path.exists(labels_file):
-        st.error(f"No data found for {labels_file}")
-        return
-    
-    with open(labels_file, 'r') as f:
-        labels = json.load(f)
-    
-    cluster_sentences = load_cluster_sentences(
-        os.path.join(model_base, selected_pair),
-        selected_layer,
-        component
-    )
-    
-    st.header(f"{component.title()} Clusters - Layer {selected_layer}")
-    
-    cluster_ids = [cluster_id for item in labels for cluster_id in item.keys()]
-    selected_cluster = st.selectbox(
-        "Select Cluster", 
-        cluster_ids, 
-        index=st.session_state.current_cluster_index,
-        key="cluster_selector"
-    )
-    
-    for item in labels:
-        if selected_cluster in item:
-            cluster_data = item[selected_cluster]
-            context_sentences = cluster_sentences.get(selected_cluster, [])
-            display_cluster_info(
-                cluster_data, 
-                f"{model_name}/{selected_pair}",
-                selected_layer,
-                selected_cluster,
-                sentences=context_sentences
-            )
-            break
-
 def display_search_results(model_name, model_base, selected_pair, available_layers, search_token):
     """Display search results for a token across all layers"""
     st.write(f"### Search Results for '{search_token}'")
     
-    # Initialize layer results in session state if not present
-    if 'layer_results' not in st.session_state:
-        st.session_state.layer_results = {}
-    
-    # Track active tab in session state
-    if 'active_tab' not in st.session_state:
-        st.session_state.active_tab = 0
+    # Find all matching tokens across all layers first
+    all_matching_tokens = set()
+    for layer in available_layers:
+        layer_results = find_clusters_for_token_across_layers(
+            model_base, 
+            selected_pair, 
+            [layer], 
+            search_token
+        ).get(layer, {})
         
-    # Create tabs for each layer
-    tab_labels = [f"Layer {layer}" for layer in available_layers]
-    active_tab = st.tabs(tab_labels)
+        for cluster_data in layer_results.values():
+            all_matching_tokens.update(cluster_data['matching_tokens'])
     
-    # Use a container to detect which tab is active
-    for idx, layer in enumerate(available_layers):
-        with active_tab[idx]:
-            # Only compute results when tab is clicked
-            if layer not in st.session_state.layer_results:
-                with st.spinner(f"Computing results for Layer {layer}..."):
-                    st.session_state.layer_results[layer] = find_clusters_for_token_across_layers(
-                        model_base, 
-                        selected_pair, 
-                        [layer], 
-                        search_token
-                    ).get(layer, {})
-            
-            layer_results = st.session_state.layer_results[layer]
-            
-            if not layer_results:
-                st.write(f"No matches found in layer {layer}")
-                continue
-            
-            # Display results for each cluster
-            for cluster_id, tokens in layer_results.items():
-                # Create cluster heading with bold matching tokens
-                matching_tokens_str = ", ".join(sorted(tokens['matching_tokens']))
-                cluster_heading = f"Cluster {cluster_id} [**{matching_tokens_str}**]"
+    # Sort matching tokens for consistent display
+    matching_tokens_list = sorted(all_matching_tokens)
+    
+    if not matching_tokens_list:
+        st.warning("No matching tokens found")
+        return
+        
+    # Display token selection
+    selected_token = st.selectbox(
+        "Select a specific token to view its clusters:",
+        matching_tokens_list,
+        key="token_selector"
+    )
+    
+    if selected_token != st.session_state.selected_token:
+        st.session_state.selected_token = selected_token
+        if 'layer_results' in st.session_state:
+            st.session_state.layer_results = {}
+    
+    # Only proceed if a token is selected
+    if selected_token:
+        # Create tabs for different views
+        tab1, tab2 = st.tabs(["Evolution Analysis", "Cluster View"])
+        
+        with tab1:
+            # Display evolution analysis for the selected token
+            with st.spinner(f"Analyzing evolution of '{selected_token}' across layers..."):
+                evolution_data = analyze_keyword_evolution(
+                    model_base,
+                    selected_pair,
+                    available_layers,
+                    selected_token
+                )
                 
-                with st.expander(cluster_heading):
-                    # Create word cloud for matching tokens
-                    matching_tokens = list(tokens['matching_tokens'])
-                    if matching_tokens:
-                        st.write("#### Word Cloud of Matching Tokens")
-                        wc = create_wordcloud(matching_tokens)
-                        if wc:
-                            fig = plt.figure(figsize=(10, 5))
-                            plt.imshow(wc, interpolation='bilinear')
-                            plt.axis('off')
-                            st.pyplot(fig)
-                            plt.close(fig)
+                if any(evolution_data['cluster_counts']):
+                    display_keyword_evolution(evolution_data, selected_token, context="search")
+                else:
+                    st.warning(f"No occurrences of '{selected_token}' found in any layer")
+        
+        with tab2:
+            # Initialize layer results in session state if not present
+            if 'layer_results' not in st.session_state:
+                st.session_state.layer_results = {}
+                
+            # Create tabs for each layer
+            tab_labels = [f"Layer {layer}" for layer in available_layers]
+            active_tab = st.tabs(tab_labels)
+            
+            # Display results for each layer
+            for idx, layer in enumerate(available_layers):
+                with active_tab[idx]:
+                    # Only compute results when tab is clicked
+                    if layer not in st.session_state.layer_results:
+                        with st.spinner(f"Computing results for Layer {layer}..."):
+                            layer_results = find_clusters_for_token_across_layers(
+                                model_base, 
+                                selected_pair, 
+                                [layer], 
+                                selected_token
+                            ).get(layer, {})
+                            
+                            # Filter results to only include clusters containing the exact selected token
+                            filtered_results = {}
+                            for cluster_id, tokens in layer_results.items():
+                                if selected_token in tokens['matching_tokens']:
+                                    filtered_results[cluster_id] = tokens
+                            
+                            st.session_state.layer_results[layer] = filtered_results
                     
-                    st.write("#### Matching Tokens")
-                    st.write(", ".join(sorted(tokens['matching_tokens'])))
+                    layer_results = st.session_state.layer_results[layer]
                     
-                    st.write("#### All Tokens in Cluster")
-                    st.write(", ".join(sorted(tokens['all_tokens'])))
+                    if not layer_results:
+                        st.write(f"No matches found in layer {layer}")
+                        continue
                     
-                    # Load and display sentences for this cluster
-                    cluster_sentences = load_cluster_sentences(
-                        os.path.join(model_base, selected_pair),
-                        layer,
-                        "mixed"
-                    )
-                    
-                    if cluster_sentences and cluster_id in cluster_sentences:
-                        st.write("#### Context Sentences")
-                        context_sentences = cluster_sentences[cluster_id]
-                        if isinstance(context_sentences, dict):
-                            context_sentences = context_sentences.get('sentences', [])
+                    # Display results for each cluster
+                    for cluster_id, tokens in layer_results.items():
+                        cluster_heading = f"Cluster {cluster_id}"
                         
-                        # Separate sentences into matching and non-matching
-                        matching_sentences = []
-                        other_sentences = []
-                        
-                        for sent_info in context_sentences:
-                            # Check if any matching token is in the sentence
-                            has_matching_token = any(
-                                token.lower() in sent_info['sentence'].lower() 
-                                for token in matching_tokens
+                        with st.expander(cluster_heading):
+                            # Create word cloud for all tokens in cluster
+                            all_tokens = list(tokens['all_tokens'])
+                            if all_tokens:
+                                st.write("#### Word Cloud of Cluster Tokens")
+                                wc = create_wordcloud(all_tokens)
+                                if wc:
+                                    fig = plt.figure(figsize=(10, 5))
+                                    plt.imshow(wc, interpolation='bilinear')
+                                    plt.axis('off')
+                                    st.pyplot(fig)
+                                    plt.close(fig)
+                            
+                            st.write("#### All Tokens in Cluster")
+                            st.write(", ".join(sorted(tokens['all_tokens'])))
+                            
+                            # Load and display sentences for this cluster
+                            cluster_sentences = load_cluster_sentences(
+                                os.path.join(model_base, selected_pair),
+                                layer,
+                                "mixed"
                             )
                             
-                            if has_matching_token:
-                                matching_sentences.append(sent_info)
-                            else:
-                                other_sentences.append(sent_info)
-                        
-                        # Display matching sentences first
-                        if matching_sentences:
-                            st.write("**Sentences with Matching Tokens:**")
-                            for sent_info in matching_sentences:
-                                html = create_sentence_html(sent_info['sentence'].split(), sent_info)
-                                st.markdown(html, unsafe_allow_html=True)
-                        
-                        # Display other sentences with a toggle
-                        if other_sentences:
-                            show_others = st.checkbox(f"Show Other Context Sentences ({len(other_sentences)} sentences)", key=f"show_others_{layer}_{cluster_id}")
-                            if show_others:
-                                st.write("**Other Context Sentences:**")
-                                for sent_info in other_sentences:
-                                    html = create_sentence_html(sent_info['sentence'].split(), sent_info)
-                                    st.markdown(html, unsafe_allow_html=True)
+                            if cluster_sentences and cluster_id in cluster_sentences:
+                                st.write("#### Context Sentences")
+                                context_sentences = cluster_sentences[cluster_id]
+                                if isinstance(context_sentences, dict):
+                                    context_sentences = context_sentences.get('sentences', [])
+                                
+                                # Separate sentences into matching and non-matching
+                                matching_sentences = []
+                                other_sentences = []
+                                
+                                for sent_info in context_sentences:
+                                    if selected_token.lower() in sent_info['sentence'].lower():
+                                        matching_sentences.append(sent_info)
+                                    else:
+                                        other_sentences.append(sent_info)
+                                
+                                # Display matching sentences first
+                                if matching_sentences:
+                                    st.write("**Sentences with Selected Token:**")
+                                    for sent_info in matching_sentences:
+                                        html = create_sentence_html(sent_info['sentence'].split(), sent_info)
+                                        st.markdown(html, unsafe_allow_html=True)
+                                
+                                # Display other sentences with a toggle
+                                if other_sentences:
+                                    show_others = st.checkbox(
+                                        f"Show Other Context Sentences ({len(other_sentences)} sentences)", 
+                                        key=f"show_others_{layer}_{cluster_id}"
+                                    )
+                                    if show_others:
+                                        st.write("**Other Context Sentences:**")
+                                        for sent_info in other_sentences:
+                                            html = create_sentence_html(sent_info['sentence'].split(), sent_info)
+                                            st.markdown(html, unsafe_allow_html=True)
 
 def verify_dataset_balance(model_dir: str) -> dict:
     """Verify the balance of C++ and CUDA sentences in the shuffled dataset"""
@@ -1660,6 +1641,587 @@ def verify_dataset_balance(model_dir: str) -> dict:
             stats["unknown_count"] += 1
     
     return stats
+
+def display_standard_clusters(model_name, model_base, selected_pair, selected_layer, component):
+    """Display clusters for standard (non-mixed) models"""
+    # Load cluster data
+    cluster_file = os.path.join(
+        model_base,
+        selected_pair,
+        f"layer{selected_layer}",
+        f"{component}-clusters-kmeans-500.txt"
+    )
+    
+    if not os.path.exists(cluster_file):
+        st.error(f"No cluster data found for {component} at layer {selected_layer}")
+        return
+        
+    # Load sentences
+    sentences = load_cluster_sentences(
+        os.path.join(model_base, selected_pair),
+        selected_layer,
+        component
+    )
+    
+    if not sentences:
+        st.error(f"No sentence data found for {component}")
+        return
+        
+    # Get list of clusters
+    clusters = sorted(sentences.keys(), key=lambda x: int(x[1:]))  # Sort by cluster number
+    
+    # Cluster selection
+    selected_cluster = st.sidebar.selectbox(
+        "Select Cluster",
+        clusters,
+        format_func=lambda x: f"Cluster {x[1:]}",  # Remove 'c' prefix for display
+        index=min(st.session_state.current_cluster_index, len(clusters)-1)
+    )
+    
+    if selected_cluster:
+        # Display cluster information
+        st.write(f"### {component.title()} Cluster {selected_cluster[1:]}")
+        
+        # Create word cloud from sentences in this cluster
+        cluster_sentences = sentences[selected_cluster]
+        tokens = set()
+        for sent_info in cluster_sentences:
+            tokens.add(sent_info["token"])
+            
+        if tokens:
+            st.write("#### Word Cloud")
+            wc = create_wordcloud(list(tokens))
+            if wc:
+                fig = plt.figure(figsize=(10, 5))
+                plt.imshow(wc, interpolation='bilinear')
+                plt.axis('off')
+                st.pyplot(fig)
+                plt.close(fig)
+        
+        # Display context sentences
+        st.write("#### Context Sentences")
+        for sent_info in cluster_sentences:
+            html = create_sentence_html(sent_info["sentence"].split(), sent_info)
+            st.markdown(html, unsafe_allow_html=True)
+
+def display_mixed_clusters(model_name, model_base, selected_pair, selected_layer):
+    """Display clusters for mixed models"""
+    # Load cluster data
+    cluster_file = os.path.join(
+        model_base,
+        selected_pair,
+        f"layer{selected_layer}",
+        "clusters-kmeans-500.txt"
+    )
+    
+    if not os.path.exists(cluster_file):
+        st.error(f"No cluster data found at layer {selected_layer}")
+        return
+        
+    # Load sentences
+    sentences = load_cluster_sentences(
+        os.path.join(model_base, selected_pair),
+        selected_layer,
+        "mixed"
+    )
+    
+    if not sentences:
+        st.error("No sentence data found")
+        return
+        
+    # Get list of clusters
+    clusters = sorted(sentences.keys(), key=lambda x: int(x[1:]))  # Sort by cluster number
+    
+    # Cluster selection
+    selected_cluster = st.sidebar.selectbox(
+        "Select Cluster",
+        clusters,
+        format_func=lambda x: f"Cluster {x[1:]}",  # Remove 'c' prefix for display
+        index=min(st.session_state.current_cluster_index, len(clusters)-1)
+    )
+    
+    if selected_cluster:
+        # Display cluster information
+        st.write(f"### Cluster {selected_cluster[1:]}")
+        
+        # Get cluster sentences and tokens
+        cluster_data = sentences[selected_cluster]
+        if isinstance(cluster_data, dict):
+            cluster_sentences = cluster_data.get('sentences', [])
+            unique_tokens = cluster_data.get('unique_tokens', [])
+        else:
+            cluster_sentences = cluster_data
+            unique_tokens = list({sent_info["token"] for sent_info in cluster_data})
+            
+        # Create word cloud
+        if unique_tokens:
+            st.write("#### Word Cloud")
+            wc = create_wordcloud(unique_tokens)
+            if wc:
+                fig = plt.figure(figsize=(10, 5))
+                plt.imshow(wc, interpolation='bilinear')
+                plt.axis('off')
+                st.pyplot(fig)
+                plt.close(fig)
+                
+        # Display language statistics
+        stats = get_language_statistics(cluster_sentences, os.path.join(model_base, selected_pair))
+        if stats:
+            st.write("#### Language Distribution")
+            total = stats["total_tokens"]
+            
+            # Create metrics for token counts
+            col1, col2, col3, col4 = st.columns(4)
+            with col1:
+                st.metric("C++ Tokens", f"{stats['cpp_count']} ({(stats['cpp_count']/total)*100:.1f}%)")
+                st.metric("Unique C++ Tokens", stats['unique_cpp_tokens'])
+            with col2:
+                st.metric("CUDA Tokens", f"{stats['cuda_count']} ({(stats['cuda_count']/total)*100:.1f}%)")
+                st.metric("Unique CUDA Tokens", stats['unique_cuda_tokens'])
+            with col3:
+                st.metric("Mixed Tokens", f"{stats['mixed_count']} ({(stats['mixed_count']/total)*100:.1f}%)")
+                st.metric("Unique Mixed Tokens", stats['unique_mixed_tokens'])
+            with col4:
+                st.metric("Unknown", f"{stats['unknown_count']} ({(stats['unknown_count']/total)*100:.1f}%)")
+                st.metric("Unique Unknown Tokens", stats['unique_unknown_tokens'])
+        
+        # Display context sentences
+        st.write("#### Context Sentences")
+        tab1, tab2, tab3, tab4 = st.tabs(["C++", "CUDA", "Mixed", "Unknown"])
+        
+        with tab1:
+            if stats and stats["cpp_sentences"]:
+                for token, sentence in stats["cpp_sentences"]:
+                    html = create_sentence_html(sentence.split(), {"sentence": sentence, "token": token})
+                    st.markdown(html, unsafe_allow_html=True)
+            else:
+                st.write("No C++ sentences found")
+                
+        with tab2:
+            if stats and stats["cuda_sentences"]:
+                for token, sentence in stats["cuda_sentences"]:
+                    html = create_sentence_html(sentence.split(), {"sentence": sentence, "token": token})
+                    st.markdown(html, unsafe_allow_html=True)
+            else:
+                st.write("No CUDA sentences found")
+                
+        with tab3:
+            if stats and stats["mixed_sentences"]:
+                for token, sentence in stats["mixed_sentences"]:
+                    html = create_sentence_html(sentence.split(), {"sentence": sentence, "token": token})
+                    st.markdown(html, unsafe_allow_html=True)
+            else:
+                st.write("No mixed sentences found")
+                
+        with tab4:
+            if stats and stats["unknown_sentences"]:
+                for token, sentence in stats["unknown_sentences"]:
+                    html = create_sentence_html(sentence.split(), {"sentence": sentence, "token": token})
+                    st.markdown(html, unsafe_allow_html=True)
+            else:
+                st.write("No unknown sentences found")
+
+def analyze_keyword_evolution(model_base: str, selected_pair: str, available_layers: List[int], keyword: str):
+    """Analyze and visualize how a specific keyword evolves across layers"""
+    
+    # Data structure to store analysis results
+    evolution_data = {
+        'layers': [],
+        'cluster_counts': [],  # Number of clusters containing the keyword
+        'token_counts': [],    # Total occurrences of the keyword
+        'cluster_details': {}  # Detailed information about each cluster containing the keyword
+    }
+    
+    # Analyze each layer
+    for layer in available_layers:
+        # Load cluster data for this layer
+        layer_results = find_clusters_for_token_across_layers(
+            model_base,
+            selected_pair,
+            [layer],
+            keyword
+        ).get(layer, {})
+        
+        # Count clusters and token occurrences
+        clusters_with_keyword = 0
+        total_token_occurrences = 0
+        cluster_info = {}
+        
+        for cluster_id, tokens in layer_results.items():
+            if keyword in tokens['matching_tokens']:
+                clusters_with_keyword += 1
+                token_count = sum(1 for t in tokens['all_tokens'] if t == keyword)
+                total_token_occurrences += token_count
+                
+                # Store detailed information about this cluster
+                cluster_info[cluster_id] = {
+                    'token_count': token_count,
+                    'cluster_size': len(tokens['all_tokens']),
+                    'token_percentage': token_count / len(tokens['all_tokens']) * 100
+                }
+        
+        # Store data for this layer
+        evolution_data['layers'].append(layer)
+        evolution_data['cluster_counts'].append(clusters_with_keyword)
+        evolution_data['token_counts'].append(total_token_occurrences)
+        evolution_data['cluster_details'][layer] = cluster_info
+    
+    return evolution_data
+
+def display_keyword_evolution(evolution_data: dict, keyword: str, context: str = "search"):
+    """
+    Display visualizations and analysis of keyword evolution
+    Args:
+        evolution_data: Dictionary containing evolution analysis data
+        keyword: The keyword being analyzed
+        context: String identifier for the context ("search" or "predefined")
+    """
+    # Generate a unique suffix for this display instance
+    unique_suffix = str(int(time.time() * 1000))  # Use millisecond timestamp
+    
+    st.write(f"### Evolution Analysis for '{keyword}'")
+    
+    # Create main evolution graph
+    fig = go.Figure()
+    
+    # Add cluster count trace
+    fig.add_trace(go.Scatter(
+        x=evolution_data['layers'],
+        y=evolution_data['cluster_counts'],
+        name='Clusters with Keyword',
+        mode='lines+markers',
+        line=dict(color='#1f77b4', width=2),
+        marker=dict(size=8)
+    ))
+    
+    # Add token count trace
+    fig.add_trace(go.Scatter(
+        x=evolution_data['layers'],
+        y=evolution_data['token_counts'],
+        name='Total Token Occurrences',
+        mode='lines+markers',
+        line=dict(color='#ff7f0e', width=2),
+        marker=dict(size=8),
+        yaxis='y2'
+    ))
+    
+    # Update layout with two y-axes
+    fig.update_layout(
+        title=f"Evolution of '{keyword}' Across Layers",
+        xaxis=dict(title='Layer'),
+        yaxis=dict(
+            title='Number of Clusters',
+            titlefont=dict(color='#1f77b4'),
+            tickfont=dict(color='#1f77b4')
+        ),
+        yaxis2=dict(
+            title='Total Token Occurrences',
+            titlefont=dict(color='#ff7f0e'),
+            tickfont=dict(color='#ff7f0e'),
+            overlaying='y',
+            side='right'
+        ),
+        hovermode='x unified',
+        showlegend=True
+    )
+    
+    st.plotly_chart(fig, use_container_width=True)
+    
+    # Display detailed statistics
+    st.write("### Detailed Statistics")
+    
+    # Create a DataFrame for the statistics
+    stats_data = {
+        'Layer': evolution_data['layers'],
+        'Clusters with Keyword': evolution_data['cluster_counts'],
+        'Total Occurrences': evolution_data['token_counts'],
+        'Avg Occurrences per Cluster': [
+            round(t/c, 2) if c > 0 else 0 
+            for t, c in zip(evolution_data['token_counts'], evolution_data['cluster_counts'])
+        ]
+    }
+    
+    df_stats = pd.DataFrame(stats_data)
+    st.dataframe(df_stats)
+    
+    # Create heatmap of cluster distributions
+    st.write("### Cluster Distribution Heatmap")
+    
+    # Prepare data for heatmap
+    heatmap_data = []
+    max_clusters = max(len(details) for details in evolution_data['cluster_details'].values())
+    
+    for layer in evolution_data['layers']:
+        layer_data = evolution_data['cluster_details'][layer]
+        row = []
+        for cluster_id in sorted(layer_data.keys(), key=lambda x: int(x[1:])):
+            row.append(layer_data[cluster_id]['token_percentage'])
+        # Pad with zeros if needed
+        row.extend([0] * (max_clusters - len(row)))
+        heatmap_data.append(row)
+    
+    # Create heatmap
+    fig_heatmap = go.Figure(data=go.Heatmap(
+        z=heatmap_data,
+        y=evolution_data['layers'],
+        x=[f'Cluster {i+1}' for i in range(max_clusters)],
+        colorscale='Viridis',
+        colorbar=dict(title='Token %')
+    ))
+    
+    fig_heatmap.update_layout(
+        title=f"Distribution of '{keyword}' Across Clusters and Layers",
+        xaxis_title="Clusters",
+        yaxis_title="Layer",
+        height=400
+    )
+    
+    st.plotly_chart(fig_heatmap, use_container_width=True)
+    
+    # Add download buttons for the data with unique timestamp-based keys
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        # Download statistics as CSV with unique key
+        csv = df_stats.to_csv(index=False).encode('utf-8')
+        st.download_button(
+            label="Download Statistics as CSV",
+            data=csv,
+            file_name=f"keyword_evolution_{keyword}.csv",
+            mime="text/csv",
+            key=f"{context}_csv_download_{keyword}_{unique_suffix}"  # Added timestamp
+        )
+    
+    with col2:
+        # Download full analysis as JSON with unique key
+        json_str = json.dumps(evolution_data, indent=2)
+        st.download_button(
+            label="Download Full Analysis as JSON",
+            data=json_str,
+            file_name=f"keyword_evolution_{keyword}.json",
+            mime="application/json",
+            key=f"{context}_json_download_{keyword}_{unique_suffix}"  # Added timestamp
+        )
+
+def add_keyword_evolution_section(model_name, model_base, selected_pair, available_layers):
+    """Add a section for keyword evolution analysis"""
+    st.write("## Keyword Evolution Analysis")
+    
+    keyword = st.text_input("Enter keyword to analyze:", key="keyword_evolution_input")
+    
+    if keyword:
+        with st.spinner(f"Analyzing evolution of '{keyword}' across layers..."):
+            evolution_data = analyze_keyword_evolution(
+                model_base,
+                selected_pair,
+                available_layers,
+                keyword
+            )
+            
+            if any(evolution_data['cluster_counts']):
+                display_keyword_evolution(evolution_data, keyword)
+            else:
+                st.warning(f"No occurrences of '{keyword}' found in any layer")
+
+def analyze_predefined_keywords(model_base: str, selected_pair: str, available_layers: List[int]):
+    """Analyze evolution of predefined CUDA and C++ keywords"""
+    
+    # Define the keywords
+    cuda_top8 = [
+        "__global__",  # Defines a function that runs on the GPU and is called from the CPU
+        "__device__",  # Defines a function that runs on the GPU and is called from the GPU
+        "__host__",   # Specifies a function that runs on the CPU
+        "__shared__", # Declares shared memory accessible by all threads in a block
+        "__constant__", # Declares constant memory on the GPU
+        "threadIdx",  # Built-in variable providing thread index within a block
+        "blockIdx",   # Built-in variable providing block index within a grid
+        "gridDim"     # Built-in variable providing the number of blocks in a grid
+    ]
+
+    cpp_top8 = [
+        "class",     # Defines a class for object-oriented programming
+        "template",  # Enables generic programming
+        "constexpr", # Compile-time constant evaluation
+        "virtual",   # Supports polymorphism in classes
+        "override",  # Ensures a function properly overrides a base class method
+        "new",       # Allocates memory dynamically
+        "delete",    # Deallocates dynamically allocated memory
+        "namespace"  # Helps organize code and prevent naming conflicts
+    ]
+    
+    # Analyze evolution for each keyword
+    cuda_evolution = {}
+    cpp_evolution = {}
+    
+    with st.spinner("Analyzing CUDA keywords..."):
+        for keyword in cuda_top8:
+            cuda_evolution[keyword] = analyze_keyword_evolution(
+                model_base,
+                selected_pair,
+                available_layers,
+                keyword
+            )
+    
+    with st.spinner("Analyzing C++ keywords..."):
+        for keyword in cpp_top8:
+            cpp_evolution[keyword] = analyze_keyword_evolution(
+                model_base,
+                selected_pair,
+                available_layers,
+                keyword
+            )
+    
+    return cuda_evolution, cpp_evolution
+
+def display_predefined_keywords_analysis(cuda_evolution: dict, cpp_evolution: dict, available_layers: List[int]):
+    """Display analysis of predefined keywords"""
+    
+    tab1, tab2, tab3 = st.tabs(["Combined View", "CUDA Keywords", "C++ Keywords"])
+    
+    with tab1:
+        st.write("### Combined Keywords Evolution")
+        
+        # Create combined graph
+        fig = go.Figure()
+        
+        # Add CUDA keywords
+        for keyword, data in cuda_evolution.items():
+            fig.add_trace(go.Scatter(
+                x=data['layers'],
+                y=data['cluster_counts'],
+                name=f"CUDA: {keyword}",
+                mode='lines+markers',
+                line=dict(dash='solid'),
+                marker=dict(size=8)
+            ))
+            
+        # Add C++ keywords
+        for keyword, data in cpp_evolution.items():
+            fig.add_trace(go.Scatter(
+                x=data['layers'],
+                y=data['cluster_counts'],
+                name=f"C++: {keyword}",
+                mode='lines+markers',
+                line=dict(dash='dot'),
+                marker=dict(size=8)
+            ))
+            
+        fig.update_layout(
+            title="Evolution of Keywords Across Layers",
+            xaxis_title="Layer",
+            yaxis_title="Number of Clusters",
+            height=800,
+            showlegend=True,
+            legend=dict(
+                yanchor="top",
+                y=-0.1,
+                xanchor="left",
+                x=0,
+                orientation="h"
+            ),
+            margin=dict(b=150)  # Add bottom margin for legend
+        )
+        
+        st.plotly_chart(fig, use_container_width=True)
+        
+    with tab2:
+        st.write("### CUDA Keywords Evolution")
+        
+        # Create heatmap for CUDA keywords
+        heatmap_data = []
+        for keyword in cuda_evolution:
+            row = []
+            for layer in available_layers:
+                count = cuda_evolution[keyword]['cluster_counts'][
+                    cuda_evolution[keyword]['layers'].index(layer)
+                ]
+                row.append(count)
+            heatmap_data.append(row)
+            
+        fig_cuda = go.Figure(data=go.Heatmap(
+            z=heatmap_data,
+            x=available_layers,
+            y=list(cuda_evolution.keys()),
+            colorscale='Viridis',
+            colorbar=dict(title='Clusters')
+        ))
+        
+        fig_cuda.update_layout(
+            title="CUDA Keywords Distribution Across Layers",
+            xaxis_title="Layer",
+            yaxis_title="Keyword",
+            height=600
+        )
+        
+        st.plotly_chart(fig_cuda, use_container_width=True)
+        
+        # Individual CUDA keyword graphs
+        for keyword, data in cuda_evolution.items():
+            with st.expander(f"Detailed View: {keyword}"):
+                display_keyword_evolution(data, keyword)
+        
+    with tab3:
+        st.write("### C++ Keywords Evolution")
+        
+        # Create heatmap for C++ keywords
+        heatmap_data = []
+        for keyword in cpp_evolution:
+            row = []
+            for layer in available_layers:
+                count = cpp_evolution[keyword]['cluster_counts'][
+                    cpp_evolution[keyword]['layers'].index(layer)
+                ]
+                row.append(count)
+            heatmap_data.append(row)
+            
+        fig_cpp = go.Figure(data=go.Heatmap(
+            z=heatmap_data,
+            x=available_layers,
+            y=list(cpp_evolution.keys()),
+            colorscale='Viridis',
+            colorbar=dict(title='Clusters')
+        ))
+        
+        fig_cpp.update_layout(
+            title="C++ Keywords Distribution Across Layers",
+            xaxis_title="Layer",
+            yaxis_title="Keyword",
+            height=600
+        )
+        
+        st.plotly_chart(fig_cpp, use_container_width=True)
+        
+        # Individual C++ keyword graphs
+        for keyword, data in cpp_evolution.items():
+            with st.expander(f"Detailed View: {keyword}"):
+                display_keyword_evolution(data, keyword)
+
+def add_predefined_keywords_tab(model_name, model_base, selected_pair, available_layers):
+    """Add predefined keywords analysis tab"""
+    st.write("## Predefined Keywords Analysis")
+    
+    # Add a refresh button
+    if st.button("Refresh Analysis"):
+        if 'cuda_evolution' in st.session_state:
+            del st.session_state.cuda_evolution
+        if 'cpp_evolution' in st.session_state:
+            del st.session_state.cpp_evolution
+    
+    # Use session state to cache results
+    if 'cuda_evolution' not in st.session_state or 'cpp_evolution' not in st.session_state:
+        cuda_evolution, cpp_evolution = analyze_predefined_keywords(
+            model_base,
+            selected_pair,
+            available_layers
+        )
+        st.session_state.cuda_evolution = cuda_evolution
+        st.session_state.cpp_evolution = cpp_evolution
+    
+    display_predefined_keywords_analysis(
+        st.session_state.cuda_evolution,
+        st.session_state.cpp_evolution,
+        available_layers
+    )
 
 def main():
     st.set_page_config(layout="wide", page_title="Code Concept Explorer")
@@ -1715,27 +2277,18 @@ def main():
         handle_standard_model_view(model_name, model_base, selected_pair, selected_layer)
 
 def handle_mixed_model_view(model_name, model_base, selected_pair, selected_layer, available_layers):
-    """Handle view logic for mixed models"""
-    st.sidebar.markdown("---")
+    """Handle view for mixed models"""
+    # Add tabs for different views
+    tab1, tab2, tab3 = st.tabs(["Cluster View", "Predefined Keywords", "Token Search"])
     
-    view_type = st.sidebar.radio(
-        "## View Type",
-        ["Clusters", "Language Distribution"],
-        key="view_type"
-    )
+    with tab1:
+        display_mixed_clusters(model_name, model_base, selected_pair, selected_layer)
     
-    st.sidebar.markdown("---")
-    
-    if view_type == "Language Distribution":
-        display_language_distribution(model_base, selected_pair, available_layers)
-        return
-
-    # Token search functionality
-    if handle_token_search(model_name, model_base, selected_pair, available_layers):
-        return
-
-    # Display individual clusters if no search
-    display_mixed_clusters(model_name, model_base, selected_pair, selected_layer)
+    with tab2:
+        add_predefined_keywords_tab(model_name, model_base, selected_pair, available_layers)
+        
+    with tab3:
+        handle_token_search(model_name, model_base, selected_pair, available_layers)
 
 def handle_standard_model_view(model_name, model_base, selected_pair, selected_layer):
     """Handle view logic for standard models"""
