@@ -1877,7 +1877,7 @@ def display_keyword_evolution(evolution_data: dict, keyword: str, context: str =
         context: String identifier for the context ("search" or "predefined")
     """
     # Generate a unique suffix for this display instance
-    unique_suffix = str(int(time.time() * 1000))  # Use millisecond timestamp
+    unique_suffix = str(int(time.time() * 1000))
     
     st.write(f"### Evolution Analysis for '{keyword}'")
     
@@ -1905,18 +1905,22 @@ def display_keyword_evolution(evolution_data: dict, keyword: str, context: str =
         yaxis='y2'
     ))
     
-    # Update layout with two y-axes
+    # Update layout with two y-axes using correct property names
     fig.update_layout(
         title=f"Evolution of '{keyword}' Across Layers",
         xaxis=dict(title='Layer'),
         yaxis=dict(
-            title='Number of Clusters',
-            titlefont=dict(color='#1f77b4'),
+            title=dict(
+                text='Number of Clusters',
+                font=dict(color='#1f77b4')
+            ),
             tickfont=dict(color='#1f77b4')
         ),
         yaxis2=dict(
-            title='Total Token Occurrences',
-            titlefont=dict(color='#ff7f0e'),
+            title=dict(
+                text='Total Token Occurrences',
+                font=dict(color='#ff7f0e')
+            ),
             tickfont=dict(color='#ff7f0e'),
             overlaying='y',
             side='right'
