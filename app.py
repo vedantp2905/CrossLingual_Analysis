@@ -1595,6 +1595,17 @@ def display_language_distribution(model_base, selected_pair, available_layers):
                     with col3:
                         st.metric("CUDA Proportion", f"{cluster_detail['cuda_proportion']:.1%}")
                     
+                    # Generate and display word cloud for unique tokens
+                    if unique_tokens:
+                        st.write("#### Word Cloud of Unique Tokens")
+                        wc = create_wordcloud(unique_tokens)
+                        if wc:
+                            fig = plt.figure(figsize=(10, 5))
+                            plt.imshow(wc, interpolation='bilinear')
+                            plt.axis('off')
+                            st.pyplot(fig)
+                            plt.close(fig)
+                    
                     # Display sentences with language tabs
                     st.write("#### Context Sentences")
                     context_sentences = sentences_data.get('sentences', sentences_data)
