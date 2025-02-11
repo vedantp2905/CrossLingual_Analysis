@@ -2283,15 +2283,18 @@ def main():
 def handle_mixed_model_view(model_name, model_base, selected_pair, selected_layer, available_layers):
     """Handle view for mixed models"""
     # Add tabs for different views
-    tab1, tab2, tab3 = st.tabs(["Cluster View", "Predefined Keywords", "Token Search"])
+    tab1, tab2, tab3, tab4 = st.tabs(["Cluster View", "Language Distribution", "Predefined Keywords", "Token Search"])
     
     with tab1:
         display_mixed_clusters(model_name, model_base, selected_pair, selected_layer)
-    
+        
     with tab2:
-        add_predefined_keywords_tab(model_name, model_base, selected_pair, available_layers)
+        display_language_distribution(model_base, selected_pair, available_layers)
         
     with tab3:
+        add_predefined_keywords_tab(model_name, model_base, selected_pair, available_layers)
+        
+    with tab4:
         handle_token_search(model_name, model_base, selected_pair, available_layers)
 
 def handle_standard_model_view(model_name, model_base, selected_pair, selected_layer):
