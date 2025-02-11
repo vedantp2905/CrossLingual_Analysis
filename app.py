@@ -952,22 +952,34 @@ def count_mixed_clusters(model_base: str, selected_pair: str, selected_layer: in
 def count_language_dominated_clusters(model_base: str, selected_pair: str, selected_layer: int, 
                                     dominance_threshold: float = 0.75,
                                     min_tokens: int = 8) -> dict:
-    """Count clusters dominated by each language using proportional thresholds.
-    
-    Args:
-        model_base: Base directory for the model
-        selected_pair: Selected language pair
-        selected_layer: Layer number to analyze
-        dominance_threshold: Proportion of tokens needed to consider a cluster dominated (default 0.75)
-        min_tokens: Minimum number of tokens needed for reliable classification (default 8)
-    """
+    """Count clusters dominated by each language using proportional thresholds."""
     stats = {
         "cpp_dominated": 0,
         "cuda_dominated": 0,
         "mixed": 0,
         "total": 0,
-        "small_clusters": 0,  # Clusters with too few tokens
-        "detailed_stats": []  # Store detailed statistics for each cluster
+        "small_clusters": 0,
+        "detailed_stats": [],
+        "diversity_summary": {
+            "cpp_dominated": {
+                "total_unique_tokens": 0, 
+                "cluster_count": 0,
+                "max_unique_tokens": 0,
+                "min_unique_tokens": float('inf')
+            },
+            "cuda_dominated": {
+                "total_unique_tokens": 0, 
+                "cluster_count": 0,
+                "max_unique_tokens": 0,
+                "min_unique_tokens": float('inf')
+            },
+            "mixed": {
+                "total_unique_tokens": 0, 
+                "cluster_count": 0,
+                "max_unique_tokens": 0,
+                "min_unique_tokens": float('inf')
+            }
+        }
     }
     
     cluster_sentences = load_cluster_sentences(
@@ -985,82 +997,131 @@ def count_language_dominated_clusters(model_base: str, selected_pair: str, selec
                           lang_stats["cuda_count"] + 
                           lang_stats["mixed_count"])
             
-            # Skip clusters with too few tokens
             if total_tokens < min_tokens:
                 stats["small_clusters"] += 1
                 continue
                 
-            # Calculate proportions
             cpp_prop = lang_stats["cpp_count"] / total_tokens
             cuda_prop = lang_stats["cuda_count"] / total_tokens
             mixed_prop = lang_stats["mixed_count"] / total_tokens
             
-            # Store detailed statistics for this cluster
+            # Count unique tokens
+            unique_tokens = len(set(sent_info["token"] for sent_info in sentences_list))
+            
             cluster_detail = {
                 "cluster_id": cluster_id,
                 "total_tokens": total_tokens,
+                "unique_tokens": unique_tokens,
                 "cpp_proportion": cpp_prop,
                 "cuda_proportion": cuda_prop,
-                "mixed_proportion": mixed_prop,
-                "classification": None
+                "mixed_proportion": mixed_prop
             }
             
-            # Determine dominance using thresholds
+            # Determine classification using more nuanced criteria
+            category = None
             if cpp_prop >= dominance_threshold:
-                stats["cpp_dominated"] += 1
                 cluster_detail["classification"] = "cpp"
+                stats["cpp_dominated"] += 1
+                category = "cpp_dominated"
             elif cuda_prop >= dominance_threshold:
-                stats["cuda_dominated"] += 1
                 cluster_detail["classification"] = "cuda"
+                stats["cuda_dominated"] += 1
+                category = "cuda_dominated"
             else:
-                # Consider various mixed scenarios
-                if mixed_prop > 0.3:  # Significant mixed tokens
-                    stats["mixed"] += 1
+                if mixed_prop > 0.3:
                     cluster_detail["classification"] = "truly_mixed"
-                elif abs(cpp_prop - cuda_prop) < 0.2:  # Close proportions
-                    stats["mixed"] += 1
+                elif abs(cpp_prop - cuda_prop) < 0.2:
                     cluster_detail["classification"] = "balanced"
                 elif cpp_prop > cuda_prop:
-                    stats["cpp_dominated"] += 1
                     cluster_detail["classification"] = "cpp_leaning"
                 else:
-                    stats["cuda_dominated"] += 1
                     cluster_detail["classification"] = "cuda_leaning"
+                stats["mixed"] += 1
+                category = "mixed"
+            
+            # Update diversity statistics
+            if category:
+                stats["diversity_summary"][category]["total_unique_tokens"] += unique_tokens
+                stats["diversity_summary"][category]["cluster_count"] += 1
+                stats["diversity_summary"][category]["max_unique_tokens"] = max(
+                    stats["diversity_summary"][category]["max_unique_tokens"],
+                    unique_tokens
+                )
+                stats["diversity_summary"][category]["min_unique_tokens"] = min(
+                    stats["diversity_summary"][category]["min_unique_tokens"],
+                    unique_tokens
+                )
             
             stats["detailed_stats"].append(cluster_detail)
             stats["total"] += 1
     
-    # Add summary statistics
-    if stats["total"] > 0:
-        stats["summary"] = {
-            "cpp_dominated_percent": (stats["cpp_dominated"] / stats["total"]) * 100,
-            "cuda_dominated_percent": (stats["cuda_dominated"] / stats["total"]) * 100,
-            "mixed_percent": (stats["mixed"] / stats["total"]) * 100,
-            "small_clusters_percent": (stats["small_clusters"] / 
-                                     (stats["total"] + stats["small_clusters"])) * 100
-        }
+    # Calculate mean unique tokens and handle empty categories
+    for category in stats["diversity_summary"]:
+        if stats["diversity_summary"][category]["cluster_count"] > 0:
+            stats["diversity_summary"][category]["mean_unique_tokens"] = (
+                stats["diversity_summary"][category]["total_unique_tokens"] / 
+                stats["diversity_summary"][category]["cluster_count"]
+            )
+            # Convert inf to 0 for min_unique_tokens if no clusters were found
+            if stats["diversity_summary"][category]["min_unique_tokens"] == float('inf'):
+                stats["diversity_summary"][category]["min_unique_tokens"] = 0
+        else:
+            stats["diversity_summary"][category]["mean_unique_tokens"] = 0
+            stats["diversity_summary"][category]["min_unique_tokens"] = 0
+            stats["diversity_summary"][category]["max_unique_tokens"] = 0
     
     return stats
 
 def display_language_distribution(model_base, selected_pair, available_layers):
     """Display enhanced language distribution statistics"""
-    balance_stats = verify_dataset_balance(os.path.join(model_base, selected_pair))
-    if balance_stats:
-        st.write("### Dataset Balance")
-        cols = st.columns(4)
-        with cols[0]:
-            st.metric("C++ Sentences", balance_stats["cpp_count"])
-        with cols[1]:
-            st.metric("CUDA Sentences", balance_stats["cuda_count"])
-        with cols[2]:
-            st.metric("Unknown", balance_stats["unknown_count"])
-        with cols[3]:
-            st.metric("Total", balance_stats["total_count"])
-        st.markdown("---")
-    
-    st.write("### Layer-wise Language Distribution")
-    
-    # Add controls for analysis parameters
+    # Initialize session state for graph settings if not exists
+    if 'graph_settings' not in st.session_state:
+        st.session_state.graph_settings = {
+            'show_small_clusters': True,
+            'show_percentages': False,
+            'chart_height': 600,
+            'selected_metrics': ['C++ Dominated', 'CUDA Dominated', 'Mixed', 'Small Clusters'],
+            'color_scheme': {
+                'C++ Dominated': '#90EE90',
+                'CUDA Dominated': '#87CEEB',
+                'Mixed': '#DDA0DD',
+                'Small Clusters': '#808080'
+            }
+        }
+
+    # Add graph controls in an expander
+    with st.expander("Graph Settings", expanded=False):
+        col1, col2 = st.columns(2)
+        with col1:
+            st.session_state.graph_settings['show_small_clusters'] = st.checkbox(
+                "Show Small Clusters",
+                value=st.session_state.graph_settings['show_small_clusters'],
+                key='show_small_clusters'
+            )
+            st.session_state.graph_settings['show_percentages'] = st.checkbox(
+                "Show as Percentages",
+                value=st.session_state.graph_settings['show_percentages'],
+                key='show_percentages'
+            )
+        with col2:
+            st.session_state.graph_settings['chart_height'] = st.slider(
+                "Chart Height",
+                min_value=400,
+                max_value=1000,
+                value=st.session_state.graph_settings['chart_height'],
+                step=50,
+                key='chart_height'
+            )
+            
+        # Multi-select for metrics to display
+        st.session_state.graph_settings['selected_metrics'] = st.multiselect(
+            "Select Metrics to Display",
+            ['C++ Dominated', 'CUDA Dominated', 'Mixed', 'Small Clusters'],
+            default=st.session_state.graph_settings['selected_metrics'],
+            key='selected_metrics'
+        )
+
+    # Rest of your existing controls
     col1, col2 = st.columns(2)
     with col1:
         dominance_threshold = st.slider(
@@ -1069,7 +1130,8 @@ def display_language_distribution(model_base, selected_pair, available_layers):
             max_value=0.9,
             value=0.75,
             step=0.05,
-            help="Proportion of tokens needed to consider a cluster dominated by a language"
+            help="Proportion of tokens needed to consider a cluster dominated by a language",
+            key="dominance_threshold"
         )
     with col2:
         min_tokens = st.slider(
@@ -1077,149 +1139,258 @@ def display_language_distribution(model_base, selected_pair, available_layers):
             min_value=3,
             max_value=20,
             value=8,
-            help="Minimum number of tokens needed for reliable classification"
+            help="Minimum number of tokens needed for reliable classification",
+            key="min_tokens"
         )
+
+    # Initialize session state for caching if not exists
+    if 'layer_stats_cache' not in st.session_state:
+        st.session_state.layer_stats_cache = {}
+    if 'last_threshold' not in st.session_state:
+        st.session_state.last_threshold = None
+    if 'last_min_tokens' not in st.session_state:
+        st.session_state.last_min_tokens = None
+
+    # Check if we need to recompute stats
+    recompute = (st.session_state.last_threshold != dominance_threshold or 
+                 st.session_state.last_min_tokens != min_tokens)
+
+    # Collect all layer statistics only if needed
+    if recompute:
+        with st.spinner("Computing language distribution statistics..."):
+            all_layer_stats = {}
+            for layer in available_layers:
+                all_layer_stats[layer] = count_language_dominated_clusters(
+                    model_base, 
+                    selected_pair, 
+                    layer,
+                    dominance_threshold,
+                    min_tokens
+                )
+            # Update cache and last parameters
+            st.session_state.layer_stats_cache = all_layer_stats
+            st.session_state.last_threshold = dominance_threshold
+            st.session_state.last_min_tokens = min_tokens
+    else:
+        all_layer_stats = st.session_state.layer_stats_cache
+
+    # Create DataFrame for detailed analysis before creating tabs
+    detailed_data = []
+    for layer, stats in all_layer_stats.items():
+        for cluster in stats['detailed_stats']:
+            detailed_data.append({
+                'Layer': layer,
+                'Cluster ID': cluster['cluster_id'],
+                'Classification': cluster['classification'],
+                'Total Tokens': cluster['total_tokens'],
+                'Unique Tokens': cluster['unique_tokens'],
+                'C++ %': cluster['cpp_proportion'] * 100,
+                'CUDA %': cluster['cuda_proportion'] * 100,
+                'Mixed %': cluster['mixed_proportion'] * 100
+            })
+    
+    df = pd.DataFrame(detailed_data)
     
     # Create tabs for different views
-    tab1, tab2, tab3 = st.tabs(["Summary View", "Detailed View", "Layerwise Graph"])
-    
-    # Store data for plotting
-    layer_data = {
-        'layers': [],
-        'cpp_dominated': [],
-        'cuda_dominated': [],
-        'mixed': [],
-        'small_clusters': []
+    tab1, tab2, tab3, tab4 = st.tabs(["Summary View", "Detailed View", "Layerwise Graph", "Cluster Browser"])
+
+    # Now proceed with the rest of the function using the properly initialized DataFrame
+    current_params = {
+        'threshold': dominance_threshold,
+        'min_tokens': min_tokens,
+        'layers': sorted(df['Layer'].unique()),
+        'classifications': sorted(df['Classification'].unique())
     }
-    
+
     with tab1:
-        for layer in available_layers:
-            stats = count_language_dominated_clusters(
-                model_base, 
-                selected_pair, 
-                layer,
-                dominance_threshold,
-                min_tokens
-            )
-            
+        for layer, stats in all_layer_stats.items():
             st.write(f"#### Layer {layer}")
-            cols = st.columns(5)
             
+            # Calculate percentages
+            total_valid_clusters = stats['cpp_dominated'] + stats['cuda_dominated'] + stats['mixed']
+            if total_valid_clusters > 0:
+                cpp_percent = (stats['cpp_dominated'] / total_valid_clusters) * 100
+                cuda_percent = (stats['cuda_dominated'] / total_valid_clusters) * 100
+                mixed_percent = (stats['mixed'] / total_valid_clusters) * 100
+                small_percent = (stats['small_clusters'] / (total_valid_clusters + stats['small_clusters'])) * 100
+            else:
+                cpp_percent = cuda_percent = mixed_percent = small_percent = 0
+            
+            # Display language distribution metrics
+            cols = st.columns(5)
             with cols[0]:
-                st.metric("C++ Dominated", 
-                         f"{stats['cpp_dominated']} ({stats['summary']['cpp_dominated_percent']:.1f}%)")
+                st.metric("C++ Dominated", f"{stats['cpp_dominated']} ({cpp_percent:.1f}%)")
             with cols[1]:
-                st.metric("CUDA Dominated", 
-                         f"{stats['cuda_dominated']} ({stats['summary']['cuda_dominated_percent']:.1f}%)")
+                st.metric("CUDA Dominated", f"{stats['cuda_dominated']} ({cuda_percent:.1f}%)")
             with cols[2]:
-                st.metric("Mixed", 
-                         f"{stats['mixed']} ({stats['summary']['mixed_percent']:.1f}%)")
+                st.metric("Mixed", f"{stats['mixed']} ({mixed_percent:.1f}%)")
             with cols[3]:
                 st.metric("Total Clusters", stats['total'])
             with cols[4]:
-                st.metric("Small Clusters", 
-                         f"{stats['small_clusters']} ({stats['summary']['small_clusters_percent']:.1f}%)")
+                st.metric("Small Clusters", f"{stats['small_clusters']} ({small_percent:.1f}%)")
+            
+            # Add token diversity statistics
+            st.write("##### Token Diversity Statistics")
+            div_cols = st.columns(3)
+            
+            with div_cols[0]:
+                st.write("**C++ Dominated Clusters**")
+                st.write(f"Mean unique tokens: {stats['diversity_summary']['cpp_dominated']['mean_unique_tokens']:.1f}")
+                st.write(f"Max unique tokens: {stats['diversity_summary']['cpp_dominated']['max_unique_tokens']}")
+                st.write(f"Min unique tokens: {stats['diversity_summary']['cpp_dominated']['min_unique_tokens']}")
+            
+            with div_cols[1]:
+                st.write("**CUDA Dominated Clusters**")
+                st.write(f"Mean unique tokens: {stats['diversity_summary']['cuda_dominated']['mean_unique_tokens']:.1f}")
+                st.write(f"Max unique tokens: {stats['diversity_summary']['cuda_dominated']['max_unique_tokens']}")
+                st.write(f"Min unique tokens: {stats['diversity_summary']['cuda_dominated']['min_unique_tokens']}")
+            
+            with div_cols[2]:
+                st.write("**Mixed Clusters**")
+                st.write(f"Mean unique tokens: {stats['diversity_summary']['mixed']['mean_unique_tokens']:.1f}")
+                st.write(f"Max unique tokens: {stats['diversity_summary']['mixed']['max_unique_tokens']}")
+                st.write(f"Min unique tokens: {stats['diversity_summary']['mixed']['min_unique_tokens']}")
     
     with tab2:
-        for layer in available_layers:
-            stats = count_language_dominated_clusters(
-                model_base, 
-                selected_pair, 
-                layer,
-                dominance_threshold,
-                min_tokens
+        st.write("### Detailed Cluster Analysis")
+        
+        # Initialize session state for detailed view if not exists
+        if 'detailed_data_cache' not in st.session_state:
+            st.session_state.detailed_data_cache = None
+        if 'last_detailed_params' not in st.session_state:
+            st.session_state.last_detailed_params = None
+        
+        # Add filters
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            selected_layers = st.multiselect(
+                "Filter by Layer",
+                options=sorted(df['Layer'].unique()),
+                default=sorted(df['Layer'].unique())
             )
-            
-            st.write(f"#### Layer {layer}")
-            
-            # Convert detailed stats to DataFrame for better visualization
-            if stats['detailed_stats']:
-                import pandas as pd
-                df = pd.DataFrame(stats['detailed_stats'])
-                df = df.round(3)  # Round proportions to 3 decimal places
+            current_params['selected_layers'] = selected_layers
+        with col2:
+            selected_classifications = st.multiselect(
+                "Filter by Classification",
+                options=sorted(df['Classification'].unique()),
+                default=sorted(df['Classification'].unique())
+            )
+            current_params['selected_classifications'] = selected_classifications
+        with col3:
+            min_unique_tokens = st.number_input(
+                "Minimum Unique Tokens",
+                min_value=0,
+                value=0
+            )
+            current_params['min_unique_tokens'] = min_unique_tokens
+        
+        # Check if we need to recompute detailed data
+        recompute_detailed = (
+            st.session_state.detailed_data_cache is None or
+            st.session_state.last_detailed_params != current_params
+        )
+        
+        if recompute_detailed:
+            with st.spinner("Computing detailed cluster analysis..."):
+                detailed_data = []
+                for layer, stats in all_layer_stats.items():
+                    for cluster in stats['detailed_stats']:
+                        detailed_data.append({
+                            'Layer': layer,
+                            'Cluster ID': cluster['cluster_id'],
+                            'Classification': cluster['classification'],
+                            'Total Tokens': cluster['total_tokens'],
+                            'Unique Tokens': cluster['unique_tokens'],
+                            'C++ %': cluster['cpp_proportion'] * 100,
+                            'CUDA %': cluster['cuda_proportion'] * 100,
+                            'Mixed %': cluster['mixed_proportion'] * 100
+                        })
                 
-                # Color-code the classification column
-                def color_classification(val):
-                    colors = {
-                        'cpp': 'background-color: #90EE90',
-                        'cuda': 'background-color: #87CEEB',
-                        'truly_mixed': 'background-color: #DDA0DD',
-                        'balanced': 'background-color: #F0E68C',
-                        'cpp_leaning': 'background-color: #98FB98',
-                        'cuda_leaning': 'background-color: #ADD8E6'
-                    }
-                    return colors.get(val, '')
-                
-                styled_df = df.style.apply(lambda x: [color_classification(v) for v in x], 
-                                         subset=['classification'])
-                
-                st.dataframe(styled_df)
+                df = pd.DataFrame(detailed_data)
+                st.session_state.detailed_data_cache = df
+                st.session_state.last_detailed_params = current_params
+        else:
+            df = st.session_state.detailed_data_cache
+        
+        # Apply filters
+        mask = (
+            df['Layer'].isin(selected_layers) &
+            df['Classification'].isin(selected_classifications) &
+            (df['Unique Tokens'] >= min_unique_tokens)
+        )
+        filtered_df = df[mask]
+        
+        # Display filtered DataFrame
+        st.dataframe(
+            filtered_df.style.format({
+                'C++ %': '{:.1f}%',
+                'CUDA %': '{:.1f}%',
+                'Mixed %': '{:.1f}%'
+            }),
+            height=400
+        )
+        
+        # Add download button for detailed data
+        csv = filtered_df.to_csv(index=False).encode('utf-8')
+        st.download_button(
+            "Download Detailed Data as CSV",
+            csv,
+            "cluster_analysis.csv",
+            "text/csv",
+            key='download-csv'
+        )
     
     with tab3:
         st.write(f"### Layerwise Distribution (Threshold: {dominance_threshold:.2f}, Min Tokens: {min_tokens})")
         
-        # Collect data for all layers
-        for layer in available_layers:
-            stats = count_language_dominated_clusters(
-                model_base, 
-                selected_pair, 
-                layer,
-                dominance_threshold,
-                min_tokens
-            )
-            
-            layer_data['layers'].append(layer)
-            layer_data['cpp_dominated'].append(stats['summary']['cpp_dominated_percent'])
-            layer_data['cuda_dominated'].append(stats['summary']['cuda_dominated_percent'])
-            layer_data['mixed'].append(stats['summary']['mixed_percent'])
-            layer_data['small_clusters'].append(stats['summary']['small_clusters_percent'])
-        
-        # Create the figure
+        # Create the figure with persisted settings
         fig = go.Figure()
         
-        # Add traces for each category
-        fig.add_trace(go.Scatter(
-            x=layer_data['layers'],
-            y=layer_data['cpp_dominated'],
-            name='C++ Dominated',
-            mode='lines+markers',
-            line=dict(color='#90EE90', width=2),
-            marker=dict(size=8)
-        ))
+        # Create data arrays from layer statistics
+        layers = []
+        cpp_dominated = []
+        cuda_dominated = []
+        mixed = []
+        small_clusters = []
         
-        fig.add_trace(go.Scatter(
-            x=layer_data['layers'],
-            y=layer_data['cuda_dominated'],
-            name='CUDA Dominated',
-            mode='lines+markers',
-            line=dict(color='#87CEEB', width=2),
-            marker=dict(size=8)
-        ))
-        
-        fig.add_trace(go.Scatter(
-            x=layer_data['layers'],
-            y=layer_data['mixed'],
-            name='Mixed',
-            mode='lines+markers',
-            line=dict(color='#DDA0DD', width=2),
-            marker=dict(size=8)
-        ))
-        
-        fig.add_trace(go.Scatter(
-            x=layer_data['layers'],
-            y=layer_data['small_clusters'],
-            name='Small Clusters',
-            mode='lines+markers',
-            line=dict(color='#808080', width=2),
-            marker=dict(size=8)
-        ))
-        
-        # Update layout with detailed title including model name
+        for layer in sorted(all_layer_stats.keys()):
+            stats = all_layer_stats[layer]
+            layers.append(layer)
+            cpp_dominated.append(stats['cpp_dominated'])
+            cuda_dominated.append(stats['cuda_dominated'])
+            mixed.append(stats['mixed'])
+            small_clusters.append(stats['small_clusters'])
+
+        # Now create the metrics_data dictionary
+        metrics_data = {
+            'C++ Dominated': {'data': cpp_dominated, 'color': st.session_state.graph_settings['color_scheme']['C++ Dominated']},
+            'CUDA Dominated': {'data': cuda_dominated, 'color': st.session_state.graph_settings['color_scheme']['CUDA Dominated']},
+            'Mixed': {'data': mixed, 'color': st.session_state.graph_settings['color_scheme']['Mixed']},
+            'Small Clusters': {'data': small_clusters, 'color': st.session_state.graph_settings['color_scheme']['Small Clusters']}
+        }
+
+        for metric_name in st.session_state.graph_settings['selected_metrics']:
+            if metric_name in metrics_data:
+                data = metrics_data[metric_name]['data']
+                if st.session_state.graph_settings['show_percentages']:
+                    total = [sum(x) for x in zip(cpp_dominated, cuda_dominated, mixed, small_clusters)]
+                    data = [d/t*100 if t > 0 else 0 for d, t in zip(data, total)]
+                
+                fig.add_trace(go.Scatter(
+                    x=layers,
+                    y=data,
+                    name=metric_name,
+                    mode='lines+markers',
+                    line=dict(color=metrics_data[metric_name]['color'], width=2),
+                    marker=dict(size=8)
+                ))
+
+        # Update layout with persisted settings
         fig.update_layout(
             title=dict(
                 text=f'Language Distribution Across Layers - {model_base}<br><sup>Dominance Threshold: {dominance_threshold:.2f}, Minimum Tokens: {min_tokens}</sup>',
                 font=dict(weight='bold', size=20),
-                y=0.95,  # Adjust title position to accommodate subtitle
+                y=0.95,
                 x=0.5,
                 xanchor='center',
                 yanchor='top'
@@ -1229,11 +1400,11 @@ def display_language_distribution(model_base, selected_pair, available_layers):
                 font=dict(weight='bold', size=14)
             ),
             yaxis_title=dict(
-                text='Percentage (%)',
+                text='Percentage' if st.session_state.graph_settings['show_percentages'] else 'Count',
                 font=dict(weight='bold', size=14)
             ),
             hovermode='x unified',
-            height=600,
+            height=st.session_state.graph_settings['chart_height'],
             showlegend=True,
             legend=dict(
                 yanchor="top",
@@ -1243,115 +1414,80 @@ def display_language_distribution(model_base, selected_pair, available_layers):
                 font=dict(weight='bold')
             )
         )
-        
+
         # Add gridlines
         fig.update_xaxes(gridcolor='LightGray', gridwidth=0.5, griddash='dot')
         fig.update_yaxes(gridcolor='LightGray', gridwidth=0.5, griddash='dot')
-        
+
         # Display the plot
         st.plotly_chart(fig, use_container_width=True)
-        
-        # Add download buttons
-        col1, col2 = st.columns(2)
-        
-        # Download plot as HTML
-        with col1:
-            buffer = io.StringIO()
-            fig.write_html(buffer)
-            html_bytes = buffer.getvalue().encode()
-            
-            st.download_button(
-                label="Download Plot as HTML",
-                data=html_bytes,
-                file_name=f"layer_distribution_t{dominance_threshold}_m{min_tokens}.html",
-                mime="text/html"
-            )
-        
-        # Download data as CSV
-        with col2:
-            df = pd.DataFrame({
-                'Layer': layer_data['layers'],
-                'CPP_Dominated_%': layer_data['cpp_dominated'],
-                'CUDA_Dominated_%': layer_data['cuda_dominated'],
-                'Mixed_%': layer_data['mixed'],
-                'Small_Clusters_%': layer_data['small_clusters']
-            })
-            
-            csv = df.to_csv(index=False).encode('utf-8')
-            
-            st.download_button(
-                label="Download Data as CSV",
-                data=csv,
-                file_name=f"layer_distribution_t{dominance_threshold}_m{min_tokens}.csv",
-                mime="text/csv"
-            )
 
-        # Add new plot for nuanced classifications
-        st.write("### Nuanced Classification Distribution")
-        
-        # Initialize data structure for nuanced classifications - removed pure categories
+        # Create nuanced classification data
         nuanced_data = {
-            'layers': [],
+            'layers': layers,
             'cpp_leaning': [],
             'cuda_leaning': [],
-            'truly_mixed': []
+            'truly_mixed': [],
+            'balanced': []
         }
         
-        # Collect nuanced classification data
-        for layer in available_layers:
-            stats = count_language_dominated_clusters(
-                model_base, 
-                selected_pair, 
-                layer,
-                dominance_threshold,
-                min_tokens
-            )
+        # Populate nuanced data arrays
+        for layer in sorted(all_layer_stats.keys()):
+            stats = all_layer_stats[layer]
             
-            # Count occurrences of each classification - removed pure and balanced categories
-            classifications = {
-                'cpp_leaning': 0, 
-                'cuda_leaning': 0, 
-                'truly_mixed': 0
-            }
+            cpp_leaning = 0
+            cuda_leaning = 0
+            truly_mixed = 0
+            balanced = 0
             
-            total_classified = 0
-            for cluster_stat in stats['detailed_stats']:
-                if cluster_stat['classification'] in classifications:
-                    classifications[cluster_stat['classification']] += 1
-                    total_classified += 1
+            for cluster in stats['detailed_stats']:
+                if cluster['classification'] == 'cpp_leaning':
+                    cpp_leaning += 1
+                elif cluster['classification'] == 'cuda_leaning':
+                    cuda_leaning += 1
+                elif cluster['classification'] == 'truly_mixed':
+                    truly_mixed += 1
+                elif cluster['classification'] == 'balanced':
+                    balanced += 1
             
-            # Convert to percentages
-            if total_classified > 0:
-                nuanced_data['layers'].append(layer)
-                for key in classifications:
-                    nuanced_data[key].append((classifications[key] / total_classified) * 100)
-        
+            nuanced_data['cpp_leaning'].append(cpp_leaning)
+            nuanced_data['cuda_leaning'].append(cuda_leaning)
+            nuanced_data['truly_mixed'].append(truly_mixed)
+            nuanced_data['balanced'].append(balanced)
+
         # Create nuanced classification figure
         fig_nuanced = go.Figure()
         
-        # Add traces for each classification with distinct colors - removed pure categories
         colors = {
-            'cpp_leaning': '#98FB98',  # Pale green
-            'cuda_leaning': '#ADD8E6',  # Light blue
-            'truly_mixed': '#DDA0DD',  # Plum
+            'cpp_leaning': '#98FB98',
+            'cuda_leaning': '#ADD8E6',
+            'truly_mixed': '#DDA0DD',
+            'balanced': '#F0E68C'
         }
-        
+
+        # Add traces with percentage option
         for classification, color in colors.items():
-            fig_nuanced.add_trace(go.Scatter(
-                x=nuanced_data['layers'],
-                y=nuanced_data[classification],
-                name=classification.replace('_', ' ').title(),
-                mode='lines+markers',
-                line=dict(color=color, width=2),
-                marker=dict(size=8)
-            ))
-        
-        # Update layout for nuanced plot with detailed title including model name
+            if nuanced_data[classification]:  # Now this check will work
+                data = nuanced_data[classification]
+                if st.session_state.graph_settings['show_percentages']:
+                    total = [sum(x) for x in zip(*[nuanced_data[c] for c in colors.keys() if nuanced_data[c]])]
+                    data = [d/t*100 if t > 0 else 0 for d, t in zip(data, total)]
+                
+                fig_nuanced.add_trace(go.Scatter(
+                    x=nuanced_data['layers'],
+                    y=data,
+                    name=classification.replace('_', ' ').title(),
+                    mode='lines+markers',
+                    line=dict(color=color, width=2),
+                    marker=dict(size=8)
+                ))
+
+        # Update nuanced layout with persisted settings
         fig_nuanced.update_layout(
             title=dict(
-                text=f'Intermediate Classification Distribution Across Layers - {model_base}<br><sup>Dominance Threshold: {dominance_threshold:.2f}, Minimum Tokens: {min_tokens}</sup>',
+                text=f'Intermediate Classification Distribution - {model_base}<br><sup>Dominance Threshold: {dominance_threshold:.2f}, Minimum Tokens: {min_tokens}</sup>',
                 font=dict(weight='bold', size=20),
-                y=0.95,  # Adjust title position to accommodate subtitle
+                y=0.95,
                 x=0.5,
                 xanchor='center',
                 yanchor='top'
@@ -1361,11 +1497,11 @@ def display_language_distribution(model_base, selected_pair, available_layers):
                 font=dict(weight='bold', size=14)
             ),
             yaxis_title=dict(
-                text='Percentage (%)',
+                text='Percentage' if st.session_state.graph_settings['show_percentages'] else 'Count',
                 font=dict(weight='bold', size=14)
             ),
             hovermode='x unified',
-            height=600,
+            height=st.session_state.graph_settings['chart_height'],
             showlegend=True,
             legend=dict(
                 yanchor="top",
@@ -1375,78 +1511,170 @@ def display_language_distribution(model_base, selected_pair, available_layers):
                 font=dict(weight='bold')
             )
         )
-        
-        # Add gridlines
+
         fig_nuanced.update_xaxes(gridcolor='LightGray', gridwidth=0.5, griddash='dot')
         fig_nuanced.update_yaxes(gridcolor='LightGray', gridwidth=0.5, griddash='dot')
-        
-        # Display the nuanced plot
+
         st.plotly_chart(fig_nuanced, use_container_width=True)
+
+    with tab4:
+        st.write("### Cluster Browser")
         
-        # Add download buttons for nuanced plot
-        col3, col4 = st.columns(2)
+        # Layer selection for cluster browser
+        selected_layer = st.selectbox(
+            "Select Layer",
+            available_layers,
+            format_func=lambda x: f"Layer {x}",
+            key="cluster_browser_layer"
+        )
         
-        # Download nuanced plot as HTML
-        with col3:
-            buffer = io.StringIO()
-            fig_nuanced.write_html(buffer)
-            html_bytes = buffer.getvalue().encode()
-            
-            st.download_button(
-                label="Download Nuanced Plot as HTML",
-                data=html_bytes,
-                file_name=f"intermediate_distribution_t{dominance_threshold}_m{min_tokens}.html",
-                mime="text/html"
+        # Get clusters for selected layer
+        layer_stats = count_language_dominated_clusters(
+            model_base, 
+            selected_pair, 
+            selected_layer,
+            dominance_threshold,
+            min_tokens
+        )
+        
+        # Create category selection
+        category = st.selectbox(
+            "Select Category",
+            ["C++ Dominated", "CUDA Dominated", "Mixed"],
+            key="cluster_category"
+        )
+        
+        # Filter clusters based on category
+        filtered_clusters = []
+        for cluster_detail in layer_stats['detailed_stats']:
+            if (category == "C++ Dominated" and cluster_detail['classification'] == "cpp") or \
+               (category == "CUDA Dominated" and cluster_detail['classification'] == "cuda") or \
+               (category == "Mixed" and cluster_detail['classification'] in 
+                ["truly_mixed", "balanced", "cpp_leaning", "cuda_leaning"]):
+                filtered_clusters.append(cluster_detail)
+        
+        # Sort clusters by unique tokens instead of total tokens
+        filtered_clusters.sort(key=lambda x: x['unique_tokens'], reverse=True)
+        
+        # Display cluster selection
+        if filtered_clusters:
+            cluster_options = [f"Cluster {c['cluster_id']} ({c['classification']}, {c['unique_tokens']} unique tokens)" 
+                             for c in filtered_clusters]
+            selected_cluster = st.selectbox(
+                "Select Cluster",
+                range(len(cluster_options)),
+                format_func=lambda i: cluster_options[i],
+                key="cluster_browser_select"
             )
-        
-        # Download nuanced data as CSV
-        with col4:
-            df_nuanced = pd.DataFrame({
-                'Layer': nuanced_data['layers'],
-                'CPP_Leaning_%': nuanced_data['cpp_leaning'],
-                'CUDA_Leaning_%': nuanced_data['cuda_leaning'],
-                'Truly_Mixed_%': nuanced_data['truly_mixed']
-            })
             
-            csv_nuanced = df_nuanced.to_csv(index=False).encode('utf-8')
-            
-            st.download_button(
-                label="Download Nuanced Data as CSV",
-                data=csv_nuanced,
-                file_name=f"intermediate_distribution_t{dominance_threshold}_m{min_tokens}.csv",
-                mime="text/csv"
-            )
+            # Display selected cluster details
+            if selected_cluster is not None:
+                cluster_detail = filtered_clusters[selected_cluster]
+                st.write(f"#### Cluster {cluster_detail['cluster_id']} Details")
+                
+                # Load cluster sentences to get unique tokens
+                cluster_sentences = load_cluster_sentences(
+                    os.path.join(model_base, selected_pair),
+                    selected_layer,
+                    "mixed"
+                )
+                
+                if cluster_sentences and cluster_detail['cluster_id'] in cluster_sentences:
+                    sentences_data = cluster_sentences[cluster_detail['cluster_id']]
+                    if isinstance(sentences_data, dict):
+                        unique_tokens = sentences_data.get('unique_tokens', [])
+                    else:
+                        unique_tokens = list({sent_info["token"] for sent_info in sentences_data})
+                    
+                    # Create metrics with unique tokens count
+                    col1, col2, col3 = st.columns(3)
+                    with col1:
+                        st.metric("Unique Tokens", len(unique_tokens))
+                    with col2:
+                        st.metric("C++ Proportion", f"{cluster_detail['cpp_proportion']:.1%}")
+                    with col3:
+                        st.metric("CUDA Proportion", f"{cluster_detail['cuda_proportion']:.1%}")
+                    
+                    # Display sentences with language tabs
+                    st.write("#### Context Sentences")
+                    context_sentences = sentences_data.get('sentences', sentences_data)
+                    stats = get_language_statistics(context_sentences, os.path.join(model_base, selected_pair))
+                    
+                    if stats:
+                        sent_tab1, sent_tab2, sent_tab3, sent_tab4 = st.tabs(["C++", "CUDA", "Mixed", "Unknown"])
+                        
+                        with sent_tab1:
+                            if stats["cpp_sentences"]:
+                                for token, sentence in stats["cpp_sentences"]:
+                                    html = create_sentence_html(sentence.split(), {"sentence": sentence, "token": token})
+                                    st.markdown(html, unsafe_allow_html=True)
+                            else:
+                                st.write("No C++ sentences found")
+                        
+                        with sent_tab2:
+                            if stats["cuda_sentences"]:
+                                for token, sentence in stats["cuda_sentences"]:
+                                    html = create_sentence_html(sentence.split(), {"sentence": sentence, "token": token})
+                                    st.markdown(html, unsafe_allow_html=True)
+                            else:
+                                st.write("No CUDA sentences found")
+                        
+                        with sent_tab3:
+                            if stats["mixed_sentences"]:
+                                for token, sentence in stats["mixed_sentences"]:
+                                    html = create_sentence_html(sentence.split(), {"sentence": sentence, "token": token})
+                                    st.markdown(html, unsafe_allow_html=True)
+                            else:
+                                st.write("No mixed sentences found")
+                        
+                        with sent_tab4:
+                            if stats["unknown_sentences"]:
+                                for token, sentence in stats["unknown_sentences"]:
+                                    html = create_sentence_html(sentence.split(), {"sentence": sentence, "token": token})
+                                    st.markdown(html, unsafe_allow_html=True)
+                            else:
+                                st.write("No unknown sentences found")
+        else:
+            st.warning(f"No clusters found for category: {category}")
 
 def handle_token_search(model_name, model_base, selected_pair, available_layers):
     """Handle token search functionality"""
-    if 'search_text' not in st.session_state:
-        st.session_state.search_text = ""
-    if 'search_key' not in st.session_state:
-        st.session_state.search_key = 0
-    if 'selected_token' not in st.session_state:
-        st.session_state.selected_token = None
+    # Initialize session state for token search if not exists
+    if 'token_search_state' not in st.session_state:
+        st.session_state.token_search_state = {
+            'last_token': "",
+            'search_key': 0,
+            'selected_token': None,
+            'layer_results': {},
+            'evolution_data': None
+        }
         
     st.sidebar.write("### Token Search")
+    
+    # Add search controls
     search_token = st.sidebar.text_input(
         "Search for token:", 
-        value=st.session_state.search_text,
-        key=f"token_search_input_{st.session_state.search_key}"
+        value=st.session_state.token_search_state['last_token'],
+        key=f"token_search_input_{st.session_state.token_search_state['search_key']}"
     )
     
+    # Add clear button
     if st.sidebar.button("Clear", key="clear_search"):
-        st.session_state.search_text = ""
-        st.session_state.search_key += 1
-        st.session_state.selected_token = None
-        if 'layer_results' in st.session_state:
-            st.session_state.layer_results = {}
+        st.session_state.token_search_state = {
+            'last_token': "",
+            'search_key': st.session_state.token_search_state['search_key'] + 1,
+            'selected_token': None,
+            'layer_results': {},
+            'evolution_data': None
+        }
         st.rerun()
     
     # Check if search text has changed
-    if search_token != st.session_state.search_text:
-        st.session_state.search_text = search_token
-        st.session_state.selected_token = None
-        if 'layer_results' in st.session_state:
-            st.session_state.layer_results = {}
+    if search_token != st.session_state.token_search_state['last_token']:
+        st.session_state.token_search_state['last_token'] = search_token
+        st.session_state.token_search_state['selected_token'] = None
+        st.session_state.token_search_state['layer_results'] = {}
+        st.session_state.token_search_state['evolution_data'] = None
 
     if search_token and search_token.strip():
         display_search_results(model_name, model_base, selected_pair, available_layers, search_token)
@@ -1458,20 +1686,21 @@ def display_search_results(model_name, model_base, selected_pair, available_laye
     st.write(f"### Search Results for '{search_token}'")
     
     # Find all matching tokens across all layers first
-    all_matching_tokens = set()
-    for layer in available_layers:
-        layer_results = find_clusters_for_token_across_layers(
-            model_base, 
-            selected_pair, 
-            [layer], 
-            search_token
-        ).get(layer, {})
-        
-        for cluster_data in layer_results.values():
-            all_matching_tokens.update(cluster_data['matching_tokens'])
+    if 'matching_tokens' not in st.session_state.token_search_state:
+        all_matching_tokens = set()
+        for layer in available_layers:
+            layer_results = find_clusters_for_token_across_layers(
+                model_base, 
+                selected_pair, 
+                [layer], 
+                search_token
+            ).get(layer, {})
+            
+            for cluster_data in layer_results.values():
+                all_matching_tokens.update(cluster_data['matching_tokens'])
+        st.session_state.token_search_state['matching_tokens'] = sorted(all_matching_tokens)
     
-    # Sort matching tokens for consistent display
-    matching_tokens_list = sorted(all_matching_tokens)
+    matching_tokens_list = st.session_state.token_search_state['matching_tokens']
     
     if not matching_tokens_list:
         st.warning("No matching tokens found")
@@ -1484,10 +1713,10 @@ def display_search_results(model_name, model_base, selected_pair, available_laye
         key="token_selector"
     )
     
-    if selected_token != st.session_state.selected_token:
-        st.session_state.selected_token = selected_token
-        if 'layer_results' in st.session_state:
-            st.session_state.layer_results = {}
+    if selected_token != st.session_state.token_search_state['selected_token']:
+        st.session_state.token_search_state['selected_token'] = selected_token
+        st.session_state.token_search_state['layer_results'] = {}
+        st.session_state.token_search_state['evolution_data'] = None
     
     # Only proceed if a token is selected
     if selected_token:
@@ -1495,34 +1724,34 @@ def display_search_results(model_name, model_base, selected_pair, available_laye
         tab1, tab2 = st.tabs(["Evolution Analysis", "Cluster View"])
         
         with tab1:
-            # Display evolution analysis for the selected token
-            with st.spinner(f"Analyzing evolution of '{selected_token}' across layers..."):
-                evolution_data = analyze_keyword_evolution(
-                    model_base,
-                    selected_pair,
-                    available_layers,
-                    selected_token
-                )
+            # Use cached evolution data if available
+            if st.session_state.token_search_state['evolution_data'] is None:
+                with st.spinner(f"Analyzing evolution of '{selected_token}' across layers..."):
+                    evolution_data = analyze_keyword_evolution(
+                        model_base,
+                        selected_pair,
+                        available_layers,
+                        selected_token
+                    )
+                    st.session_state.token_search_state['evolution_data'] = evolution_data
+            else:
+                evolution_data = st.session_state.token_search_state['evolution_data']
                 
-                if any(evolution_data['cluster_counts']):
-                    display_keyword_evolution(evolution_data, selected_token, context="search")
-                else:
-                    st.warning(f"No occurrences of '{selected_token}' found in any layer")
+            if any(evolution_data['cluster_counts']):
+                display_keyword_evolution(evolution_data, selected_token, context="search")
+            else:
+                st.warning(f"No occurrences of '{selected_token}' found in any layer")
         
         with tab2:
-            # Initialize layer results in session state if not present
-            if 'layer_results' not in st.session_state:
-                st.session_state.layer_results = {}
-                
-            # Create tabs for each layer
+            # Display results for each layer
             tab_labels = [f"Layer {layer}" for layer in available_layers]
             active_tab = st.tabs(tab_labels)
             
             # Display results for each layer
             for idx, layer in enumerate(available_layers):
                 with active_tab[idx]:
-                    # Only compute results when tab is clicked
-                    if layer not in st.session_state.layer_results:
+                    # Use cached results if available
+                    if layer not in st.session_state.token_search_state['layer_results']:
                         with st.spinner(f"Computing results for Layer {layer}..."):
                             layer_results = find_clusters_for_token_across_layers(
                                 model_base, 
@@ -1537,9 +1766,9 @@ def display_search_results(model_name, model_base, selected_pair, available_laye
                                 if selected_token in tokens['matching_tokens']:
                                     filtered_results[cluster_id] = tokens
                             
-                            st.session_state.layer_results[layer] = filtered_results
+                            st.session_state.token_search_state['layer_results'][layer] = filtered_results
                     
-                    layer_results = st.session_state.layer_results[layer]
+                    layer_results = st.session_state.token_search_state['layer_results'][layer]
                     
                     if not layer_results:
                         st.write(f"No matches found in layer {layer}")
@@ -2080,6 +2309,55 @@ def analyze_predefined_keywords(model_base: str, selected_pair: str, available_l
 def display_predefined_keywords_analysis(cuda_evolution: dict, cpp_evolution: dict, available_layers: List[int]):
     """Display analysis of predefined keywords"""
     
+    # Initialize graph settings in session state if not exists
+    if 'predefined_graph_settings' not in st.session_state:
+        st.session_state.predefined_graph_settings = {
+            'show_percentages': False,
+            'chart_height': 800,
+            'selected_cuda_keywords': list(cuda_evolution.keys()),
+            'selected_cpp_keywords': list(cpp_evolution.keys()),
+            'color_scheme': {
+                'CUDA': {k: f'rgb({30+i*30}, {144+i*10}, {255-i*20})' for i, k in enumerate(cuda_evolution.keys())},
+                'C++': {k: f'rgb({255-i*20}, {144+i*10}, {30+i*30})' for i, k in enumerate(cpp_evolution.keys())}
+            }
+        }
+    
+    # Add graph controls in an expander
+    with st.expander("Graph Settings", expanded=False):
+        col1, col2 = st.columns(2)
+        with col1:
+            st.session_state.predefined_graph_settings['show_percentages'] = st.checkbox(
+                "Show as Percentages",
+                value=st.session_state.predefined_graph_settings['show_percentages'],
+                key='predefined_show_percentages'
+            )
+        with col2:
+            st.session_state.predefined_graph_settings['chart_height'] = st.slider(
+                "Chart Height",
+                min_value=400,
+                max_value=1200,
+                value=st.session_state.predefined_graph_settings['chart_height'],
+                step=50,
+                key='predefined_chart_height'
+            )
+        
+        # Keyword selection
+        col1, col2 = st.columns(2)
+        with col1:
+            st.session_state.predefined_graph_settings['selected_cuda_keywords'] = st.multiselect(
+                "Select CUDA Keywords",
+                list(cuda_evolution.keys()),
+                default=st.session_state.predefined_graph_settings['selected_cuda_keywords'],
+                key='selected_cuda_keywords'
+            )
+        with col2:
+            st.session_state.predefined_graph_settings['selected_cpp_keywords'] = st.multiselect(
+                "Select C++ Keywords",
+                list(cpp_evolution.keys()),
+                default=st.session_state.predefined_graph_settings['selected_cpp_keywords'],
+                key='selected_cpp_keywords'
+            )
+    
     tab1, tab2, tab3 = st.tabs(["Combined View", "CUDA Keywords", "C++ Keywords"])
     
     with tab1:
@@ -2089,32 +2367,52 @@ def display_predefined_keywords_analysis(cuda_evolution: dict, cpp_evolution: di
         fig = go.Figure()
         
         # Add CUDA keywords
-        for keyword, data in cuda_evolution.items():
+        for keyword in st.session_state.predefined_graph_settings['selected_cuda_keywords']:
+            data = cuda_evolution[keyword]
+            if st.session_state.predefined_graph_settings['show_percentages']:
+                total = max(data['cluster_counts']) if data['cluster_counts'] else 1
+                y_values = [count/total * 100 for count in data['cluster_counts']]
+            else:
+                y_values = data['cluster_counts']
+                
             fig.add_trace(go.Scatter(
                 x=data['layers'],
-                y=data['cluster_counts'],
+                y=y_values,
                 name=f"CUDA: {keyword}",
                 mode='lines+markers',
-                line=dict(dash='solid'),
+                line=dict(
+                    dash='solid',
+                    color=st.session_state.predefined_graph_settings['color_scheme']['CUDA'][keyword]
+                ),
                 marker=dict(size=8)
             ))
             
         # Add C++ keywords
-        for keyword, data in cpp_evolution.items():
+        for keyword in st.session_state.predefined_graph_settings['selected_cpp_keywords']:
+            data = cpp_evolution[keyword]
+            if st.session_state.predefined_graph_settings['show_percentages']:
+                total = max(data['cluster_counts']) if data['cluster_counts'] else 1
+                y_values = [count/total * 100 for count in data['cluster_counts']]
+            else:
+                y_values = data['cluster_counts']
+                
             fig.add_trace(go.Scatter(
                 x=data['layers'],
-                y=data['cluster_counts'],
+                y=y_values,
                 name=f"C++: {keyword}",
                 mode='lines+markers',
-                line=dict(dash='dot'),
+                line=dict(
+                    dash='dot',
+                    color=st.session_state.predefined_graph_settings['color_scheme']['C++'][keyword]
+                ),
                 marker=dict(size=8)
             ))
             
         fig.update_layout(
             title="Evolution of Keywords Across Layers",
             xaxis_title="Layer",
-            yaxis_title="Number of Clusters",
-            height=800,
+            yaxis_title="Percentage" if st.session_state.predefined_graph_settings['show_percentages'] else "Number of Clusters",
+            height=st.session_state.predefined_graph_settings['chart_height'],
             showlegend=True,
             legend=dict(
                 yanchor="top",
@@ -2132,73 +2430,85 @@ def display_predefined_keywords_analysis(cuda_evolution: dict, cpp_evolution: di
         st.write("### CUDA Keywords Evolution")
         
         # Create heatmap for CUDA keywords
+        selected_cuda = st.session_state.predefined_graph_settings['selected_cuda_keywords']
         heatmap_data = []
-        for keyword in cuda_evolution:
+        for keyword in selected_cuda:
             row = []
             for layer in available_layers:
                 count = cuda_evolution[keyword]['cluster_counts'][
                     cuda_evolution[keyword]['layers'].index(layer)
                 ]
+                if st.session_state.predefined_graph_settings['show_percentages']:
+                    total = max(cuda_evolution[keyword]['cluster_counts'])
+                    count = (count / total * 100) if total > 0 else 0
                 row.append(count)
             heatmap_data.append(row)
             
         fig_cuda = go.Figure(data=go.Heatmap(
             z=heatmap_data,
             x=available_layers,
-            y=list(cuda_evolution.keys()),
+            y=selected_cuda,
             colorscale='Viridis',
-            colorbar=dict(title='Clusters')
+            colorbar=dict(
+                title='Percentage' if st.session_state.predefined_graph_settings['show_percentages'] else 'Clusters'
+            )
         ))
         
         fig_cuda.update_layout(
             title="CUDA Keywords Distribution Across Layers",
             xaxis_title="Layer",
             yaxis_title="Keyword",
-            height=600
+            height=st.session_state.predefined_graph_settings['chart_height']
         )
         
         st.plotly_chart(fig_cuda, use_container_width=True)
         
         # Individual CUDA keyword graphs
-        for keyword, data in cuda_evolution.items():
+        for keyword in selected_cuda:
             with st.expander(f"Detailed View: {keyword}"):
-                display_keyword_evolution(data, keyword)
+                display_keyword_evolution(cuda_evolution[keyword], keyword, "predefined")
         
     with tab3:
         st.write("### C++ Keywords Evolution")
         
         # Create heatmap for C++ keywords
+        selected_cpp = st.session_state.predefined_graph_settings['selected_cpp_keywords']
         heatmap_data = []
-        for keyword in cpp_evolution:
+        for keyword in selected_cpp:
             row = []
             for layer in available_layers:
                 count = cpp_evolution[keyword]['cluster_counts'][
                     cpp_evolution[keyword]['layers'].index(layer)
                 ]
+                if st.session_state.predefined_graph_settings['show_percentages']:
+                    total = max(cpp_evolution[keyword]['cluster_counts'])
+                    count = (count / total * 100) if total > 0 else 0
                 row.append(count)
             heatmap_data.append(row)
             
         fig_cpp = go.Figure(data=go.Heatmap(
             z=heatmap_data,
             x=available_layers,
-            y=list(cpp_evolution.keys()),
+            y=selected_cpp,
             colorscale='Viridis',
-            colorbar=dict(title='Clusters')
+            colorbar=dict(
+                title='Percentage' if st.session_state.predefined_graph_settings['show_percentages'] else 'Clusters'
+            )
         ))
         
         fig_cpp.update_layout(
             title="C++ Keywords Distribution Across Layers",
             xaxis_title="Layer",
             yaxis_title="Keyword",
-            height=600
+            height=st.session_state.predefined_graph_settings['chart_height']
         )
         
         st.plotly_chart(fig_cpp, use_container_width=True)
         
         # Individual C++ keyword graphs
-        for keyword, data in cpp_evolution.items():
+        for keyword in selected_cpp:
             with st.expander(f"Detailed View: {keyword}"):
-                display_keyword_evolution(data, keyword)
+                display_keyword_evolution(cpp_evolution[keyword], keyword, "predefined")
 
 def add_predefined_keywords_tab(model_name, model_base, selected_pair, available_layers):
     """Add predefined keywords analysis tab"""
