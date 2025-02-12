@@ -2145,22 +2145,16 @@ def display_keyword_evolution(evolution_data: dict, keyword: str, context: str =
         yaxis='y2'
     ))
     
-    # Update layout with two y-axes using correct property names
+    # Update layout with two y-axes
     fig.update_layout(
         title=f"Evolution of '{keyword}' Across Layers",
         xaxis=dict(title='Layer'),
         yaxis=dict(
-            title=dict(
-                text='Number of Clusters',
-                font=dict(color='#1f77b4')
-            ),
+            title=dict(text='Number of Clusters', font=dict(color='#1f77b4')),
             tickfont=dict(color='#1f77b4')
         ),
         yaxis2=dict(
-            title=dict(
-                text='Total Token Occurrences',
-                font=dict(color='#ff7f0e')
-            ),
+            title=dict(text='Total Token Occurrences', font=dict(color='#ff7f0e')),
             tickfont=dict(color='#ff7f0e'),
             overlaying='y',
             side='right'
@@ -2169,7 +2163,8 @@ def display_keyword_evolution(evolution_data: dict, keyword: str, context: str =
         showlegend=True
     )
     
-    st.plotly_chart(fig, use_container_width=True)
+    # Add unique key for the first plotly chart
+    st.plotly_chart(fig, use_container_width=True, key=f"evolution_main_{context}_{keyword}_{unique_suffix}")
     
     # Display detailed statistics
     st.write("### Detailed Statistics")
@@ -2204,7 +2199,7 @@ def display_keyword_evolution(evolution_data: dict, keyword: str, context: str =
         row.extend([0] * (max_clusters - len(row)))
         heatmap_data.append(row)
     
-    # Create heatmap
+    # Create heatmap with unique key
     fig_heatmap = go.Figure(data=go.Heatmap(
         z=heatmap_data,
         y=evolution_data['layers'],
@@ -2220,7 +2215,8 @@ def display_keyword_evolution(evolution_data: dict, keyword: str, context: str =
         height=400
     )
     
-    st.plotly_chart(fig_heatmap, use_container_width=True)
+    # Add unique key for the heatmap
+    st.plotly_chart(fig_heatmap, use_container_width=True, key=f"evolution_heatmap_{context}_{keyword}_{unique_suffix}")
     
     # Add download buttons for the data with unique timestamp-based keys
     col1, col2 = st.columns(2)
