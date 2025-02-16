@@ -494,7 +494,7 @@ def display_aligned_clusters(model_base: str, selected_pair: str, selected_layer
     selected_pair_idx = st.selectbox(
         "Select cluster pair",
         range(len(cluster_pairs)),
-        format_func=lambda x: f"Encoder {cluster_pairs[x][0]} → Decoder {cluster_pairs[x][1]}",
+        format_func=lambda x: f"Source {cluster_pairs[x][0]} → Target {cluster_pairs[x][1]}",
         index=st.session_state.current_cluster_index
     )
     
@@ -540,7 +540,7 @@ def display_aligned_clusters(model_base: str, selected_pair: str, selected_layer
     col1, col2 = st.columns(2)
     
     with col1:
-        st.write("#### Encoder Cluster")
+        st.write("#### Source Cluster")
         # Create and display encoder wordcloud first
         tokens = encoder_cluster.get('unique_tokens', [])
         wc = create_wordcloud(tokens)
@@ -559,7 +559,7 @@ def display_aligned_clusters(model_base: str, selected_pair: str, selected_layer
         st.write(f"**Description:** {encoder_cluster.get('description', 'N/A')}")
     
     with col2:
-        st.write("#### Decoder Cluster")
+        st.write("#### Target Cluster")
         # Create and display decoder wordcloud first
         tokens = decoder_cluster.get('unique_tokens', [])
         wc = create_wordcloud(tokens)
@@ -662,14 +662,14 @@ def display_aligned_clusters(model_base: str, selected_pair: str, selected_layer
     
     # Display context sentences last
     if encoder_sentences.get(encoder_cluster['id']):
-        st.write("### Encoder Context Sentences")
+        st.write("### Source Context Sentences")
         for sent_info in encoder_sentences[encoder_cluster['id']]:
             tokens = sent_info["sentence"].split()
             html = create_sentence_html(tokens, sent_info)
             st.markdown(html, unsafe_allow_html=True)
             
     if decoder_sentences.get(decoder_cluster['id']):
-        st.write("### Decoder Context Sentences")
+        st.write("### Target Context Sentences")
         for sent_info in decoder_sentences[decoder_cluster['id']]:
             tokens = sent_info["sentence"].split()
             html = create_sentence_html(tokens, sent_info)
@@ -1937,7 +1937,12 @@ def display_standard_clusters(model_name, model_base, selected_pair, selected_la
     
     if selected_cluster:
         # Display cluster information
-        st.write(f"### {component.title()} Cluster {selected_cluster[1:]}")
+        if component == "encoder":
+            component_display = "Source"
+        else:
+            component_display = "Target"
+        
+        st.write(f"### {component_display} Cluster {selected_cluster[1:]}")
         
         # Create word cloud from sentences in this cluster
         cluster_sentences = sentences[selected_cluster]
@@ -2643,7 +2648,11 @@ def handle_standard_model_view(model_name, model_base, selected_pair, selected_l
     elif view == "Aligned Clusters":
         display_aligned_clusters(model_base, selected_pair, selected_layer)
     else:  # Individual Clusters
-        component = st.sidebar.radio("Component", ["encoder", "decoder"])
+        component = st.sidebar.radio("Component", ["source", "target"])
+        if component == "source":
+            component = "encoder"
+        else:
+            component = "decoder"
         display_standard_clusters(model_name, model_base, selected_pair, selected_layer, component)
 
 if __name__ == "__main__":
