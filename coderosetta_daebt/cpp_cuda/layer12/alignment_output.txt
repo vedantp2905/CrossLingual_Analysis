@@ -1,0 +1,37 @@
+Aligned Clusters: 34
+Source Cluster 4 is aligned to Target Clusters: 128, 444
+Source Cluster 7 is aligned to Target Clusters: 36
+Source Cluster 9 is aligned to Target Clusters: 128, 444
+Source Cluster 53 is aligned to Target Clusters: 128, 444
+Source Cluster 73 is aligned to Target Clusters: 256, 315
+Source Cluster 101 is aligned to Target Clusters: 419, 294, 423
+Source Cluster 103 is aligned to Target Clusters: 315
+Source Cluster 139 is aligned to Target Clusters: 425
+Source Cluster 157 is aligned to Target Clusters: 464
+Source Cluster 172 is aligned to Target Clusters: 416
+Source Cluster 190 is aligned to Target Clusters: 256, 315
+Source Cluster 197 is aligned to Target Clusters: 168
+Source Cluster 198 is aligned to Target Clusters: 263
+Source Cluster 216 is aligned to Target Clusters: 475
+Source Cluster 221 is aligned to Target Clusters: 204, 213
+Source Cluster 231 is aligned to Target Clusters: 315
+Source Cluster 235 is aligned to Target Clusters: 479
+Source Cluster 238 is aligned to Target Clusters: 151
+Source Cluster 244 is aligned to Target Clusters: 223
+Source Cluster 261 is aligned to Target Clusters: 480
+Source Cluster 273 is aligned to Target Clusters: 315
+Source Cluster 276 is aligned to Target Clusters: 263
+Source Cluster 290 is aligned to Target Clusters: 350
+Source Cluster 353 is aligned to Target Clusters: 256, 315
+Source Cluster 376 is aligned to Target Clusters: 457
+Source Cluster 381 is aligned to Target Clusters: 141
+Source Cluster 396 is aligned to Target Clusters: 464
+Source Cluster 410 is aligned to Target Clusters: 425
+Source Cluster 414 is aligned to Target Clusters: 457
+Source Cluster 421 is aligned to Target Clusters: 480
+Source Cluster 423 is aligned to Target Clusters: 454
+Source Cluster 436 is aligned to Target Clusters: 211
+Source Cluster 489 is aligned to Target Clusters: 419, 294, 423
+Source Cluster 492 is aligned to Target Clusters: 256, 457, 255
+
+Alignment results saved to: ../CrossLingual_Analysis/coderosetta_daebt/cpp_cuda/layer12/cluster_alignments.json

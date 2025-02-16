@@ -445,17 +445,44 @@ def display_aligned_clusters(model_base: str, selected_pair: str, selected_layer
         "cluster_alignments.json"
     )
     
-    if not os.path.exists(alignments_file):
+    if not os.path.exists(metrics_file):
         st.error("No alignment data found for this layer")
         return
-        
-    with open(alignments_file, 'r') as f:
-        alignments = json.load(f)
         
     with open(metrics_file, 'r') as f:
         alignment_metrics = json.load(f)
 
-    # Create dropdown options for cluster pairs first
+    # Initialize alignments data structure
+    alignments = {"alignments": {}}
+    
+    # Try to load rich alignment data, fall back to metrics-only if not available
+    if os.path.exists(alignments_file):
+        with open(alignments_file, 'r') as f:
+            alignments = json.load(f)
+    else:
+        # Create basic alignments structure from metrics file
+        for src_cluster_id, data in alignment_metrics.items():
+            alignments["alignments"][src_cluster_id] = {
+                "encoder_cluster": {
+                    "id": f"c{src_cluster_id}",
+                    "syntactic_label": "N/A",
+                    "semantic_tags": [],
+                    "description": "Alignment information from metrics only",
+                    "unique_tokens": []  # Will be populated from sentences later
+                },
+                "aligned_decoder_clusters": [
+                    {
+                        "id": f"c{target_id}",
+                        "syntactic_label": "N/A",
+                        "semantic_tags": [],
+                        "description": f"Match: {data['metrics'].get('match_percentage', 'N/A')}, Align: {data['metrics'].get('calign_score', 'N/A'):.2%}, Overlap: {data['metrics'].get('colap_score', 'N/A'):.2%}",
+                        "unique_tokens": []  # Will be populated from sentences later
+                    }
+                    for target_id in data.get("aligned_clusters", [])
+                ]
+            }
+
+    # Create dropdown options for cluster pairs
     cluster_pairs = []
     for src_cluster_id, cluster_data in alignments["alignments"].items():
         encoder_id = cluster_data["encoder_cluster"]["id"]
@@ -473,11 +500,6 @@ def display_aligned_clusters(model_base: str, selected_pair: str, selected_layer
     
     # Get the selected encoder and decoder IDs
     selected_encoder_id, selected_decoder_id = cluster_pairs[selected_pair_idx]
-    
-
-    
-    # The issue might be that the encoder ID in metrics file doesn't include 'c' prefix
-    metrics_encoder_id = selected_encoder_id.lstrip('c') if selected_encoder_id.startswith('c') else selected_encoder_id
     
     # Find the corresponding data
     for src_cluster_id, cluster_data in alignments["alignments"].items():
@@ -501,6 +523,17 @@ def display_aligned_clusters(model_base: str, selected_pair: str, selected_layer
         selected_layer,
         "decoder"
     )
+    
+    # Populate unique tokens if not already present
+    if not encoder_cluster.get('unique_tokens') and encoder_sentences:
+        encoder_cluster['unique_tokens'] = list(set(
+            sent_info["token"] for sent_info in encoder_sentences.get(encoder_cluster['id'], [])
+        ))
+    
+    if not decoder_cluster.get('unique_tokens') and decoder_sentences:
+        decoder_cluster['unique_tokens'] = list(set(
+            sent_info["token"] for sent_info in decoder_sentences.get(decoder_cluster['id'], [])
+        ))
     
     # Display clusters side by side with wordclouds
     st.write("### Cluster Details")
@@ -548,21 +581,6 @@ def display_aligned_clusters(model_base: str, selected_pair: str, selected_layer
     st.write("### Alignment Metrics")
     metrics_encoder_id = selected_encoder_id.lstrip('c')  # Remove 'c' prefix if present
     
-    # Load cluster alignments metrics file
-    metrics_file = os.path.join(
-        model_base,
-        selected_pair,
-        f"layer{selected_layer}",
-        "cluster_alignments.json"
-    )
-    
-    if not os.path.exists(metrics_file):
-        st.error(f"No metrics file found at {metrics_file}")
-        return
-        
-    with open(metrics_file, 'r') as f:
-        alignment_metrics = json.load(f)
-    
     if metrics_encoder_id in alignment_metrics:
         metrics = alignment_metrics[metrics_encoder_id]["metrics"]
         column = st.columns(2)  # Create two columns for horizontal layout
@@ -576,7 +594,6 @@ def display_aligned_clusters(model_base: str, selected_pair: str, selected_layer
                 st.metric("Cluster Overlap Score", f"{metrics['colap_score']:.2%}")
     else:
         st.warning(f"No alignment metrics found for cluster {selected_encoder_id}")
-        print(f"No metrics found for ID {metrics_encoder_id}")
 
     # Display evaluation section after cluster details
     st.write("### Alignment Evaluation")
@@ -2145,22 +2162,16 @@ def display_keyword_evolution(evolution_data: dict, keyword: str, context: str =
         yaxis='y2'
     ))
     
-    # Update layout with two y-axes using correct property names
+    # Update layout with two y-axes
     fig.update_layout(
         title=f"Evolution of '{keyword}' Across Layers",
         xaxis=dict(title='Layer'),
         yaxis=dict(
-            title=dict(
-                text='Number of Clusters',
-                font=dict(color='#1f77b4')
-            ),
+            title=dict(text='Number of Clusters', font=dict(color='#1f77b4')),
             tickfont=dict(color='#1f77b4')
         ),
         yaxis2=dict(
-            title=dict(
-                text='Total Token Occurrences',
-                font=dict(color='#ff7f0e')
-            ),
+            title=dict(text='Total Token Occurrences', font=dict(color='#ff7f0e')),
             tickfont=dict(color='#ff7f0e'),
             overlaying='y',
             side='right'
@@ -2169,7 +2180,8 @@ def display_keyword_evolution(evolution_data: dict, keyword: str, context: str =
         showlegend=True
     )
     
-    st.plotly_chart(fig, use_container_width=True)
+    # Add unique key for the first plotly chart
+    st.plotly_chart(fig, use_container_width=True, key=f"evolution_main_{context}_{keyword}_{unique_suffix}")
     
     # Display detailed statistics
     st.write("### Detailed Statistics")
@@ -2204,7 +2216,7 @@ def display_keyword_evolution(evolution_data: dict, keyword: str, context: str =
         row.extend([0] * (max_clusters - len(row)))
         heatmap_data.append(row)
     
-    # Create heatmap
+    # Create heatmap with unique key
     fig_heatmap = go.Figure(data=go.Heatmap(
         z=heatmap_data,
         y=evolution_data['layers'],
@@ -2220,7 +2232,8 @@ def display_keyword_evolution(evolution_data: dict, keyword: str, context: str =
         height=400
     )
     
-    st.plotly_chart(fig_heatmap, use_container_width=True)
+    # Add unique key for the heatmap
+    st.plotly_chart(fig_heatmap, use_container_width=True, key=f"evolution_heatmap_{context}_{keyword}_{unique_suffix}")
     
     # Add download buttons for the data with unique timestamp-based keys
     col1, col2 = st.columns(2)
@@ -2558,7 +2571,7 @@ def main():
     
     model_name = st.sidebar.selectbox(
         "Select Model",
-        ["t5", "coderosetta", "coderosetta_aer", "coderosetta_mlm", "coderosetta_mlm_mixed", "coderosetta_aer_mixed"],
+        ["t5", "coderosetta", "coderosetta_daebt", "coderosetta_aer", "coderosetta_mlm", "coderosetta_mlm_mixed", "coderosetta_aer_mixed"],
         key="model_select"
     )
     model_base = os.path.join(model_name)

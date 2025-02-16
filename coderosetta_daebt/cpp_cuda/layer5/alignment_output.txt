@@ -1,0 +1,17 @@
+Aligned Clusters: 14
+Source Cluster 10 is aligned to Target Clusters: 402
+Source Cluster 21 is aligned to Target Clusters: 495, 93, 231
+Source Cluster 29 is aligned to Target Clusters: 495, 93, 231
+Source Cluster 84 is aligned to Target Clusters: 7
+Source Cluster 119 is aligned to Target Clusters: 128, 29
+Source Cluster 153 is aligned to Target Clusters: 291
+Source Cluster 183 is aligned to Target Clusters: 128, 29
+Source Cluster 273 is aligned to Target Clusters: 119
+Source Cluster 367 is aligned to Target Clusters: 109, 189
+Source Cluster 372 is aligned to Target Clusters: 495, 93, 231
+Source Cluster 374 is aligned to Target Clusters: 26, 284, 295
+Source Cluster 376 is aligned to Target Clusters: 495, 93, 231
+Source Cluster 399 is aligned to Target Clusters: 115
+Source Cluster 433 is aligned to Target Clusters: 309
+
+Alignment results saved to: ../CrossLingual_Analysis/coderosetta_daebt/cpp_cuda/layer5/cluster_alignments.json
