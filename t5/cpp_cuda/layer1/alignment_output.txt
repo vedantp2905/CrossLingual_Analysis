@@ -1,4 +1,0 @@
-Aligned Clusters: 1
-Source Cluster 301 is aligned to Target Clusters: 100
-
-Alignment results saved to: ../CrossLingual_Analysis/t5/cpp_cuda//layer1/cluster_alignments_fast_align.json

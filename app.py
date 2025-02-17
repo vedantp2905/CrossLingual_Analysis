@@ -431,6 +431,24 @@ def display_aligned_clusters(model_base: str, selected_pair: str, selected_layer
     """Display aligned encoder-decoder cluster pairs with wordclouds and evaluation"""
     st.header(f"Aligned Clusters - Layer {selected_layer}")
     
+    # Add radio button for visualization type
+    if not model_base.startswith(("coderosetta_mlm_mixed", "coderosetta_aer_mixed")):
+        view_type = st.radio(
+            "Select View",
+            ["Cluster Analysis", "Alignment Metrics"],
+            key="view_type"
+        )
+    else:
+        view_type = st.radio(
+            "Select View",
+            ["Cluster Analysis", "Language Distribution"],
+            key="view_type"
+        )
+
+    if view_type == "Alignment Metrics":
+        display_layer_alignment_metrics(model_base, selected_pair, [selected_layer])
+        return
+        
     # Load the alignments file
     alignments_file = os.path.join(
         model_base,
@@ -799,76 +817,29 @@ def display_top_semantic_tags(model_base: str, selected_pair: str):
         st.plotly_chart(fig)
 
 def get_available_layers(model_base: str, selected_pair: str) -> List[int]:
-    """Returns a list of layer numbers that have alignment files or any cluster files."""
-    layers = set()  # Using set to avoid duplicates
+    """Get list of available layers for the selected model and language pair."""
     pair_dir = os.path.join(model_base, selected_pair)
+    layers = []
     
-    print(f"Looking for layers in: {pair_dir}")  # Debug print
+    if os.path.exists(pair_dir):
+        print(f"Scanning directory: {pair_dir}")  # Debug print
+        for item in os.listdir(pair_dir):
+            print(f"Found item: {item}")  # Debug print
+            # Only process directories that start with 'layer'
+            if item.startswith('layer'):
+                try:
+                    layer_num = int(item.replace('layer', ''))
+                    print(f"Adding layer: {layer_num}")  # Debug print
+                    layers.append(layer_num)
+                except ValueError:
+                    print(f"Skipping invalid layer format: {item}")  # Debug print
+                    continue
+    else:
+        print(f"Directory not found: {pair_dir}")  # Debug print
     
-    if not os.path.exists(pair_dir):
-        print(f"Directory not found: {pair_dir}")
-        return []
-        
-    # Check each layer directory
-    for item in os.listdir(pair_dir):
-        if item.startswith('layer'):
-            layer_num = int(item.replace('layer', ''))
-            layer_dir = os.path.join(pair_dir, item)
-            
-            # For MLM mixed model or AER mixed model, look for clusters-kmeans-500.txt
-            if model_base.startswith(('coderosetta_mlm_mixed', 'coderosetta_aer_mixed')):
-                cluster_file = os.path.join(layer_dir, "clusters-kmeans-500.txt")
-                if os.path.isfile(cluster_file):
-                    try:
-                        with open(cluster_file, 'r', encoding='utf-8') as f:
-                            next(f)  # Try reading first line
-                        layers.add(layer_num)
-                        print(f"Found valid mixed cluster file for layer: {layer_num}")
-                    except (StopIteration, UnicodeDecodeError) as e:
-                        print(f"Error reading mixed cluster file for layer {layer_num}: {str(e)}")
-                else:
-                    print(f"Cluster file not found at: {cluster_file}")
-                continue
-            
-            # Original logic for other models
-            alignment_file = os.path.join(
-                layer_dir, 
-                f"Alignments_with_LLM_labels_layer{layer_num}.json"
-            )
-            encoder_cluster_file = os.path.join(layer_dir, "encoder-clusters-kmeans-500.txt")
-            decoder_cluster_file = os.path.join(layer_dir, "decoder-clusters-kmeans-500.txt")
-            
-            # Add layer if it has alignment file
-            if os.path.isfile(alignment_file):
-                try:
-                    with open(alignment_file, 'r', encoding='utf-8') as f:
-                        json.load(f)
-                    layers.add(layer_num)
-                    print(f"Found valid alignment file for layer: {layer_num}")
-                except (json.JSONDecodeError, UnicodeDecodeError) as e:
-                    print(f"Error reading alignment file for layer {layer_num}: {str(e)}")
-            
-            # Check encoder cluster file
-            if os.path.isfile(encoder_cluster_file):
-                try:
-                    with open(encoder_cluster_file, 'r', encoding='utf-8') as f:
-                        next(f)  # Try reading first line
-                    layers.add(layer_num)
-                    print(f"Found valid encoder cluster file for layer: {layer_num}")
-                except (StopIteration, UnicodeDecodeError) as e:
-                    print(f"Error reading encoder cluster file for layer {layer_num}: {str(e)}")
-            
-            # Check decoder cluster file
-            if os.path.isfile(decoder_cluster_file):
-                try:
-                    with open(decoder_cluster_file, 'r', encoding='utf-8') as f:
-                        next(f)  # Try reading first line
-                    layers.add(layer_num)
-                    print(f"Found valid decoder cluster file for layer: {layer_num}")
-                except (StopIteration, UnicodeDecodeError) as e:
-                    print(f"Error reading decoder cluster file for layer {layer_num}: {str(e)}")
-    
-    return sorted(list(layers))
+    sorted_layers = sorted(layers)
+    print(f"Final layers list: {sorted_layers}")  # Debug print
+    return sorted_layers
 
 def validate_selected_layer(layer: int, available_layers: List[int]) -> int:
     """Validates and returns a valid layer number."""
@@ -2775,6 +2746,151 @@ def display_semantic_alignments(model_base: str, selected_pair: str, selected_la
         else:
             st.info(f"No aligned target clusters found with similarity ≥{similarity_threshold:.0%}")
 
+def load_layer_alignment_metrics(model_base: str, selected_pair: str, layers: List[int]) -> dict:
+    """Load and aggregate alignment metrics for all layers"""
+    layer_metrics = {}
+    
+    for layer in layers:
+        metrics_file = os.path.join(
+            model_base,
+            selected_pair,
+            f"layer{layer}",
+            "cluster_alignments.json"
+        )
+        
+        print(f"Looking for metrics file: {metrics_file}")  # Debug print
+        
+        if os.path.exists(metrics_file):
+            try:
+                with open(metrics_file, 'r') as f:
+                    metrics = json.load(f)
+                    
+                # Calculate average scores for this layer
+                calign_scores = []
+                colap_scores = []
+                
+                for cluster_id, cluster_data in metrics.items():
+                    metrics_data = cluster_data.get("metrics", {})
+                    if "calign_score" in metrics_data:
+                        calign_scores.append(float(metrics_data["calign_score"]))
+                    if "colap_score" in metrics_data:
+                        colap_scores.append(float(metrics_data["colap_score"]))
+                
+                if calign_scores or colap_scores:
+                    layer_metrics[layer] = {
+                        "avg_calign": sum(calign_scores) / len(calign_scores) if calign_scores else 0,
+                        "avg_colap": sum(colap_scores) / len(colap_scores) if colap_scores else 0,
+                        "num_clusters": len(calign_scores)  # Add count for debugging
+                    }
+                    print(f"Layer {layer}: Found {len(calign_scores)} clusters with metrics")  # Debug print
+                else:
+                    print(f"Layer {layer}: No valid scores found")  # Debug print
+            except Exception as e:
+                print(f"Error loading metrics for layer {layer}: {str(e)}")  # Debug print
+                continue
+        else:
+            print(f"Metrics file not found for layer {layer}")  # Debug print
+    
+    return layer_metrics
+
+def display_layer_alignment_metrics(model_base: str, selected_pair: str, layers: List[int]):
+    """Display graphs for inter-layer alignment metrics"""
+    print(f"Displaying metrics for layers: {layers}")  # Debug print
+    
+    # If only one layer is passed, get all available layers
+    if len(layers) == 1:
+        layers = get_available_layers(model_base, selected_pair)
+        print(f"Expanded to all layers: {layers}")  # Debug print
+    
+    metrics = load_layer_alignment_metrics(model_base, selected_pair, layers)
+    
+    if not metrics:
+        st.error("No alignment metrics found")
+        print("No metrics found for any layer")  # Debug print
+        return
+    
+    # Create lists for plotting
+    layers = sorted(metrics.keys())
+    avg_calign = [metrics[layer]["avg_calign"] for layer in layers]
+    avg_colap = [metrics[layer]["avg_colap"] for layer in layers]
+    
+    print(f"Plotting metrics for layers: {layers}")  # Debug print
+    print(f"Calign scores: {avg_calign}")  # Debug print
+    print(f"Colap scores: {avg_colap}")  # Debug print
+    
+    # Add metrics table
+    st.write("### Layer-wise Alignment Metrics")
+    metrics_df = pd.DataFrame({
+        'Layer': layers,
+        'Avg Cluster Alignment': [f"{score:.2%}" for score in avg_calign],
+        'Avg Cluster Overlap': [f"{score:.2%}" for score in avg_colap],
+        'Clusters': [metrics[layer]["num_clusters"] for layer in layers]
+    })
+    st.dataframe(metrics_df)
+    
+    # Create figure
+    fig = go.Figure()
+    
+    # Add traces
+    fig.add_trace(go.Scatter(
+        x=layers,
+        y=[score * 100 for score in avg_calign],  # Convert to percentage
+        name='Average Cluster Alignment Score',
+        mode='lines+markers',
+        line=dict(color='#1f77b4', width=2),
+        marker=dict(size=8)
+    ))
+    
+    fig.add_trace(go.Scatter(
+        x=layers,
+        y=[score * 100 for score in avg_colap],  # Convert to percentage
+        name='Average Cluster Overlap Score',
+        mode='lines+markers',
+        line=dict(color='#ff7f0e', width=2),
+        marker=dict(size=8)
+    ))
+    
+    # Update layout
+    fig.update_layout(
+        title=dict(
+            text=f'Layer-wise Average Alignment Metrics - {model_base}',  # Changed back to model_base
+            font=dict(weight='bold', size=20),
+            y=0.95,
+            x=0.5,
+            xanchor='center',
+            yanchor='top'
+        ),
+        xaxis_title=dict(
+            text='Layer',
+            font=dict(weight='bold', size=14)
+        ),
+        yaxis_title=dict(
+            text='Score (%)',
+            font=dict(weight='bold', size=14)
+        ),
+        yaxis=dict(
+            tickformat='.1f',
+            range=[0, 110]  # Increased from 100 to 110 to show all points
+        ),
+        hovermode='x unified',
+        height=600,
+        showlegend=True,
+        legend=dict(
+            yanchor="bottom",
+            y=0.01,
+            xanchor="left",
+            x=0.01,
+            font=dict(weight='bold')
+        )
+    )
+    
+    # Add gridlines
+    fig.update_xaxes(gridcolor='LightGray', gridwidth=0.5, griddash='dot')
+    fig.update_yaxes(gridcolor='LightGray', gridwidth=0.5, griddash='dot')
+    
+    # Display the plot
+    st.plotly_chart(fig, use_container_width=True)
+
 def main():
     st.set_page_config(layout="wide", page_title="Code Concept Explorer")
     
@@ -2785,7 +2901,7 @@ def main():
     
     model_name = st.sidebar.selectbox(
         "Select Model",
-        ["t5", "coderosetta", "coderosetta_daebt", "coderosetta_aer", "coderosetta_mlm", "coderosetta_mlm_mixed", "coderosetta_aer_mixed"],
+        ["t5", "coderosetta_ft", "coderosetta_daebt", "coderosetta_aer", "coderosetta_mlm", "coderosetta_mlm_mixed", "coderosetta_aer_mixed"],
         key="model_select"
     )
     model_base = os.path.join(model_name)

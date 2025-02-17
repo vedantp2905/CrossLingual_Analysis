@@ -1,5 +1,0 @@
-Aligned Clusters: 2
-Source Cluster 124 is aligned to Target Clusters: 149
-Source Cluster 130 is aligned to Target Clusters: 337
-
-Alignment results saved to: ../CrossLingual_Analysis/t5/cpp_cuda//layer0/cluster_alignments_fast_align.json
