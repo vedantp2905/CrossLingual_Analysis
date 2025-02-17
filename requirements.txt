@@ -5,3 +5,4 @@ matplotlib
 supabase
 python-dotenv
 kaleido
+gdown
