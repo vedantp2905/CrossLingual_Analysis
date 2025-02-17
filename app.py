@@ -13,6 +13,7 @@ import io
 import pandas as pd
 import time
 import numpy as np
+import gdown
 
 # Load environment variables
 load_dotenv()
@@ -2567,21 +2568,40 @@ def add_predefined_keywords_tab(model_name, model_base, selected_pair, available
         available_layers
     )
 
+def download_from_drive(file_id, destination):
+    """Download a file from Google Drive"""
+    if not os.path.exists(destination):
+        # Create URL for direct download
+        url = f"https://drive.google.com/uc?id={file_id}"
+        
+        # Create directory if it doesn't exist
+        os.makedirs(os.path.dirname(destination), exist_ok=True)
+        
+        try:
+            gdown.download(url, destination, quiet=False)
+        except Exception as e:
+            st.error(f"Error downloading file: {e}")
+            return False
+    return True
+
 def display_semantic_alignments(model_base: str, selected_pair: str, selected_layer: int):
     """Display semantic alignments between encoder and decoder clusters"""
-    
-    # Create tabs for different views
-    tab1, tab2 = st.tabs(["Cluster Details", "Alignment Distribution"])
     
     # Load semantic alignments
     alignment_file = Path(model_base) / selected_pair / f"layer{selected_layer}" / "semantic_alignments.json"
     
+    # If file doesn't exist locally, download from Drive
     if not alignment_file.exists():
-        st.warning("No semantic alignments found for this layer")
-        return
-        
+        drive_file_id = "https://drive.google.com/file/d/1ghtRAz4egj8Zw4R5zjSEEBDFZN4Cx-CR/view?usp=sharing"  # Replace with your file ID
+        if not download_from_drive(drive_file_id, str(alignment_file)):
+            st.warning("Could not load semantic alignments")
+            return
+            
     with open(alignment_file) as f:
         alignment_data = json.load(f)
+    
+    # Create tabs for different views
+    tab1, tab2 = st.tabs(["Cluster Details", "Alignment Distribution"])
     
     with tab2:
         st.write("### Distribution of Alignments Across Source Clusters")
@@ -2656,7 +2676,6 @@ def display_semantic_alignments(model_base: str, selected_pair: str, selected_la
         # Display encoder and matched decoder clusters side by side
         st.write("#### Cluster Details")
         
-        # Rest of the existing display code...
         # Display encoder cluster
         with st.expander("Source Cluster Details", expanded=True):
             st.write("##### Source Cluster")

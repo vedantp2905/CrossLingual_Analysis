@@ -5,3 +5,4 @@ rename.py
 gemini_labelling_cpp.py
 readme copy.md
 *.png
+coderosetta/cpp_cuda/layer12/semantic_alignments.json
