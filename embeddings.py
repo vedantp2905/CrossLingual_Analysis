@@ -46,7 +46,7 @@ class ClusterAligner:
         self.base_path = Path(base_path)
         self.layer = layer
         self.embedder = ClusterEmbedder()
-        self.similarity_threshold = 0.75
+        self.similarity_threshold = 0.82  # Good balance between precision/recall
         
     def load_clusters(self) -> Tuple[List[Dict], List[Dict]]:
         """Load raw encoder and decoder clusters."""

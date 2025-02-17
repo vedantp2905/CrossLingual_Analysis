@@ -2687,7 +2687,10 @@ def display_semantic_alignments(model_base: str, selected_pair: str, selected_la
         
         # Display total alignments count
         num_alignments = len(alignment['matches'])
+        num_high_similarity = len([m for m in alignment['matches'] if m['similarity'] >= 0.82])
         st.write(f"**Total alignments for Source Cluster {alignment['encoder_id'].lstrip('c')}:** {num_alignments}")
+        st.write(f"**High similarity alignments (≥82%):** {num_high_similarity}")
+        st.info("Only showing alignments with similarity score of 82% or higher")
         
         # Display encoder and matched decoder clusters side by side
         st.write("#### Cluster Details")
@@ -2720,7 +2723,7 @@ def display_semantic_alignments(model_base: str, selected_pair: str, selected_la
         st.write("##### Aligned Target Clusters")
         if alignment['matches']:
             # Sort matches by decoder_id (removing 'c' prefix for sorting)
-            sorted_matches = sorted(alignment['matches'], 
+            sorted_matches = sorted([m for m in alignment['matches'] if m['similarity'] >= 0.82], 
                                   key=lambda x: int(x['decoder_id'].lstrip('c')))
             
             # Create dropdown for target clusters
