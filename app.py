@@ -2710,40 +2710,11 @@ def display_semantic_alignments(model_base: str, selected_pair: str, selected_la
         st.write(f"**High similarity alignments (≥{similarity_threshold:.0%}):** {num_high_similarity}")
         st.info(f"Only showing alignments with similarity score of {similarity_threshold:.0%} or higher")
         
-        # Display encoder and matched decoder clusters side by side
-        st.write("#### Cluster Details")
-        
-        # Display encoder cluster
-        with st.expander("Source Cluster Details", expanded=True):
-            st.write("##### Source Cluster")
-            st.write(f"**Cluster ID:** {alignment['encoder_id'].lstrip('c')}")
-            
-            # Display encoder cluster details
-            encoder_cluster = alignment['encoder_cluster']
-            st.write("**Unique Tokens:** " + ", ".join(encoder_cluster['Unique tokens']))
-            
-            st.write(f"**Syntactic Label:** {encoder_cluster['Syntactic Label']}")
-            
-            st.write("**Semantic Tags:**")
-            for tag in encoder_cluster['Semantic Tags']:
-                st.write(f"- {tag}")
-                
-            st.write(f"**Description:** {encoder_cluster.get('Description', 'N/A')}")
-            
-            if encoder_sentences.get(f"c{selected_encoder.lstrip('c')}"):
-                st.write("**Context Sentences:**")
-                for sent_info in encoder_sentences[f"c{selected_encoder.lstrip('c')}"]:
-                    tokens = sent_info["sentence"].split()
-                    html = create_sentence_html(tokens, sent_info)
-                    st.markdown(html, unsafe_allow_html=True)
-        
-        # Display decoder clusters
-        st.write("##### Aligned Target Clusters")
+        # Filter and sort matches
         filtered_matches = [m for m in alignment['matches'] if m['similarity'] >= similarity_threshold]
+        sorted_matches = sorted(filtered_matches, key=lambda x: int(x['decoder_id'].lstrip('c')))
+        
         if filtered_matches:
-            # Sort matches by decoder_id (removing 'c' prefix for sorting)
-            sorted_matches = sorted(filtered_matches, key=lambda x: int(x['decoder_id'].lstrip('c')))
-            
             # Create dropdown for target clusters
             match_options = [
                 f"Cluster {m['decoder_id'].lstrip('c')} (Similarity: {m['similarity']:.2%})"
@@ -2755,30 +2726,52 @@ def display_semantic_alignments(model_base: str, selected_pair: str, selected_la
                 format_func=lambda i: match_options[i]
             )
             
-            # Display selected target cluster
+            # Get selected match
             match = sorted_matches[selected_target]
             decoder_id = match['decoder_id']
             similarity = match['similarity']
             decoder_cluster = match['decoder_cluster']
             
-            with st.expander(f"Target Cluster {decoder_id.lstrip('c')} (Similarity: {similarity:.2%})", expanded=True):
-                # Display decoder cluster details
-                st.write("**Unique Tokens:** " + ", ".join(decoder_cluster['Unique tokens']))
-                
-                st.write(f"**Syntactic Label:** {decoder_cluster['Syntactic Label']}")
-                
-                st.write("**Semantic Tags:**")
-                for tag in decoder_cluster['Semantic Tags']:
-                    st.write(f"- {tag}")
+            # Display clusters side by side
+            st.write("#### Cluster Details")
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.write("##### Source Cluster")
+                with st.expander("Source Details", expanded=True):
+                    st.write(f"**Cluster ID:** {alignment['encoder_id'].lstrip('c')}")
+                    encoder_cluster = alignment['encoder_cluster']
+                    st.write("**Unique Tokens:** " + ", ".join(encoder_cluster['Unique tokens']))
+                    st.write(f"**Syntactic Label:** {encoder_cluster['Syntactic Label']}")
+                    st.write("**Semantic Tags:**")
+                    for tag in encoder_cluster['Semantic Tags']:
+                        st.write(f"- {tag}")
+                    st.write(f"**Description:** {encoder_cluster.get('Description', 'N/A')}")
                     
-                st.write(f"**Description:** {decoder_cluster.get('Description', 'N/A')}")
-                
-                if decoder_sentences.get(f"c{decoder_id.lstrip('c')}"):
-                    st.write("**Context Sentences:**")
-                    for sent_info in decoder_sentences[f"c{decoder_id.lstrip('c')}"]:
-                        tokens = sent_info["sentence"].split()
-                        html = create_sentence_html(tokens, sent_info)
-                        st.markdown(html, unsafe_allow_html=True)
+                    if encoder_sentences.get(f"c{selected_encoder.lstrip('c')}"):
+                        st.write("**Context Sentences:**")
+                        for sent_info in encoder_sentences[f"c{selected_encoder.lstrip('c')}"]:
+                            tokens = sent_info["sentence"].split()
+                            html = create_sentence_html(tokens, sent_info)
+                            st.markdown(html, unsafe_allow_html=True)
+            
+            with col2:
+                st.write(f"##### Target Cluster (Similarity: {similarity:.2%})")
+                with st.expander("Target Details", expanded=True):
+                    st.write(f"**Cluster ID:** {decoder_id.lstrip('c')}")
+                    st.write("**Unique Tokens:** " + ", ".join(decoder_cluster['Unique tokens']))
+                    st.write(f"**Syntactic Label:** {decoder_cluster['Syntactic Label']}")
+                    st.write("**Semantic Tags:**")
+                    for tag in decoder_cluster['Semantic Tags']:
+                        st.write(f"- {tag}")
+                    st.write(f"**Description:** {decoder_cluster.get('Description', 'N/A')}")
+                    
+                    if decoder_sentences.get(f"c{decoder_id.lstrip('c')}"):
+                        st.write("**Context Sentences:**")
+                        for sent_info in decoder_sentences[f"c{decoder_id.lstrip('c')}"]:
+                            tokens = sent_info["sentence"].split()
+                            html = create_sentence_html(tokens, sent_info)
+                            st.markdown(html, unsafe_allow_html=True)
         else:
             st.info(f"No aligned target clusters found with similarity ≥{similarity_threshold:.0%}")
 
