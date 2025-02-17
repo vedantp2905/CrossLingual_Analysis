@@ -2602,12 +2602,22 @@ def download_from_drive(file_id, destination):
 def display_semantic_alignments(model_base: str, selected_pair: str, selected_layer: int):
     """Display semantic alignments between encoder and decoder clusters"""
     
+    # Add similarity threshold slider
+    similarity_threshold = st.slider(
+        "Similarity Threshold",
+        min_value=0.0,
+        max_value=1.0,
+        value=0.82,  # Default value
+        step=0.01,
+        format="%.2f",
+        help="Only show alignments with similarity score above this threshold"
+    )
+    
     # Load semantic alignments
     alignment_file = Path(model_base) / selected_pair / f"layer{selected_layer}" / "semantic_alignments.json"
     
     # If file doesn't exist locally, download from Drive
     if not alignment_file.exists():
-        # Use just the file ID instead of the full URL
         drive_file_id = "1ghtRAz4egj8Zw4R5zjSEEBDFZN4Cx-CR"
         if not download_from_drive(drive_file_id, str(alignment_file)):
             st.warning("Could not load semantic alignments. Please ensure the file is publicly accessible.")
@@ -2622,8 +2632,11 @@ def display_semantic_alignments(model_base: str, selected_pair: str, selected_la
     with tab2:
         st.write("### Distribution of Alignments Across Source Clusters")
         
-        # Calculate number of alignments per cluster
-        alignment_counts = [len(align['matches']) for align in alignment_data['alignments']]
+        # Calculate number of alignments per cluster above threshold
+        alignment_counts = [
+            len([m for m in align['matches'] if m['similarity'] >= similarity_threshold])
+            for align in alignment_data['alignments']
+        ]
         cluster_ids = [int(align['encoder_id'].lstrip('c')) for align in alignment_data['alignments']]
         
         # Create line plot using plotly
@@ -2637,7 +2650,7 @@ def display_semantic_alignments(model_base: str, selected_pair: str, selected_la
         
         # Update x-axis to show ticks at multiples of 50
         fig.update_layout(
-            title="Number of Alignments per Source Cluster",
+            title=f"Number of Alignments per Source Cluster (Similarity ≥ {similarity_threshold:.2%})",
             xaxis=dict(
                 title="Source Cluster ID",
                 tickmode='array',
@@ -2652,9 +2665,14 @@ def display_semantic_alignments(model_base: str, selected_pair: str, selected_la
         st.plotly_chart(fig, use_container_width=True)
         
         # Show some statistics
-        st.write(f"**Average alignments per cluster:** {np.mean(alignment_counts):.2f}")
-        st.write(f"**Maximum alignments:** {max(alignment_counts)}")
-        st.write(f"**Minimum alignments:** {min(alignment_counts)}")
+        non_zero_counts = [count for count in alignment_counts if count > 0]
+        if non_zero_counts:
+            st.write(f"**Average alignments per cluster:** {np.mean(alignment_counts):.2f}")
+            st.write(f"**Maximum alignments:** {max(alignment_counts)}")
+            st.write(f"**Minimum alignments:** {min(alignment_counts)}")
+            st.write(f"**Clusters with no alignments:** {alignment_counts.count(0)}")
+        else:
+            st.warning("No alignments found above the selected threshold")
     
     with tab1:
         # Load sentences for both encoder and decoder
@@ -2687,10 +2705,10 @@ def display_semantic_alignments(model_base: str, selected_pair: str, selected_la
         
         # Display total alignments count
         num_alignments = len(alignment['matches'])
-        num_high_similarity = len([m for m in alignment['matches'] if m['similarity'] >= 0.82])
+        num_high_similarity = len([m for m in alignment['matches'] if m['similarity'] >= similarity_threshold])
         st.write(f"**Total alignments for Source Cluster {alignment['encoder_id'].lstrip('c')}:** {num_alignments}")
-        st.write(f"**High similarity alignments (≥82%):** {num_high_similarity}")
-        st.info("Only showing alignments with similarity score of 82% or higher")
+        st.write(f"**High similarity alignments (≥{similarity_threshold:.0%}):** {num_high_similarity}")
+        st.info(f"Only showing alignments with similarity score of {similarity_threshold:.0%} or higher")
         
         # Display encoder and matched decoder clusters side by side
         st.write("#### Cluster Details")
@@ -2721,10 +2739,10 @@ def display_semantic_alignments(model_base: str, selected_pair: str, selected_la
         
         # Display decoder clusters
         st.write("##### Aligned Target Clusters")
-        if alignment['matches']:
+        filtered_matches = [m for m in alignment['matches'] if m['similarity'] >= similarity_threshold]
+        if filtered_matches:
             # Sort matches by decoder_id (removing 'c' prefix for sorting)
-            sorted_matches = sorted([m for m in alignment['matches'] if m['similarity'] >= 0.82], 
-                                  key=lambda x: int(x['decoder_id'].lstrip('c')))
+            sorted_matches = sorted(filtered_matches, key=lambda x: int(x['decoder_id'].lstrip('c')))
             
             # Create dropdown for target clusters
             match_options = [
@@ -2762,7 +2780,7 @@ def display_semantic_alignments(model_base: str, selected_pair: str, selected_la
                         html = create_sentence_html(tokens, sent_info)
                         st.markdown(html, unsafe_allow_html=True)
         else:
-            st.info("No aligned target clusters found for this source cluster")
+            st.info(f"No aligned target clusters found with similarity ≥{similarity_threshold:.0%}")
 
 def main():
     st.set_page_config(layout="wide", page_title="Code Concept Explorer")
