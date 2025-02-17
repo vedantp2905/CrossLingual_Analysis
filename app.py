@@ -2571,6 +2571,17 @@ def add_predefined_keywords_tab(model_name, model_base, selected_pair, available
 def download_from_drive(file_id, destination):
     """Download a file from Google Drive"""
     if not os.path.exists(destination):
+        # Extract file ID from full Google Drive URL if needed
+        if 'drive.google.com' in file_id:
+            # Handle different Google Drive URL formats
+            if '/file/d/' in file_id:
+                file_id = file_id.split('/file/d/')[1].split('/')[0]
+            elif 'id=' in file_id:
+                file_id = file_id.split('id=')[1].split('&')[0]
+            else:
+                st.error(f"Invalid Google Drive URL format: {file_id}")
+                return False
+
         # Create URL for direct download
         url = f"https://drive.google.com/uc?id={file_id}"
         
@@ -2578,7 +2589,11 @@ def download_from_drive(file_id, destination):
         os.makedirs(os.path.dirname(destination), exist_ok=True)
         
         try:
-            gdown.download(url, destination, quiet=False)
+            # Try downloading with gdown
+            success = gdown.download(url, destination, quiet=False)
+            if not success:
+                st.error("Failed to download file with gdown. Please check the file permissions.")
+                return False
         except Exception as e:
             st.error(f"Error downloading file: {e}")
             return False
@@ -2592,11 +2607,12 @@ def display_semantic_alignments(model_base: str, selected_pair: str, selected_la
     
     # If file doesn't exist locally, download from Drive
     if not alignment_file.exists():
-        drive_file_id = "https://drive.google.com/file/d/1ghtRAz4egj8Zw4R5zjSEEBDFZN4Cx-CR/view?usp=sharing"  # Replace with your file ID
+        # Use just the file ID instead of the full URL
+        drive_file_id = "1ghtRAz4egj8Zw4R5zjSEEBDFZN4Cx-CR"
         if not download_from_drive(drive_file_id, str(alignment_file)):
-            st.warning("Could not load semantic alignments")
+            st.warning("Could not load semantic alignments. Please ensure the file is publicly accessible.")
             return
-            
+
     with open(alignment_file) as f:
         alignment_data = json.load(f)
     
