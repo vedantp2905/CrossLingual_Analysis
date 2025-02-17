@@ -4,3 +4,4 @@ venv/
 rename.py
 gemini_labelling_cpp.py
 readme copy.md
+*.png

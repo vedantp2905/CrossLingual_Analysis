@@ -12,6 +12,7 @@ from typing import List
 import io
 import pandas as pd
 import time
+import numpy as np
 
 # Load environment variables
 load_dotenv()
@@ -2566,6 +2567,165 @@ def add_predefined_keywords_tab(model_name, model_base, selected_pair, available
         available_layers
     )
 
+def display_semantic_alignments(model_base: str, selected_pair: str, selected_layer: int):
+    """Display semantic alignments between encoder and decoder clusters"""
+    
+    # Create tabs for different views
+    tab1, tab2 = st.tabs(["Cluster Details", "Alignment Distribution"])
+    
+    # Load semantic alignments
+    alignment_file = Path(model_base) / selected_pair / f"layer{selected_layer}" / "semantic_alignments.json"
+    
+    if not alignment_file.exists():
+        st.warning("No semantic alignments found for this layer")
+        return
+        
+    with open(alignment_file) as f:
+        alignment_data = json.load(f)
+    
+    with tab2:
+        st.write("### Distribution of Alignments Across Source Clusters")
+        
+        # Calculate number of alignments per cluster
+        alignment_counts = [len(align['matches']) for align in alignment_data['alignments']]
+        cluster_ids = [int(align['encoder_id'].lstrip('c')) for align in alignment_data['alignments']]
+        
+        # Create line plot using plotly
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(
+            x=cluster_ids,
+            y=alignment_counts,
+            mode='lines',
+            name='Number of Alignments'
+        ))
+        
+        # Update x-axis to show ticks at multiples of 50
+        fig.update_layout(
+            title="Number of Alignments per Source Cluster",
+            xaxis=dict(
+                title="Source Cluster ID",
+                tickmode='array',
+                tickvals=list(range(0, max(cluster_ids) + 50, 50)),
+                ticktext=[str(i) for i in range(0, max(cluster_ids) + 50, 50)]
+            ),
+            yaxis_title="Number of Alignments",
+            showlegend=False,
+            height=500
+        )
+        
+        st.plotly_chart(fig, use_container_width=True)
+        
+        # Show some statistics
+        st.write(f"**Average alignments per cluster:** {np.mean(alignment_counts):.2f}")
+        st.write(f"**Maximum alignments:** {max(alignment_counts)}")
+        st.write(f"**Minimum alignments:** {min(alignment_counts)}")
+    
+    with tab1:
+        # Load sentences for both encoder and decoder
+        encoder_sentences = load_cluster_sentences(
+            os.path.join(model_base, selected_pair),
+            selected_layer,
+            "encoder"
+        )
+        
+        decoder_sentences = load_cluster_sentences(
+            os.path.join(model_base, selected_pair),
+            selected_layer,
+            "decoder"
+        )
+        
+        # Create dropdown for selecting encoder cluster
+        encoder_clusters = sorted([align["encoder_id"] for align in alignment_data["alignments"]], 
+                                key=lambda x: int(x.lstrip('c')))
+        selected_encoder = st.selectbox(
+            "Select Source Cluster",
+            encoder_clusters,
+            format_func=lambda x: f"Cluster {x.lstrip('c')}"
+        )
+        
+        # Find the alignment data for selected encoder
+        alignment = next(
+            align for align in alignment_data["alignments"] 
+            if align["encoder_id"] == selected_encoder
+        )
+        
+        # Display total alignments count
+        num_alignments = len(alignment['matches'])
+        st.write(f"**Total alignments for Source Cluster {alignment['encoder_id'].lstrip('c')}:** {num_alignments}")
+        
+        # Display encoder and matched decoder clusters side by side
+        st.write("#### Cluster Details")
+        
+        # Rest of the existing display code...
+        # Display encoder cluster
+        with st.expander("Source Cluster Details", expanded=True):
+            st.write("##### Source Cluster")
+            st.write(f"**Cluster ID:** {alignment['encoder_id'].lstrip('c')}")
+            
+            # Display encoder cluster details
+            encoder_cluster = alignment['encoder_cluster']
+            st.write("**Unique Tokens:** " + ", ".join(encoder_cluster['Unique tokens']))
+            
+            st.write(f"**Syntactic Label:** {encoder_cluster['Syntactic Label']}")
+            
+            st.write("**Semantic Tags:**")
+            for tag in encoder_cluster['Semantic Tags']:
+                st.write(f"- {tag}")
+                
+            st.write(f"**Description:** {encoder_cluster.get('Description', 'N/A')}")
+            
+            if encoder_sentences.get(f"c{selected_encoder.lstrip('c')}"):
+                st.write("**Context Sentences:**")
+                for sent_info in encoder_sentences[f"c{selected_encoder.lstrip('c')}"]:
+                    tokens = sent_info["sentence"].split()
+                    html = create_sentence_html(tokens, sent_info)
+                    st.markdown(html, unsafe_allow_html=True)
+        
+        # Display decoder clusters
+        st.write("##### Aligned Target Clusters")
+        if alignment['matches']:
+            # Sort matches by decoder_id (removing 'c' prefix for sorting)
+            sorted_matches = sorted(alignment['matches'], 
+                                  key=lambda x: int(x['decoder_id'].lstrip('c')))
+            
+            # Create dropdown for target clusters
+            match_options = [
+                f"Cluster {m['decoder_id'].lstrip('c')} (Similarity: {m['similarity']:.2%})"
+                for m in sorted_matches
+            ]
+            selected_target = st.selectbox(
+                "Select Target Cluster",
+                range(len(match_options)),
+                format_func=lambda i: match_options[i]
+            )
+            
+            # Display selected target cluster
+            match = sorted_matches[selected_target]
+            decoder_id = match['decoder_id']
+            similarity = match['similarity']
+            decoder_cluster = match['decoder_cluster']
+            
+            with st.expander(f"Target Cluster {decoder_id.lstrip('c')} (Similarity: {similarity:.2%})", expanded=True):
+                # Display decoder cluster details
+                st.write("**Unique Tokens:** " + ", ".join(decoder_cluster['Unique tokens']))
+                
+                st.write(f"**Syntactic Label:** {decoder_cluster['Syntactic Label']}")
+                
+                st.write("**Semantic Tags:**")
+                for tag in decoder_cluster['Semantic Tags']:
+                    st.write(f"- {tag}")
+                    
+                st.write(f"**Description:** {decoder_cluster.get('Description', 'N/A')}")
+                
+                if decoder_sentences.get(f"c{decoder_id.lstrip('c')}"):
+                    st.write("**Context Sentences:**")
+                    for sent_info in decoder_sentences[f"c{decoder_id.lstrip('c')}"]:
+                        tokens = sent_info["sentence"].split()
+                        html = create_sentence_html(tokens, sent_info)
+                        st.markdown(html, unsafe_allow_html=True)
+        else:
+            st.info("No aligned target clusters found for this source cluster")
+
 def main():
     st.set_page_config(layout="wide", page_title="Code Concept Explorer")
     
@@ -2640,13 +2800,15 @@ def handle_standard_model_view(model_name, model_base, selected_pair, selected_l
     """Handle view logic for standard models"""
     view = st.sidebar.radio(
         "View", 
-        ["Individual Clusters", "Aligned Clusters", "Top Semantic Tags"]
+        ["Individual Clusters", "Aligned Clusters", "Semantic Alignments", "Top Semantic Tags"]
     )
 
     if view == "Top Semantic Tags":
         display_top_semantic_tags(model_base, selected_pair)
     elif view == "Aligned Clusters":
         display_aligned_clusters(model_base, selected_pair, selected_layer)
+    elif view == "Semantic Alignments":
+        display_semantic_alignments(model_base, selected_pair, selected_layer)
     else:  # Individual Clusters
         component = st.sidebar.radio("Component", ["source", "target"])
         if component == "source":
