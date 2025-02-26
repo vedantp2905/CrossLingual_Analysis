@@ -1638,6 +1638,205 @@ def display_language_distribution(model_base, selected_pair, available_layers):
         else:
             st.warning(f"No clusters found for category: {category}")
 
+def find_clusters_for_token_standard(model_base: str, selected_pair: str, selected_layer: int, search_token: str, component: str):
+    """Find all clusters containing the specified token for standard (non-mixed) models"""
+    cluster_file = os.path.join(
+        model_base, 
+        selected_pair,
+        f"layer{selected_layer}",
+        f"{component}-clusters-kmeans-500.txt"
+    )
+    
+    # Dictionary to store clusters containing the token
+    token_clusters = {}
+    
+    with open(cluster_file, 'r', encoding='utf-8') as f:
+        for line in f:
+            parts = line.strip().split('|||')
+            if len(parts) == 5:  # token|||other|||sent_id|||token_idx|||cluster_id
+                token = parts[0].strip()
+                cluster_id = parts[4].strip()
+                
+                if search_token.lower() in token.lower():
+                    if f"c{cluster_id}" not in token_clusters:
+                        token_clusters[f"c{cluster_id}"] = {
+                            'matching_tokens': set(),
+                            'all_tokens': set()
+                        }
+                    token_clusters[f"c{cluster_id}"]['matching_tokens'].add(token)
+                    token_clusters[f"c{cluster_id}"]['all_tokens'].add(token)
+                elif f"c{cluster_id}" in token_clusters:
+                    token_clusters[f"c{cluster_id}"]['all_tokens'].add(token)
+    
+    return token_clusters
+
+def display_search_results_standard(model_name, model_base, selected_pair, selected_layer, search_token):
+    """Display search results for a token in standard (non-mixed) models"""
+    st.write(f"### Search Results for '{search_token}'")
+    
+    # Create tabs for different views
+    tab1, tab2, tab3 = st.tabs(["Evolution Analysis", "Source (Encoder)", "Target (Decoder)"])
+    
+    with tab1:
+        # Analyze evolution across all layers
+        evolution_data = analyze_keyword_evolution_standard(
+            model_base,
+            selected_pair,
+            list(range(12)),  # Assuming 12 layers, adjust as needed
+            search_token
+        )
+        display_keyword_evolution_standard(evolution_data, search_token)
+    
+    with tab2:
+        # Display encoder results
+        encoder_results = find_clusters_for_token_standard(model_base, selected_pair, selected_layer, search_token, "encoder")
+        if encoder_results:
+            st.write(f"#### Source Clusters containing '{search_token}'")
+            for cluster_id, tokens in encoder_results.items():
+                with st.expander(f"Cluster {cluster_id}"):
+                    try:
+                        # Display matching tokens
+                        st.write("**Matching Tokens:**")
+                        st.write(", ".join(sorted(tokens['matching_tokens'])))
+                        
+                        # Create word cloud for all tokens in cluster
+                        all_tokens = list(tokens['all_tokens'])
+                        if all_tokens:
+                            st.write("#### Word Cloud of Cluster Tokens")
+                            wc = create_wordcloud(all_tokens)
+                            if wc:
+                                fig = plt.figure(figsize=(10, 5))
+                                plt.imshow(wc, interpolation='bilinear')
+                                plt.axis('off')
+                                st.pyplot(fig)
+                                plt.close(fig)
+                        
+                        # Load and display sentences
+                        cluster_sentences = load_cluster_sentences(
+                            os.path.join(model_base, selected_pair),
+                            selected_layer,
+                            "encoder"
+                        )
+                        
+                        if cluster_sentences and cluster_id in cluster_sentences:
+                            st.write("#### Context Sentences")
+                            context_sentences = cluster_sentences[cluster_id]
+                            if isinstance(context_sentences, dict):
+                                context_sentences = context_sentences.get('sentences', [])
+                            
+                            # Separate sentences into matching and non-matching
+                            matching_sentences = []
+                            other_sentences = []
+                            
+                            for sent_info in context_sentences:
+                                if search_token.lower() in sent_info['sentence'].lower():
+                                    matching_sentences.append(sent_info)
+                                else:
+                                    other_sentences.append(sent_info)
+                            
+                            # Display matching sentences first
+                            if matching_sentences:
+                                st.write("**Sentences with Selected Token:**")
+                                for sent_info in matching_sentences[:10]:  # Limit to first 10 matching sentences
+                                    html = create_sentence_html(sent_info['sentence'].split(), sent_info)
+                                    st.markdown(html, unsafe_allow_html=True)
+                                if len(matching_sentences) > 10:
+                                    st.info(f"Showing 10 of {len(matching_sentences)} matching sentences")
+                            
+                            # Display other sentences with a toggle
+                            if other_sentences:
+                                show_others = st.checkbox(
+                                    f"Show Other Context Sentences ({len(other_sentences)} sentences)", 
+                                    key=f"show_others_encoder_{cluster_id}"
+                                )
+                                if show_others:
+                                    st.write("**Other Context Sentences:**")
+                                    for sent_info in other_sentences[:10]:  # Limit to first 10 other sentences
+                                        html = create_sentence_html(sent_info['sentence'].split(), sent_info)
+                                        st.markdown(html, unsafe_allow_html=True)
+                                    if len(other_sentences) > 10:
+                                        st.info(f"Showing 10 of {len(other_sentences)} other sentences")
+                    except Exception as e:
+                        st.error(f"Error displaying cluster {cluster_id}: {str(e)}")
+                        continue
+        else:
+            st.info(f"No matches found in source clusters for '{search_token}'")
+    
+    with tab3:
+        # Display decoder results
+        decoder_results = find_clusters_for_token_standard(model_base, selected_pair, selected_layer, search_token, "decoder")
+        if decoder_results:
+            st.write(f"#### Target Clusters containing '{search_token}'")
+            for cluster_id, tokens in decoder_results.items():
+                with st.expander(f"Cluster {cluster_id}"):
+                    try:
+                        # Display matching tokens
+                        st.write("**Matching Tokens:**")
+                        st.write(", ".join(sorted(tokens['matching_tokens'])))
+                        
+                        # Create word cloud for all tokens in cluster
+                        all_tokens = list(tokens['all_tokens'])
+                        if all_tokens:
+                            st.write("#### Word Cloud of Cluster Tokens")
+                            wc = create_wordcloud(all_tokens)
+                            if wc:
+                                fig = plt.figure(figsize=(10, 5))
+                                plt.imshow(wc, interpolation='bilinear')
+                                plt.axis('off')
+                                st.pyplot(fig)
+                                plt.close(fig)
+                        
+                        # Load and display sentences
+                        cluster_sentences = load_cluster_sentences(
+                            os.path.join(model_base, selected_pair),
+                            selected_layer,
+                            "decoder"
+                        )
+                        
+                        if cluster_sentences and cluster_id in cluster_sentences:
+                            st.write("#### Context Sentences")
+                            context_sentences = cluster_sentences[cluster_id]
+                            if isinstance(context_sentences, dict):
+                                context_sentences = context_sentences.get('sentences', [])
+                            
+                            # Separate sentences into matching and non-matching
+                            matching_sentences = []
+                            other_sentences = []
+                            
+                            for sent_info in context_sentences:
+                                if search_token.lower() in sent_info['sentence'].lower():
+                                    matching_sentences.append(sent_info)
+                                else:
+                                    other_sentences.append(sent_info)
+                            
+                            # Display matching sentences first
+                            if matching_sentences:
+                                st.write("**Sentences with Selected Token:**")
+                                for sent_info in matching_sentences[:10]:  # Limit to first 10 matching sentences
+                                    html = create_sentence_html(sent_info['sentence'].split(), sent_info)
+                                    st.markdown(html, unsafe_allow_html=True)
+                                if len(matching_sentences) > 10:
+                                    st.info(f"Showing 10 of {len(matching_sentences)} matching sentences")
+                            
+                            # Display other sentences with a toggle
+                            if other_sentences:
+                                show_others = st.checkbox(
+                                    f"Show Other Context Sentences ({len(other_sentences)} sentences)", 
+                                    key=f"show_others_decoder_{cluster_id}"
+                                )
+                                if show_others:
+                                    st.write("**Other Context Sentences:**")
+                                    for sent_info in other_sentences[:10]:  # Limit to first 10 other sentences
+                                        html = create_sentence_html(sent_info['sentence'].split(), sent_info)
+                                        st.markdown(html, unsafe_allow_html=True)
+                                    if len(other_sentences) > 10:
+                                        st.info(f"Showing 10 of {len(other_sentences)} other sentences")
+                    except Exception as e:
+                        st.error(f"Error displaying cluster {cluster_id}: {str(e)}")
+                        continue
+        else:
+            st.info(f"No matches found in target clusters for '{search_token}'")
+
 def handle_token_search(model_name, model_base, selected_pair, available_layers):
     """Handle token search functionality"""
     # Initialize session state for token search if not exists
@@ -1678,7 +1877,12 @@ def handle_token_search(model_name, model_base, selected_pair, available_layers)
         st.session_state.token_search_state['evolution_data'] = None
 
     if search_token and search_token.strip():
-        display_search_results(model_name, model_base, selected_pair, available_layers, search_token)
+        # Check if it's a mixed model
+        is_mixed_model = model_name in ["coderosetta_mlm_mixed", "coderosetta_aer_mixed"]
+        if is_mixed_model:
+            display_search_results(model_name, model_base, selected_pair, available_layers, search_token)
+        else:
+            display_search_results_standard(model_name, model_base, selected_pair, available_layers[0], search_token)
         return True
     return False
 
@@ -2891,6 +3095,240 @@ def display_layer_alignment_metrics(model_base: str, selected_pair: str, layers:
     # Display the plot
     st.plotly_chart(fig, use_container_width=True)
 
+def analyze_keyword_evolution_standard(model_base: str, selected_pair: str, available_layers: List[int], keyword: str):
+    """Analyze how a specific keyword evolves across layers in standard (non-mixed) models"""
+    
+    # Data structure to store analysis results for both encoder and decoder
+    evolution_data = {
+        'encoder': {
+            'layers': [],
+            'cluster_counts': [],
+            'token_counts': [],
+            'cluster_details': {}
+        },
+        'decoder': {
+            'layers': [],
+            'cluster_counts': [],
+            'token_counts': [],
+            'cluster_details': {}
+        }
+    }
+    
+    # Analyze each layer
+    for layer in available_layers:
+        # Analyze encoder clusters
+        encoder_results = find_clusters_for_token_standard(
+            model_base,
+            selected_pair,
+            layer,
+            keyword,
+            "encoder"
+        )
+        
+        # Count encoder clusters and token occurrences
+        encoder_clusters = 0
+        encoder_tokens = 0
+        encoder_cluster_info = {}
+        
+        for cluster_id, tokens in encoder_results.items():
+            if keyword in tokens['matching_tokens']:
+                encoder_clusters += 1
+                token_count = sum(1 for t in tokens['all_tokens'] if t == keyword)
+                encoder_tokens += token_count
+                
+                encoder_cluster_info[cluster_id] = {
+                    'token_count': token_count,
+                    'cluster_size': len(tokens['all_tokens']),
+                    'token_percentage': token_count / len(tokens['all_tokens']) * 100
+                }
+        
+        # Store encoder data
+        evolution_data['encoder']['layers'].append(layer)
+        evolution_data['encoder']['cluster_counts'].append(encoder_clusters)
+        evolution_data['encoder']['token_counts'].append(encoder_tokens)
+        evolution_data['encoder']['cluster_details'][layer] = encoder_cluster_info
+        
+        # Analyze decoder clusters
+        decoder_results = find_clusters_for_token_standard(
+            model_base,
+            selected_pair,
+            layer,
+            keyword,
+            "decoder"
+        )
+        
+        # Count decoder clusters and token occurrences
+        decoder_clusters = 0
+        decoder_tokens = 0
+        decoder_cluster_info = {}
+        
+        for cluster_id, tokens in decoder_results.items():
+            if keyword in tokens['matching_tokens']:
+                decoder_clusters += 1
+                token_count = sum(1 for t in tokens['all_tokens'] if t == keyword)
+                decoder_tokens += token_count
+                
+                decoder_cluster_info[cluster_id] = {
+                    'token_count': token_count,
+                    'cluster_size': len(tokens['all_tokens']),
+                    'token_percentage': token_count / len(tokens['all_tokens']) * 100
+                }
+        
+        # Store decoder data
+        evolution_data['decoder']['layers'].append(layer)
+        evolution_data['decoder']['cluster_counts'].append(decoder_clusters)
+        evolution_data['decoder']['token_counts'].append(decoder_tokens)
+        evolution_data['decoder']['cluster_details'][layer] = decoder_cluster_info
+    
+    return evolution_data
+
+def display_keyword_evolution_standard(evolution_data: dict, keyword: str):
+    """Display visualizations and analysis of keyword evolution for standard models"""
+    st.write(f"### Evolution Analysis for '{keyword}'")
+    
+    # Create tabs for different views
+    tab1, tab2 = st.tabs(["Combined View", "Detailed Analysis"])
+    
+    with tab1:
+        # Create combined evolution graph
+        fig = go.Figure()
+        
+        # Add encoder traces
+        fig.add_trace(go.Scatter(
+            x=evolution_data['encoder']['layers'],
+            y=evolution_data['encoder']['cluster_counts'],
+            name='Source Clusters',
+            mode='lines+markers',
+            line=dict(color='#1f77b4', width=2),
+            marker=dict(size=8)
+        ))
+        
+        fig.add_trace(go.Scatter(
+            x=evolution_data['encoder']['layers'],
+            y=evolution_data['encoder']['token_counts'],
+            name='Source Token Occurrences',
+            mode='lines+markers',
+            line=dict(color='#1f77b4', width=2, dash='dot'),
+            marker=dict(size=8)
+        ))
+        
+        # Add decoder traces
+        fig.add_trace(go.Scatter(
+            x=evolution_data['decoder']['layers'],
+            y=evolution_data['decoder']['cluster_counts'],
+            name='Target Clusters',
+            mode='lines+markers',
+            line=dict(color='#ff7f0e', width=2),
+            marker=dict(size=8)
+        ))
+        
+        fig.add_trace(go.Scatter(
+            x=evolution_data['decoder']['layers'],
+            y=evolution_data['decoder']['token_counts'],
+            name='Target Token Occurrences',
+            mode='lines+markers',
+            line=dict(color='#ff7f0e', width=2, dash='dot'),
+            marker=dict(size=8)
+        ))
+        
+        fig.update_layout(
+            title=f"Evolution of '{keyword}' Across Layers",
+            xaxis_title="Layer",
+            yaxis_title="Count",
+            hovermode='x unified',
+            showlegend=True
+        )
+        
+        st.plotly_chart(fig, use_container_width=True)
+    
+    with tab2:
+        # Create subtabs for encoder and decoder analysis
+        subtab1, subtab2 = st.tabs(["Source (Encoder)", "Target (Decoder)"])
+        
+        with subtab1:
+            st.write("#### Source Distribution")
+            
+            # Create heatmap for encoder clusters
+            heatmap_data = []
+            max_clusters = max(len(details) for details in evolution_data['encoder']['cluster_details'].values())
+            
+            for layer in evolution_data['encoder']['layers']:
+                layer_data = evolution_data['encoder']['cluster_details'][layer]
+                row = []
+                for cluster_id in sorted(layer_data.keys(), key=lambda x: int(x[1:])):
+                    row.append(layer_data[cluster_id]['token_percentage'])
+                # Pad with zeros if needed
+                row.extend([0] * (max_clusters - len(row)))
+                heatmap_data.append(row)
+            
+            fig_encoder = go.Figure(data=go.Heatmap(
+                z=heatmap_data,
+                y=evolution_data['encoder']['layers'],
+                x=[f'Cluster {i+1}' for i in range(max_clusters)],
+                colorscale='Viridis',
+                colorbar=dict(title='Token %')
+            ))
+            
+            fig_encoder.update_layout(
+                title=f"Distribution of '{keyword}' Across Source Clusters and Layers",
+                xaxis_title="Clusters",
+                yaxis_title="Layer",
+                height=400
+            )
+            
+            st.plotly_chart(fig_encoder, use_container_width=True)
+            
+            # Display statistics
+            st.write("**Statistics:**")
+            encoder_stats = pd.DataFrame({
+                'Layer': evolution_data['encoder']['layers'],
+                'Clusters with Token': evolution_data['encoder']['cluster_counts'],
+                'Total Occurrences': evolution_data['encoder']['token_counts']
+            })
+            st.dataframe(encoder_stats)
+        
+        with subtab2:
+            st.write("#### Target Distribution")
+            
+            # Create heatmap for decoder clusters
+            heatmap_data = []
+            max_clusters = max(len(details) for details in evolution_data['decoder']['cluster_details'].values())
+            
+            for layer in evolution_data['decoder']['layers']:
+                layer_data = evolution_data['decoder']['cluster_details'][layer]
+                row = []
+                for cluster_id in sorted(layer_data.keys(), key=lambda x: int(x[1:])):
+                    row.append(layer_data[cluster_id]['token_percentage'])
+                # Pad with zeros if needed
+                row.extend([0] * (max_clusters - len(row)))
+                heatmap_data.append(row)
+            
+            fig_decoder = go.Figure(data=go.Heatmap(
+                z=heatmap_data,
+                y=evolution_data['decoder']['layers'],
+                x=[f'Cluster {i+1}' for i in range(max_clusters)],
+                colorscale='Viridis',
+                colorbar=dict(title='Token %')
+            ))
+            
+            fig_decoder.update_layout(
+                title=f"Distribution of '{keyword}' Across Target Clusters and Layers",
+                xaxis_title="Clusters",
+                yaxis_title="Layer",
+                height=400
+            )
+            
+            st.plotly_chart(fig_decoder, use_container_width=True)
+            
+            # Display statistics
+            st.write("**Statistics:**")
+            decoder_stats = pd.DataFrame({
+                'Layer': evolution_data['decoder']['layers'],
+                'Clusters with Token': evolution_data['decoder']['cluster_counts'],
+                'Total Occurrences': evolution_data['decoder']['token_counts']
+            })
+            st.dataframe(decoder_stats)
+
 def main():
     st.set_page_config(layout="wide", page_title="Code Concept Explorer")
     
@@ -2963,6 +3401,10 @@ def handle_mixed_model_view(model_name, model_base, selected_pair, selected_laye
 
 def handle_standard_model_view(model_name, model_base, selected_pair, selected_layer):
     """Handle view logic for standard models"""
+    # Add token search to sidebar first
+    if handle_token_search(model_name, model_base, selected_pair, [selected_layer]):
+        return
+
     view = st.sidebar.radio(
         "View", 
         ["Individual Clusters", "Aligned Clusters", "Semantic Alignments", "Top Semantic Tags"]
