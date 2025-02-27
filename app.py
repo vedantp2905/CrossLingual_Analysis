@@ -1674,30 +1674,118 @@ def display_search_results_standard(model_name, model_base, selected_pair, selec
     """Display search results for a token in standard (non-mixed) models"""
     st.write(f"### Search Results for '{search_token}'")
     
+    # Initialize state for search results if not exists
+    if 'search_results_state' not in st.session_state:
+        st.session_state.search_results_state = {
+            'encoder_results': {},  # Layer -> {cluster_results}
+            'decoder_results': {},  # Layer -> {cluster_results}
+            'matching_tokens': set(),
+            'last_search': None,
+            'last_selected_token': None
+        }
+    
+    # Check if we need to recompute results
+    if (search_token != st.session_state.search_results_state['last_search']):
+        # Find all matching tokens across all layers
+        all_matching_tokens = set()
+        encoder_results = {}
+        decoder_results = {}
+        
+        for layer in get_available_layers(model_base, selected_pair):
+            # Check encoder clusters
+            layer_encoder_results = find_clusters_for_token_standard(
+                model_base, 
+                selected_pair, 
+                layer, 
+                search_token,
+                "encoder"
+            )
+            encoder_results[layer] = layer_encoder_results
+            for cluster_data in layer_encoder_results.values():
+                all_matching_tokens.update(cluster_data['matching_tokens'])
+            
+            # Check decoder clusters
+            layer_decoder_results = find_clusters_for_token_standard(
+                model_base, 
+                selected_pair, 
+                layer, 
+                search_token,
+                "decoder"
+            )
+            decoder_results[layer] = layer_decoder_results
+            for cluster_data in layer_decoder_results.values():
+                all_matching_tokens.update(cluster_data['matching_tokens'])
+        
+        # Update state
+        st.session_state.search_results_state.update({
+            'encoder_results': encoder_results,
+            'decoder_results': decoder_results,
+            'matching_tokens': sorted(all_matching_tokens),
+            'last_search': search_token,
+            'last_selected_token': None
+        })
+    
+    matching_tokens_list = st.session_state.search_results_state['matching_tokens']
+    
+    if not matching_tokens_list:
+        st.warning("No matching tokens found")
+        return
+    
+    # Display token selection BEFORE creating tabs
+    selected_token = st.selectbox(
+        "Select a specific token to view its clusters:",
+        matching_tokens_list,
+        key="token_selector_standard"
+    )
+    
+    # Update evolution data if token selection changes
+    if selected_token != st.session_state.search_results_state['last_selected_token']:
+        st.session_state.search_results_state['last_selected_token'] = selected_token
+        st.session_state.search_results_state['evolution_data'] = analyze_keyword_evolution_standard(
+            model_base,
+            selected_pair,
+            get_available_layers(model_base, selected_pair),
+            selected_token
+        )
+    
     # Create tabs for different views
     tab1, tab2, tab3 = st.tabs(["Evolution Analysis", "Source (Encoder)", "Target (Decoder)"])
     
     with tab1:
-        # Analyze evolution across all layers
-        evolution_data = analyze_keyword_evolution_standard(
-            model_base,
-            selected_pair,
-            list(range(12)),  # Assuming 12 layers, adjust as needed
-            search_token
-        )
-        display_keyword_evolution_standard(evolution_data, search_token)
+        # Use cached evolution data
+        evolution_data = st.session_state.search_results_state['evolution_data']
+        display_keyword_evolution_standard(evolution_data, selected_token)
     
     with tab2:
-        # Display encoder results
-        encoder_results = find_clusters_for_token_standard(model_base, selected_pair, selected_layer, search_token, "encoder")
-        if encoder_results:
-            st.write(f"#### Source Clusters containing '{search_token}'")
-            for cluster_id, tokens in encoder_results.items():
-                with st.expander(f"Cluster {cluster_id}"):
-                    try:
-                        # Display matching tokens
+        st.write(f"#### Source Clusters containing '{selected_token}'")
+        
+        for layer in get_available_layers(model_base, selected_pair):
+            # Use cached results
+            encoder_results = st.session_state.search_results_state['encoder_results'].get(layer, {})
+            
+            # Filter results to only include clusters containing the exact selected token
+            filtered_results = {
+                cluster_id: tokens for cluster_id, tokens in encoder_results.items()
+                if selected_token in tokens['matching_tokens']
+            }
+            
+            if filtered_results:
+                with st.expander(f"Layer {layer}"):
+                    # Cluster selection for this layer
+                    selected_cluster = st.selectbox(
+                        "Select Cluster",
+                        sorted(filtered_results.keys(), key=lambda x: int(x.lstrip('c'))),
+                        format_func=lambda x: f"Cluster {x.lstrip('c')}",
+                        key=f"source_cluster_select_layer_{layer}"
+                    )
+                    
+                    if selected_cluster:
+                        tokens = filtered_results[selected_cluster]
+                        # Display matching tokens and unique tokens
                         st.write("**Matching Tokens:**")
                         st.write(", ".join(sorted(tokens['matching_tokens'])))
+                        st.write("**All Unique Tokens in Cluster:**")
+                        st.write(", ".join(sorted(tokens['all_tokens'])))
                         
                         # Create word cloud for all tokens in cluster
                         all_tokens = list(tokens['all_tokens'])
@@ -1711,16 +1799,25 @@ def display_search_results_standard(model_name, model_base, selected_pair, selec
                                 st.pyplot(fig)
                                 plt.close(fig)
                         
-                        # Load and display sentences
-                        cluster_sentences = load_cluster_sentences(
-                            os.path.join(model_base, selected_pair),
-                            selected_layer,
+                        # Display Gemini labels
+                        display_individual_cluster_labels(
+                            selected_cluster,
+                            model_base,
+                            selected_pair,
+                            layer,
                             "encoder"
                         )
                         
-                        if cluster_sentences and cluster_id in cluster_sentences:
+                        # Load and display sentences
+                        cluster_sentences = load_cluster_sentences(
+                            os.path.join(model_base, selected_pair),
+                            layer,
+                            "encoder"
+                        )
+                        
+                        if cluster_sentences and selected_cluster in cluster_sentences:
                             st.write("#### Context Sentences")
-                            context_sentences = cluster_sentences[cluster_id]
+                            context_sentences = cluster_sentences[selected_cluster]
                             if isinstance(context_sentences, dict):
                                 context_sentences = context_sentences.get('sentences', [])
                             
@@ -1729,7 +1826,7 @@ def display_search_results_standard(model_name, model_base, selected_pair, selec
                             other_sentences = []
                             
                             for sent_info in context_sentences:
-                                if search_token.lower() in sent_info['sentence'].lower():
+                                if selected_token.lower() in sent_info['sentence'].lower():
                                     matching_sentences.append(sent_info)
                                 else:
                                     other_sentences.append(sent_info)
@@ -1737,39 +1834,42 @@ def display_search_results_standard(model_name, model_base, selected_pair, selec
                             # Display matching sentences first
                             if matching_sentences:
                                 st.write("**Sentences with Selected Token:**")
-                                for sent_info in matching_sentences[:10]:  # Limit to first 10 matching sentences
+                                for sent_info in matching_sentences:
                                     html = create_sentence_html(sent_info['sentence'].split(), sent_info)
                                     st.markdown(html, unsafe_allow_html=True)
-                                if len(matching_sentences) > 10:
-                                    st.info(f"Showing 10 of {len(matching_sentences)} matching sentences")
                             
-                            # Display other sentences with a toggle
+                            # Display other sentences without a toggle
                             if other_sentences:
-                                show_others = st.checkbox(
-                                    f"Show Other Context Sentences ({len(other_sentences)} sentences)", 
-                                    key=f"show_others_encoder_{cluster_id}"
-                                )
-                                if show_others:
-                                    st.write("**Other Context Sentences:**")
-                                    for sent_info in other_sentences[:10]:  # Limit to first 10 other sentences
-                                        html = create_sentence_html(sent_info['sentence'].split(), sent_info)
-                                        st.markdown(html, unsafe_allow_html=True)
-                                    if len(other_sentences) > 10:
-                                        st.info(f"Showing 10 of {len(other_sentences)} other sentences")
-                    except Exception as e:
-                        st.error(f"Error displaying cluster {cluster_id}: {str(e)}")
-                        continue
-        else:
-            st.info(f"No matches found in source clusters for '{search_token}'")
+                                st.write("**Other Context Sentences:**")
+                                for sent_info in other_sentences:
+                                    html = create_sentence_html(sent_info['sentence'].split(), sent_info)
+                                    st.markdown(html, unsafe_allow_html=True)
     
     with tab3:
-        # Display decoder results
-        decoder_results = find_clusters_for_token_standard(model_base, selected_pair, selected_layer, search_token, "decoder")
-        if decoder_results:
-            st.write(f"#### Target Clusters containing '{search_token}'")
-            for cluster_id, tokens in decoder_results.items():
-                with st.expander(f"Cluster {cluster_id}"):
-                    try:
+        st.write(f"#### Target Clusters containing '{selected_token}'")
+        
+        for layer in get_available_layers(model_base, selected_pair):
+            # Use cached results
+            decoder_results = st.session_state.search_results_state['decoder_results'].get(layer, {})
+            
+            # Filter results to only include clusters containing the exact selected token
+            filtered_results = {
+                cluster_id: tokens for cluster_id, tokens in decoder_results.items()
+                if selected_token in tokens['matching_tokens']
+            }
+            
+            if filtered_results:
+                with st.expander(f"Layer {layer}"):
+                    # Cluster selection for this layer
+                    selected_cluster = st.selectbox(
+                        "Select Cluster",
+                        sorted(filtered_results.keys(), key=lambda x: int(x.lstrip('c'))),
+                        format_func=lambda x: f"Cluster {x.lstrip('c')}",
+                        key=f"target_cluster_select_layer_{layer}"
+                    )
+                    
+                    if selected_cluster:
+                        tokens = filtered_results[selected_cluster]
                         # Display matching tokens
                         st.write("**Matching Tokens:**")
                         st.write(", ".join(sorted(tokens['matching_tokens'])))
@@ -1786,16 +1886,25 @@ def display_search_results_standard(model_name, model_base, selected_pair, selec
                                 st.pyplot(fig)
                                 plt.close(fig)
                         
-                        # Load and display sentences
-                        cluster_sentences = load_cluster_sentences(
-                            os.path.join(model_base, selected_pair),
-                            selected_layer,
+                        # Display Gemini labels
+                        display_individual_cluster_labels(
+                            selected_cluster,
+                            model_base,
+                            selected_pair,
+                            layer,
                             "decoder"
                         )
                         
-                        if cluster_sentences and cluster_id in cluster_sentences:
+                        # Load and display sentences
+                        cluster_sentences = load_cluster_sentences(
+                            os.path.join(model_base, selected_pair),
+                            layer,
+                            "decoder"
+                        )
+                        
+                        if cluster_sentences and selected_cluster in cluster_sentences:
                             st.write("#### Context Sentences")
-                            context_sentences = cluster_sentences[cluster_id]
+                            context_sentences = cluster_sentences[selected_cluster]
                             if isinstance(context_sentences, dict):
                                 context_sentences = context_sentences.get('sentences', [])
                             
@@ -1804,7 +1913,7 @@ def display_search_results_standard(model_name, model_base, selected_pair, selec
                             other_sentences = []
                             
                             for sent_info in context_sentences:
-                                if search_token.lower() in sent_info['sentence'].lower():
+                                if selected_token.lower() in sent_info['sentence'].lower():
                                     matching_sentences.append(sent_info)
                                 else:
                                     other_sentences.append(sent_info)
@@ -1812,30 +1921,16 @@ def display_search_results_standard(model_name, model_base, selected_pair, selec
                             # Display matching sentences first
                             if matching_sentences:
                                 st.write("**Sentences with Selected Token:**")
-                                for sent_info in matching_sentences[:10]:  # Limit to first 10 matching sentences
+                                for sent_info in matching_sentences:
                                     html = create_sentence_html(sent_info['sentence'].split(), sent_info)
                                     st.markdown(html, unsafe_allow_html=True)
-                                if len(matching_sentences) > 10:
-                                    st.info(f"Showing 10 of {len(matching_sentences)} matching sentences")
                             
-                            # Display other sentences with a toggle
+                            # Display other sentences without a toggle
                             if other_sentences:
-                                show_others = st.checkbox(
-                                    f"Show Other Context Sentences ({len(other_sentences)} sentences)", 
-                                    key=f"show_others_decoder_{cluster_id}"
-                                )
-                                if show_others:
-                                    st.write("**Other Context Sentences:**")
-                                    for sent_info in other_sentences[:10]:  # Limit to first 10 other sentences
-                                        html = create_sentence_html(sent_info['sentence'].split(), sent_info)
-                                        st.markdown(html, unsafe_allow_html=True)
-                                    if len(other_sentences) > 10:
-                                        st.info(f"Showing 10 of {len(other_sentences)} other sentences")
-                    except Exception as e:
-                        st.error(f"Error displaying cluster {cluster_id}: {str(e)}")
-                        continue
-        else:
-            st.info(f"No matches found in target clusters for '{search_token}'")
+                                st.write("**Other Context Sentences:**")
+                                for sent_info in other_sentences:
+                                    html = create_sentence_html(sent_info['sentence'].split(), sent_info)
+                                    st.markdown(html, unsafe_allow_html=True)
 
 def handle_token_search(model_name, model_base, selected_pair, available_layers):
     """Handle token search functionality"""
@@ -2104,22 +2199,24 @@ def display_standard_clusters(model_name, model_base, selected_pair, selected_la
     # Get list of clusters
     clusters = sorted(sentences.keys(), key=lambda x: int(x[1:]))  # Sort by cluster number
     
-    # Cluster selection
-    selected_cluster = st.sidebar.selectbox(
-        "Select Cluster",
+    # Move cluster selection to main view
+    if component == "encoder":
+        component_display = "Source"
+    else:
+        component_display = "Target"
+        
+    st.write(f"### {component_display} Cluster Analysis")
+    
+    # Cluster selection in main view
+    selected_cluster = st.selectbox(
+        f"Select {component_display} Cluster",
         clusters,
         format_func=lambda x: f"Cluster {x[1:]}",  # Remove 'c' prefix for display
         index=min(st.session_state.current_cluster_index, len(clusters)-1)
     )
     
     if selected_cluster:
-        # Display cluster information
-        if component == "encoder":
-            component_display = "Source"
-        else:
-            component_display = "Target"
-        
-        st.write(f"### {component_display} Cluster {selected_cluster[1:]}")
+        st.write(f"#### Details for {component_display} Cluster {selected_cluster[1:]}")
         
         # Create word cloud from sentences in this cluster
         cluster_sentences = sentences[selected_cluster]
@@ -2131,11 +2228,21 @@ def display_standard_clusters(model_name, model_base, selected_pair, selected_la
             st.write("#### Word Cloud")
             wc = create_wordcloud(list(tokens))
             if wc:
-                fig = plt.figure(figsize=(10, 5))
+                # Reduced figure size from (10, 5) to (8, 4)
+                fig = plt.figure(figsize=(8, 4))
                 plt.imshow(wc, interpolation='bilinear')
                 plt.axis('off')
                 st.pyplot(fig)
                 plt.close(fig)
+        
+        # Add Gemini labels display after word cloud
+        display_individual_cluster_labels(
+            selected_cluster,
+            model_base,
+            selected_pair,
+            selected_layer,
+            component
+        )
         
         # Display context sentences
         st.write("#### Context Sentences")
@@ -2171,17 +2278,19 @@ def display_mixed_clusters(model_name, model_base, selected_pair, selected_layer
     # Get list of clusters
     clusters = sorted(sentences.keys(), key=lambda x: int(x[1:]))  # Sort by cluster number
     
-    # Cluster selection
-    selected_cluster = st.sidebar.selectbox(
-        "Select Cluster",
+    # Move cluster selection to main view
+    st.write("### Mixed Cluster Analysis")
+    
+    # Cluster selection in main view
+    selected_cluster = st.selectbox(
+        "Select Mixed Cluster",
         clusters,
         format_func=lambda x: f"Cluster {x[1:]}",  # Remove 'c' prefix for display
         index=min(st.session_state.current_cluster_index, len(clusters)-1)
     )
     
     if selected_cluster:
-        # Display cluster information
-        st.write(f"### Cluster {selected_cluster[1:]}")
+        st.write(f"#### Details for Cluster {selected_cluster[1:]}")
         
         # Get cluster sentences and tokens
         cluster_data = sentences[selected_cluster]
@@ -2197,68 +2306,26 @@ def display_mixed_clusters(model_name, model_base, selected_pair, selected_layer
             st.write("#### Word Cloud")
             wc = create_wordcloud(unique_tokens)
             if wc:
-                fig = plt.figure(figsize=(10, 5))
+                # Reduced figure size from (10, 5) to (8, 4)
+                fig = plt.figure(figsize=(8, 4))
                 plt.imshow(wc, interpolation='bilinear')
                 plt.axis('off')
                 st.pyplot(fig)
                 plt.close(fig)
                 
-        # Display language statistics
-        stats = get_language_statistics(cluster_sentences, os.path.join(model_base, selected_pair))
-        if stats:
-            st.write("#### Language Distribution")
-            total = stats["total_tokens"]
-            
-            # Create metrics for token counts
-            col1, col2, col3, col4 = st.columns(4)
-            with col1:
-                st.metric("C++ Tokens", f"{stats['cpp_count']} ({(stats['cpp_count']/total)*100:.1f}%)")
-                st.metric("Unique C++ Tokens", stats['unique_cpp_tokens'])
-            with col2:
-                st.metric("CUDA Tokens", f"{stats['cuda_count']} ({(stats['cuda_count']/total)*100:.1f}%)")
-                st.metric("Unique CUDA Tokens", stats['unique_cuda_tokens'])
-            with col3:
-                st.metric("Mixed Tokens", f"{stats['mixed_count']} ({(stats['mixed_count']/total)*100:.1f}%)")
-                st.metric("Unique Mixed Tokens", stats['unique_mixed_tokens'])
-            with col4:
-                st.metric("Unknown", f"{stats['unknown_count']} ({(stats['unknown_count']/total)*100:.1f}%)")
-                st.metric("Unique Unknown Tokens", stats['unique_unknown_tokens'])
+        # Add mixed model Gemini labels display after word cloud
+        display_mixed_cluster_labels(
+            selected_cluster,
+            model_base,
+            selected_pair,
+            selected_layer
+        )
         
         # Display context sentences
         st.write("#### Context Sentences")
-        tab1, tab2, tab3, tab4 = st.tabs(["C++", "CUDA", "Mixed", "Unknown"])
-        
-        with tab1:
-            if stats and stats["cpp_sentences"]:
-                for token, sentence in stats["cpp_sentences"]:
-                    html = create_sentence_html(sentence.split(), {"sentence": sentence, "token": token})
-                    st.markdown(html, unsafe_allow_html=True)
-            else:
-                st.write("No C++ sentences found")
-                
-        with tab2:
-            if stats and stats["cuda_sentences"]:
-                for token, sentence in stats["cuda_sentences"]:
-                    html = create_sentence_html(sentence.split(), {"sentence": sentence, "token": token})
-                    st.markdown(html, unsafe_allow_html=True)
-            else:
-                st.write("No CUDA sentences found")
-                
-        with tab3:
-            if stats and stats["mixed_sentences"]:
-                for token, sentence in stats["mixed_sentences"]:
-                    html = create_sentence_html(sentence.split(), {"sentence": sentence, "token": token})
-                    st.markdown(html, unsafe_allow_html=True)
-            else:
-                st.write("No mixed sentences found")
-                
-        with tab4:
-            if stats and stats["unknown_sentences"]:
-                for token, sentence in stats["unknown_sentences"]:
-                    html = create_sentence_html(sentence.split(), {"sentence": sentence, "token": token})
-                    st.markdown(html, unsafe_allow_html=True)
-            else:
-                st.write("No unknown sentences found")
+        for sent_info in cluster_sentences:
+            html = create_sentence_html(sent_info["sentence"].split(), sent_info)
+            st.markdown(html, unsafe_allow_html=True)
 
 def analyze_keyword_evolution(model_base: str, selected_pair: str, available_layers: List[int], keyword: str):
     """Analyze and visualize how a specific keyword evolves across layers"""
@@ -3328,6 +3395,88 @@ def display_keyword_evolution_standard(evolution_data: dict, keyword: str):
                 'Total Occurrences': evolution_data['decoder']['token_counts']
             })
             st.dataframe(decoder_stats)
+
+def display_individual_cluster_labels(cluster_id: str, model_base: str, selected_pair: str, layer: int, component: str):
+    """Display Gemini labels for an individual cluster"""
+    
+    # Add debug prints
+    labels_file = Path(model_base) / selected_pair / f"layer{layer}" / f"{component}_gemini_labels.json"
+    
+    if not labels_file.exists():
+        st.warning("Gemini labels not found for this cluster")
+        return
+        
+    with open(labels_file) as f:
+        labels_data = json.load(f)
+    
+    # Find labels for this cluster
+    cluster_labels = next((item[cluster_id] for item in labels_data if cluster_id in item), None)
+    
+    if cluster_labels:
+        # Remove the expander and just show the content directly
+        st.write("### Gemini Analysis")
+        st.write("**Syntactic Label:**", cluster_labels.get("Syntactic Label", "N/A"))
+        
+        st.write("**Semantic Tags:**")
+        for tag in cluster_labels.get("Semantic Tags", []):
+            st.write(f"- {tag}")
+            
+        st.write("**Description:**", cluster_labels.get("Description", "N/A"))
+    else:
+        print(f"No labels found for cluster {cluster_id}")
+        st.warning("No Gemini labels found for this cluster")
+
+def display_cluster_details(cluster_data, cluster_id, model_base, selected_pair, layer, component):
+    """Display detailed information for a single cluster"""
+    
+    # Display existing cluster information
+    st.write(f"### Cluster {cluster_id}")
+    
+    # Display tokens
+    st.write("**Unique Tokens:**")
+    st.write(", ".join(cluster_data["Unique tokens"]))
+    
+    # Add Gemini labels
+    display_individual_cluster_labels(
+        f"c{cluster_id}", 
+        model_base,
+        selected_pair,
+        layer,
+        component
+    )
+    
+    # Display context sentences if available
+    if "Context Sentences" in cluster_data:
+        st.write("**Context Sentences:**")
+        for sentence in cluster_data["Context Sentences"]:
+            st.write(f"- {sentence}")
+
+def display_mixed_cluster_labels(cluster_id: str, model_base: str, selected_pair: str, layer: int):
+    """Display Gemini labels for mixed model clusters"""
+    
+    labels_file = Path(model_base) / selected_pair / f"layer{layer}" / "mixed_gemini_labels.json"
+    
+    if not labels_file.exists():
+        st.warning("Mixed model Gemini labels not found for this cluster")
+        return
+        
+    with open(labels_file) as f:
+        labels_data = json.load(f)
+    
+    cluster_labels = next((item[cluster_id] for item in labels_data if cluster_id in item), None)
+    
+    if cluster_labels:
+        with st.expander("Cross-Language Analysis", expanded=True):
+            st.write("**Lexical Patterns:**", cluster_labels.get("lexical_patterns", "N/A"))
+            
+            st.write("**Semantic Tags:**")
+            for tag in cluster_labels.get("semantic_tags", []):
+                st.write(f"- {tag}")
+            
+            st.write("**Functional Equivalence:**", cluster_labels.get("functional_equivalence", "N/A"))
+            st.write("**Semantic Description:**", cluster_labels.get("semantic_description", "N/A"))
+    else:
+        st.warning("No mixed model labels found for this cluster")
 
 def main():
     st.set_page_config(layout="wide", page_title="Code Concept Explorer")
