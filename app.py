@@ -3488,7 +3488,7 @@ def main():
     
     model_name = st.sidebar.selectbox(
         "Select Model",
-        ["t5", "coderosetta_ft", "coderosetta_daebt", "coderosetta_aer", "coderosetta_mlm", "coderosetta_mlm_mixed", "coderosetta_aer_mixed"],
+        ["t5", "coderosetta_ft", "coderosetta_daebt","coderosetta_daebt_phrase", "coderosetta_aer", "coderosetta_mlm", "coderosetta_mlm_mixed", "coderosetta_aer_mixed"],
         key="model_select"
     )
     model_base = os.path.join(model_name)
