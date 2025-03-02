@@ -1650,6 +1650,10 @@ def find_clusters_for_token_standard(model_base: str, selected_pair: str, select
     # Dictionary to store clusters containing the token
     token_clusters = {}
     
+    # Check if file exists (especially important for coconet_codebert which doesn't have decoder files)
+    if not os.path.exists(cluster_file):
+        return token_clusters
+    
     with open(cluster_file, 'r', encoding='utf-8') as f:
         for line in f:
             parts = line.strip().split('|||')
@@ -1909,10 +1913,17 @@ def handle_standard_model_view(model_name, model_base, selected_pair, selected_l
     # Get all available layers for the model
     available_layers = get_available_layers(model_base, selected_pair)
 
-    view = st.sidebar.radio(
-        "View", 
-        ["Search & Analysis", "Individual Clusters", "Aligned Clusters", "Semantic Alignments", "Top Semantic Tags", "Token Pairs"]
-    )
+    if model_name == "coconet_codebert" or model_name == "coconet_deepseek":
+        view = st.sidebar.radio(
+            "View", 
+            ["Search & Analysis", "Individual Clusters", "Token Pairs"]
+        )
+    
+    else:
+        view = st.sidebar.radio(
+            "View", 
+            ["Search & Analysis", "Individual Clusters", "Aligned Clusters", "Semantic Alignments", "Top Semantic Tags", "Token Pairs"]
+        )
 
     if view == "Search & Analysis":
         # Create tabs for different search types
@@ -2067,15 +2078,23 @@ def handle_standard_model_view(model_name, model_base, selected_pair, selected_l
     elif view == "Token Pairs":
         display_token_pair_analysis(model_name, model_base, selected_pair, available_layers)
     else:  # Individual Clusters
-        component = st.sidebar.radio("Component", ["source", "target"])
-        if component == "source":
-            component = "encoder"
+        if model_name != "coconet_codebert" and model_name != "coconet_deepseek":
+            component = st.sidebar.radio("Component", ["source", "target"])
+            if component == "source":
+                component = "encoder"
+            else:
+                component = "decoder"
         else:
-            component = "decoder"
+            component = "encoder"
         display_standard_clusters(model_name, model_base, selected_pair, selected_layer, component)
 
 def display_token_clusters(model_base, selected_pair, layer, token, component):
     """Helper function to display clusters for a token"""
+    # For coconet_codebert, skip decoder component
+    if "coconet_codebert" in model_base or "coconet_deepseek" in model_base and component == "decoder":
+        st.info("CodeBERT model doesn't have target (decoder) clusters")
+        return
+        
     clusters = find_clusters_for_token_standard(
         model_base,
         selected_pair,
@@ -2099,6 +2118,11 @@ def display_token_clusters(model_base, selected_pair, layer, token, component):
 
 def display_token_pair_clusters(model_base, selected_pair, layer, token1, token2, component):
     """Helper function to display clusters for a token pair"""
+    # For coconet_codebert, skip decoder component
+    if "coconet_codebert" in model_base or "coconet_deepseek" in model_base and component == "decoder":
+        st.info("CodeBERT model doesn't have target (decoder) clusters")
+        return
+        
     clusters = find_clusters_with_multiple_tokens(
         model_base,
         selected_pair,
@@ -2148,36 +2172,58 @@ def display_search_results(model_name, model_base, selected_pair, available_laye
         
         # If second token provided, search for co-occurrences
         if search_token2 and search_token2.strip():
-            for component in ['encoder', 'decoder']:
+            # For encoder component
+            results = find_clusters_with_multiple_tokens(
+                model_base,
+                selected_pair,
+                available_layers[0],
+                [search_token, search_token2],
+                "encoder"
+            )
+            encoder_results = results
+            
+            for cluster_data in results.values():
+                all_matching_tokens.update(cluster_data['matching_tokens'][search_token])
+                all_matching_tokens2.update(cluster_data['matching_tokens'][search_token2])
+            
+            # For decoder component (skip for coconet_codebert)
+            if not "coconet_codebert" in model_base and not "coconet_deepseek" in model_base    :
                 results = find_clusters_with_multiple_tokens(
                     model_base,
                     selected_pair,
                     available_layers[0],
                     [search_token, search_token2],
-                    component
+                    "decoder"
                 )
-                if component == 'encoder':
-                    encoder_results = results
-                else:
-                    decoder_results = results
+                decoder_results = results
                 
                 for cluster_data in results.values():
                     all_matching_tokens.update(cluster_data['matching_tokens'][search_token])
                     all_matching_tokens2.update(cluster_data['matching_tokens'][search_token2])
         else:
-            # Single token search
-            for component in ['encoder', 'decoder']:
+            # Single token search for encoder
+            results = find_clusters_for_token_standard(
+                model_base, 
+                selected_pair, 
+                available_layers[0], 
+                search_token,
+                "encoder"
+            )
+            encoder_results = results
+                
+            for cluster_data in results.values():
+                all_matching_tokens.update(cluster_data['matching_tokens'])
+            
+            # Single token search for decoder (skip for coconet_codebert)
+            if not "coconet_codebert" in model_base and not "coconet_deepseek" in model_base:
                 results = find_clusters_for_token_standard(
                     model_base, 
                     selected_pair, 
                     available_layers[0], 
                     search_token,
-                    component
+                    "decoder"
                 )
-                if component == 'encoder':
-                    encoder_results = results
-                else:
-                    decoder_results = results
+                decoder_results = results
                     
                 for cluster_data in results.values():
                     all_matching_tokens.update(cluster_data['matching_tokens'])
@@ -2193,7 +2239,10 @@ def display_search_results(model_name, model_base, selected_pair, available_laye
         })
     
     # Create tabs for evolution, encoder, and decoder results
-    tab1, tab2, tab3 = st.tabs(["Evolution Analysis", "Source (Encoder)", "Target (Decoder)"])
+    if "coconet_codebert" in model_base or "coconet_deepseek" in model_base:
+        tab1, tab2 = st.tabs(["Evolution Analysis", "Source (Encoder)"])
+    else:
+        tab1, tab2, tab3 = st.tabs(["Evolution Analysis", "Source (Encoder)", "Target (Decoder)"])
     
     with tab1:
         st.write("### Token Evolution Analysis")
@@ -2262,50 +2311,51 @@ def display_search_results(model_name, model_base, selected_pair, available_laye
         else:
             st.info("No matching source clusters found")
     
-    with tab3:
-        st.write("### Target Clusters")
-        decoder_results = st.session_state.search_results_state['decoder_results']
-        
-        if decoder_results:
-            for cluster_id, cluster_data in decoder_results.items():
-                with st.expander(f"Cluster {cluster_id}"):
-                    # Display token information
-                    st.write("**Matching Tokens:**")
-                    if search_token2:
-                        st.write(f"Token 1 matches: {', '.join(cluster_data['matching_tokens'][search_token])}")
-                        st.write(f"Token 2 matches: {', '.join(cluster_data['matching_tokens'][search_token2])}")
-                    else:
-                        if isinstance(cluster_data['matching_tokens'], dict):
-                            st.write(f"Matches: {', '.join(cluster_data['matching_tokens'][search_token])}")
+    if not "coconet_codebert"  in model_base and not "coconet_deepseek" in model_base:
+        with tab3:
+            st.write("### Target Clusters")
+            decoder_results = st.session_state.search_results_state['decoder_results']
+            
+            if decoder_results:
+                for cluster_id, cluster_data in decoder_results.items():
+                    with st.expander(f"Cluster {cluster_id}"):
+                        # Display token information
+                        st.write("**Matching Tokens:**")
+                        if search_token2:
+                            st.write(f"Token 1 matches: {', '.join(cluster_data['matching_tokens'][search_token])}")
+                            st.write(f"Token 2 matches: {', '.join(cluster_data['matching_tokens'][search_token2])}")
                         else:
-                            st.write(f"Matches: {', '.join(cluster_data['matching_tokens'])}")
-                    
-                    st.write("**All Tokens in Cluster:**")
-                    st.write(", ".join(sorted(cluster_data['all_tokens'])))
-                    
-                    # Load and display cluster sentences
-                    sentences = load_cluster_sentences(
-                        os.path.join(model_base, selected_pair),
-                        available_layers[0],
-                        "decoder"
-                    )
-                    
-                    if sentences and cluster_id in sentences:
-                        st.write("**Context Sentences:**")
-                        for sent_info in sentences[cluster_id]:
-                            html = create_sentence_html(sent_info["sentence"].split(), sent_info)
-                            st.markdown(html, unsafe_allow_html=True)
-                    
-                    # Display Gemini labels
-                    display_individual_cluster_labels(
-                        cluster_id,
-                        model_base,
-                        selected_pair,
-                        available_layers[0],
-                        "decoder"
-                    )
-        else:
-            st.info("No matching target clusters found")
+                            if isinstance(cluster_data['matching_tokens'], dict):
+                                st.write(f"Matches: {', '.join(cluster_data['matching_tokens'][search_token])}")
+                            else:
+                                st.write(f"Matches: {', '.join(cluster_data['matching_tokens'])}")
+                        
+                        st.write("**All Tokens in Cluster:**")
+                        st.write(", ".join(sorted(cluster_data['all_tokens'])))
+                        
+                        # Load and display cluster sentences
+                        sentences = load_cluster_sentences(
+                            os.path.join(model_base, selected_pair),
+                            available_layers[0],
+                            "decoder"
+                        )
+                        
+                        if sentences and cluster_id in sentences:
+                            st.write("**Context Sentences:**")
+                            for sent_info in sentences[cluster_id]:
+                                html = create_sentence_html(sent_info["sentence"].split(), sent_info)
+                                st.markdown(html, unsafe_allow_html=True)
+                        
+                        # Display Gemini labels
+                        display_individual_cluster_labels(
+                            cluster_id,
+                            model_base,
+                            selected_pair,
+                            available_layers[0],
+                            "decoder"
+                        )
+            else:
+                st.info("No matching target clusters found")
 
 def verify_dataset_balance(model_dir: str) -> dict:
     """Verify the balance of C++ and CUDA sentences in the shuffled dataset"""
@@ -2346,7 +2396,7 @@ def display_standard_clusters(model_name, model_base, selected_pair, selected_la
     """Display clusters for standard (non-mixed) models"""
     # Load cluster data
     cluster_file = os.path.join(
-        model_base,
+        model_base, 
         selected_pair,
         f"layer{selected_layer}",
         f"{component}-clusters-kmeans-500.txt"
@@ -3661,6 +3711,11 @@ def find_clusters_with_multiple_tokens(model_base: str, selected_pair: str, sele
     # Dictionary to store clusters containing the tokens
     token_clusters = {}
     
+    # Check if file exists before trying to open it
+    if not os.path.exists(cluster_file):
+        print(f"Warning: Cluster file not found: {cluster_file}")
+        return token_clusters  # Return empty dictionary
+    
     with open(cluster_file, 'r', encoding='utf-8') as f:
         for line in f:
             parts = line.strip().split('|||')
@@ -3789,14 +3844,15 @@ def display_token_evolution(evolution_data: dict, tokens: List[str]):
     fig = go.Figure()
 
     # Add combined occurrences
-    fig.add_trace(go.Scatter(
-        x=evolution_data['layers'],
-        y=evolution_data['combined_counts'],
-        name='Co-occurring',
-        mode='lines+markers',
-        line=dict(color='#2ecc71', width=2),
-        marker=dict(size=8)
-    ))
+    if len(tokens) > 1 and evolution_data['combined_counts']:
+        fig.add_trace(go.Scatter(
+            x=evolution_data['layers'],
+            y=evolution_data['combined_counts'],
+            name='Co-occurring',
+            mode='lines+markers',
+            line=dict(color='#2ecc71', width=2),
+            marker=dict(size=8)
+        ))
 
     # Add individual token traces
     colors = ['#3498db', '#e74c3c']  # Blue and Red for individual tokens
@@ -3811,7 +3867,7 @@ def display_token_evolution(evolution_data: dict, tokens: List[str]):
             marker=dict(size=8)
         ))
 
-        if len(tokens) > 1:
+        if len(tokens) > 1 and evolution_data['combined_counts']:
             # Calculate exclusive occurrences (total minus co-occurrences)
             exclusive_counts = [
                 total - combined 
@@ -3929,6 +3985,17 @@ def display_token_pair_analysis(model_name, model_base, selected_pair, available
     # Determine if we're using a mixed model
     is_mixed = os.path.exists(os.path.join(model_base, selected_pair, f"layer{available_layers[0]}", "clusters-kmeans-500.txt"))
     
+    # Determine available components
+    available_components = []
+    if is_mixed:
+        available_components = ["mixed"]
+    else:
+        # Check which components exist
+        if os.path.exists(os.path.join(model_base, selected_pair, f"layer{available_layers[0]}", "encoder-clusters-kmeans-500.txt")):
+            available_components.append("encoder")
+        if os.path.exists(os.path.join(model_base, selected_pair, f"layer{available_layers[0]}", "decoder-clusters-kmeans-500.txt")):
+            available_components.append("decoder")
+    
     for tab, (category, data) in zip(tabs, token_pairs.items()):
         with tab:
             st.write(f"### {category}")
@@ -3959,12 +4026,7 @@ def display_token_pair_analysis(model_name, model_base, selected_pair, available
                     # Add cluster analysis using existing functionality
                     st.write("#### Cluster Analysis")
                     
-                    if is_mixed:
-                        components = ["mixed"]
-                    else:
-                        components = ["encoder", "decoder"]
-                    
-                    for component in components:
+                    for component in available_components:
                         st.write(f"**{component.title()} Component Analysis**")
                         
                         col1, col2 = st.columns(2)
@@ -4239,124 +4301,119 @@ def display_semantic_tag_evolution(evolution_data: dict, search_tag: str):
                 else:
                     st.write("No clusters found in this layer")
 
-def handle_semantic_tag_search(model_name, model_base, selected_pair, available_layers, selected_tag=None):
+def handle_semantic_tag_search(model_name, model_base, selected_pair, available_layers):
     """Handle semantic tag search functionality"""
+    st.write("### Semantic Tag Search")
     
     # Initialize session state for semantic search if not exists
     if 'semantic_search_state' not in st.session_state:
         st.session_state.semantic_search_state = {
-            'search_tag': selected_tag or '',
-            'encoder_results': {},
-            'decoder_results': {},
-            'last_search': None,
             'matching_tags': [],
-            'evolution_data': None
+            'last_search': None,
+            'last_analyzed_tag': None,
+            'encoder_clusters': {},
+            'decoder_clusters': {}
         }
     
-    # Single search interface at the top
-    col1, col2 = st.columns([3, 1])
+    # Search box for semantic tags
+    search_term = st.text_input(
+        "Search for semantic tags:",
+        help="Type to search for semantic tags (e.g., 'loop', 'condition', 'memory')"
+    )
     
-    with col1:
-        search_tag = st.text_input(
-            "Search for semantic tags:",
-            value=st.session_state.semantic_search_state['search_tag'],
-            help="Enter a semantic tag to search for (e.g., 'loop', 'conditional', 'memory')"
-        )
-        search_button = st.button("Search for Tag", type="primary")
-    
-    # Perform search when button clicked or search term changes
-    if search_tag and (search_button or search_tag != st.session_state.semantic_search_state['last_search']):
-        if not search_tag.strip():
-            st.warning("Please enter a search term")
-            return
+    if search_term and search_term != st.session_state.semantic_search_state['last_search']:
+        with st.spinner("Searching for matching semantic tags..."):
+            matching_tags = find_matching_semantic_tags(
+                model_base,
+                selected_pair,
+                available_layers[0],
+                search_term
+            )
             
-        # Find matching clusters
-        encoder_results = find_clusters_by_semantic_tag(
-            model_base,
-            selected_pair,
-            available_layers[0],
-            search_tag,
-            "encoder"
-        )
-        
-        decoder_results = find_clusters_by_semantic_tag(
-            model_base,
-            selected_pair,
-            available_layers[0],
-            search_tag,
-            "decoder"
-        )
-        
-        # Collect unique semantic tags that match the search
-        matching_tags = set()
-        for results in [encoder_results, decoder_results]:
-            for data in results.values():
-                matching_tags.update(
-                    tag for tag in data['semantic_tags'] 
-                    if search_tag.lower() in tag.lower()
-                )
-        
-        # Update state
-        st.session_state.semantic_search_state.update({
-            'search_tag': search_tag,
-            'encoder_results': encoder_results,
-            'decoder_results': decoder_results,
-            'last_search': search_tag,
-            'matching_tags': sorted(matching_tags)
-        })
+            st.session_state.semantic_search_state.update({
+                'matching_tags': matching_tags,
+                'last_search': search_term
+            })
     
-    # Show single matching tags dropdown if we have results
-    if st.session_state.semantic_search_state['matching_tags']:
+    matching_tags = st.session_state.semantic_search_state['matching_tags']
+    
+    if matching_tags:
         selected_tag = st.selectbox(
             "Select a semantic tag:",
-            st.session_state.semantic_search_state['matching_tags'],
-            key="semantic_tag_selector_unified"
+            matching_tags,
+            key="semantic_tag_selector"
         )
         
-        if selected_tag:
-            # Create tabs for different views
-            tab1, tab2, tab3 = st.tabs(["Evolution Analysis", "Source Clusters", "Target Clusters"])
-            
-            # Evolution Analysis
-            with tab1:
-                if 'evolution_data' not in st.session_state.semantic_search_state or \
-                   st.session_state.semantic_search_state['last_analyzed_tag'] != selected_tag:
-                    with st.spinner("Analyzing tag evolution..."):
-                        evolution_data = analyze_semantic_tag_evolution(
-                            model_base,
-                            selected_pair,
-                            available_layers,
-                            selected_tag
-                        )
-                        st.session_state.semantic_search_state['evolution_data'] = evolution_data
-                        st.session_state.semantic_search_state['last_analyzed_tag'] = selected_tag
+        if selected_tag and st.button("Analyze Semantic Tag", type="primary"):
+            # Check if we need to recompute analysis
+            if ('last_analyzed_tag' not in st.session_state.semantic_search_state or
+                st.session_state.semantic_search_state['last_analyzed_tag'] != selected_tag):
                 
-                display_semantic_tag_evolution(
-                    st.session_state.semantic_search_state['evolution_data'],
-                    selected_tag
-                )
+                with st.spinner(f"Analyzing semantic tag '{selected_tag}'..."):
+                    # Fix: Call find_clusters_by_semantic_tag separately for encoder and decoder
+                    encoder_clusters = find_clusters_by_semantic_tag(
+                        model_base,
+                        selected_pair,
+                        available_layers[0],
+                        selected_tag,
+                        "encoder"  # Add the missing component parameter
+                    )
+                    
+                    decoder_clusters = find_clusters_by_semantic_tag(
+                        model_base,
+                        selected_pair,
+                        available_layers[0],
+                        selected_tag,
+                        "decoder"  # Add the missing component parameter
+                    )
+                    
+                    st.session_state.semantic_search_state.update({
+                        'last_analyzed_tag': selected_tag,
+                        'encoder_clusters': encoder_clusters,
+                        'decoder_clusters': decoder_clusters
+                    })
             
-            # Filter results for the selected tag
-            filtered_encoder = {
-                cid: data for cid, data in st.session_state.semantic_search_state['encoder_results'].items()
-                if selected_tag in data['semantic_tags']
-            }
+            # Display results
+            encoder_clusters = st.session_state.semantic_search_state['encoder_clusters']
+            decoder_clusters = st.session_state.semantic_search_state['decoder_clusters']
             
-            filtered_decoder = {
-                cid: data for cid, data in st.session_state.semantic_search_state['decoder_results'].items()
-                if selected_tag in data['semantic_tags']
-            }
-            
-            # Display results in remaining tabs
-            with tab2:
-                st.write("### Source Clusters")
-                display_filtered_clusters(filtered_encoder)
-            
-            with tab3:
-                st.write("### Target Clusters")
-                display_filtered_clusters(filtered_decoder)
-    
-    elif search_tag and search_button:
+            if encoder_clusters or decoder_clusters:
+                tab1, tab2 = st.tabs(["Source (Encoder) Clusters", "Target (Decoder) Clusters"])
+                
+                with tab1:
+                    st.write(f"### Source Clusters with Tag: {selected_tag}")
+                    if encoder_clusters:
+                        for cluster_id, tokens in encoder_clusters.items():
+                            with st.expander(f"Cluster {cluster_id}"):
+                                st.write("**Tokens in Cluster:**", ", ".join(tokens))
+                                display_individual_cluster_labels(
+                                    cluster_id,
+                                    model_base,
+                                    selected_pair,
+                                    available_layers[0],
+                                    "encoder"
+                                )
+                    else:
+                        st.info("No source clusters found with this semantic tag")
+                
+                with tab2:
+                    st.write(f"### Target Clusters with Tag: {selected_tag}")
+                    if decoder_clusters:
+                        for cluster_id, tokens in decoder_clusters.items():
+                            with st.expander(f"Cluster {cluster_id}"):
+                                st.write("**Tokens in Cluster:**", ", ".join(tokens))
+                                display_individual_cluster_labels(
+                                    cluster_id,
+                                    model_base,
+                                    selected_pair,
+                                    available_layers[0],
+                                    "decoder"
+                                )
+                    else:
+                        st.info("No target clusters found with this semantic tag")
+            else:
+                st.warning(f"No clusters found with semantic tag: {selected_tag}")
+    elif search_term:
         st.info("No matching semantic tags found")
 
 def display_filtered_clusters(filtered_results):
@@ -4406,7 +4463,7 @@ def main():
     
     model_name = st.sidebar.selectbox(
         "Select Model",
-        ["t5", "coderosetta_ft", "coderosetta_daebt","coderosetta_daebt_phrase", "coderosetta_aer", "coderosetta_mlm"], #"coderosetta_mlm_mixed", "coderosetta_aer_mixed"],
+        ["t5", "coderosetta_ft", "coderosetta_daebt","coderosetta_daebt_phrase", "coderosetta_aer", "coderosetta_mlm", "coconet_codebert", "coconet_deepseek"], #"coderosetta_mlm_mixed", "coderosetta_aer_mixed"],
         key="model_select"
     )
     model_base = os.path.join(model_name)
