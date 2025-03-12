@@ -4463,7 +4463,7 @@ def main():
     
     model_name = st.sidebar.selectbox(
         "Select Model",
-        ["t5", "coderosetta_ft", "coderosetta_daebt","coderosetta_daebt_phrase", "coderosetta_aer", "coderosetta_mlm", "coconet_codebert", "coconet_deepseek"], #"coderosetta_mlm_mixed", "coderosetta_aer_mixed"],
+        ["t5", "coderosetta_ft", "coderosetta_daebt", "coderosetta_aer", "coderosetta_mlm"], #"coderosetta_mlm_mixed", "coderosetta_aer_mixed"],
         key="model_select"
     )
     model_base = os.path.join(model_name)
@@ -4498,13 +4498,8 @@ def main():
     if 'current_cluster_index' not in st.session_state:
         st.session_state.current_cluster_index = 0
 
-    # Split logic based on model type
-    is_mixed_model = model_name in ["coderosetta_mlm_mixed", "coderosetta_aer_mixed"]
-    
-    if is_mixed_model:
-        handle_mixed_model_view(model_name, model_base, selected_pair, selected_layer, available_layers)
-    else:
-        handle_standard_model_view(model_name, model_base, selected_pair, selected_layer)
+
+    handle_standard_model_view(model_name, model_base, selected_pair, selected_layer)
 
 if __name__ == "__main__":
     main()
